@@ -5,16 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using GymSystem.DAL.Entites.Enums;
 using GymSystem.DAL.Entities;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage;
 
 namespace GymSystemBLL.Models
 {
     public class CreateMemberModelView
     {
+        public IFormFile? PhotoFile { get; set; }
+        public string? Photo { get; set; }
+
         [Required(ErrorMessage = "Name Is Required")]
         [StringLength(30,MinimumLength = 3,ErrorMessage = "Name must be between 3 and 30 char")]
         [RegularExpression(@"^[a-zA-Z\s]+$",ErrorMessage = "Name Must Contain Only letters or spaces")]
         public string Name { get; set; } = null!;
+
+
 
 
         [Required(ErrorMessage = "Email Is Required")]
@@ -33,6 +39,7 @@ namespace GymSystemBLL.Models
 
 
 
+
         [Required(ErrorMessage = "Gender Is Required")]
         public Gender Gender { get; set; }
 
@@ -40,7 +47,7 @@ namespace GymSystemBLL.Models
 
         [Required(ErrorMessage = "DateOfBirth Is Required")]
         [DataType(DataType.Date)]
-        public DateOnly DateOfBirth { get; set; }
+        public DateTime DateOfBirth { get; set; }
 
 
 

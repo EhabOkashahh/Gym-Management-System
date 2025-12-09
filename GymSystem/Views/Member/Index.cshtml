@@ -1,5 +1,9 @@
-
 @model IEnumerable<MemberModelView>
+
+@{
+    object? CreationFailed =  TempData["CreationFailed"];
+}
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -20,71 +24,19 @@
 </head>
 
 <body>
-    <header>
-        <!-- ^ navbar -->
-        <nav class="navbar navbar-expand-lg bg-white my-3">
-            <div class="container">
-                <a class="navbar-brand" href="#">
-                    <img src="~/images/logo.jpg" alt="" />
-                </a>
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                        data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav m-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
-                        <li class="nav-item">
-                        <li class="nav-item">
-                            <a class="nav-link active px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page"
-                               href="#">Home</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Members</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Trainers</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Sessions</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">Plans</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page"
-                               href="#">Memberships</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link  px-3 py-2 mx-2 fw-bolder fs-5" aria-current="page" href="#">
-                                Sessions
-                                Schedule
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-
-    </header>
     <div class="container">
         <main role="main" class="pb-3">
-            <div id="Alert" class="alert alert-success alert-dismissible fade show">
+            @if(CreationFailed is not null && CreationFailed is false){
+                <div id="Alert" class="alert alert-success alert-dismissible fade show">
                 <i class="bi bi-check-circle-fill me-2"></i>
                 Member Created Successfully
                 <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
-
-            <div id="Alert" class="alert alert-danger alert-dismissible fade show">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                Member Failed To Create
-                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-            </div>
+                </div>
+            }
 
             <div class="container">
                 <header class="d-flex justify-content-end mt-5 mb-4 align-items-center">
-                    <a href="\Member\Create" class="btn btn-fill fw-medium rounded-pill px-3 py-3">
+                    <a asp-action="AddMember" class="btn btn-fill fw-medium rounded-pill px-3 py-3">
                         + Add Member
                     </a>
                 </header>
@@ -107,7 +59,7 @@
                              <tr>
                                 <td>
                                     <span class="avatar">
-                                        <img src="~/images/@member.Phone" alt="Default Avatar" class="rounded-circle"
+                                        <img src="~/images/@member.Photo" alt="Default Avatar" class="rounded-circle"
                                              style="width: 40px; height: 40px;" />
                                     </span>
                                 </td>

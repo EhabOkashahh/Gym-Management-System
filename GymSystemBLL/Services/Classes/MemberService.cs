@@ -8,7 +8,7 @@ using GymSystem.DAL.Entities;
 using GymSystemBLL.Models;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Repositories.Interfaces;
-using Microsoft.VisualBasic;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GymSystemBLL.Services.Classes
 {
@@ -32,11 +32,14 @@ namespace GymSystemBLL.Services.Classes
             return _autoMapper.Map<MemberModelView>(Member);
         }
 
-        public async Task<bool> CreateMemberAsync(CreateMemberModelView member)
+        public async Task<bool> CreateMemberAsync(CreateMemberModelView modelView)
         {
-            var Member = _autoMapper.Map<Member>(member);
-            await GetRepo().AddAsync(Member);
+            var res = await FindByEmailOrPhone(modelView.Phone , modelView.Email);
+            if(res) return false;
 
+            var Member = _autoMapper.Map<Member>(modelView);
+            await GetRepo().AddAsync(Member);
+            
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 
@@ -72,6 +75,13 @@ namespace GymSystemBLL.Services.Classes
             return _autoMapper.Map<HealthRecordModelView>(member.healthRecord);
         }
 
+
+
+        private async Task<bool> FindByEmailOrPhone(string phone , string email)
+        {
+            var Member = await GetRepo().GetAllAsync();
+            return Member.Any(m => m.Phone == phone || m.Email == email);
+        }
 
         private IGenericRepository<Member> GetRepo()
         {

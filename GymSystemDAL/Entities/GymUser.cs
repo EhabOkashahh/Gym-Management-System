@@ -9,19 +9,19 @@ namespace GymSystem.DAL.Entities
 {
     public class GymUser : BaseEntity
     {
-        public string Name { get; set; }
-        public string Email { get; set; }
-        public string Phone { get; set; }
-        public DateOnly DateOfBirth { get; set; }
+        public string Name { get; set; } = null!;
+        public string Email { get; set; }= null!;
+        public string Phone { get; set; }= null!;
+        public DateTime DateOfBirth { get; set; }
         public Gender Gender { get; set; }
-        public Address Address { get; set; }
+        public Address Address { get; set; } = null!;
     }
 
     [Owned]
     public class Address
     {
-        public string BuildingNo{ get; set; }
-        public string Street{ get; set; }
-        public string City{ get; set; }
+        public string BuildingNo{ get; set; } = null!;
+        public string Street{ get; set; } = null!;
+        public string City{ get; set; } = null!;
     }
 }
