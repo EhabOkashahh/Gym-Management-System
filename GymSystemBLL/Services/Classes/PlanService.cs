@@ -12,7 +12,7 @@ using GymSystemDAL.Repositories.Interfaces;
 
 namespace GymSystemBLL.Services.Classes
 {
-    public class PlanService(UnitOfWork _UnitOfWork, IMapper _mapper) : IPlanService
+    public class PlanService(IUnitOfWork _UnitOfWork, IMapper _mapper) : IPlanService
     {
         public async Task<IEnumerable<PlanModelView>> GetAllPlans()
         {

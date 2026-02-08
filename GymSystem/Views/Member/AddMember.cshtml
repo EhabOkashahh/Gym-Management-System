@@ -1,7 +1,5 @@
 @model CreateMemberModelView
-@{
-    object? IsCreated =   ViewData["CreationFailed"];
-}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -24,11 +22,12 @@
                 <h3 class="text-primary-color">Add Member</h3>
             </header>
 
-            @if(IsCreated is not null && IsCreated is true){
-                <div class="alert alert-danger" role="alert">
-                    Creation Failed
-                </div>
-            }
+             @if (ViewData["CreationFailed"] is bool creationFailed && creationFailed)
+        {
+            <div class="alert alert-danger">
+                Creation Failed. Please try again.
+            </div>
+        }
 
 
             <form method="post" enctype="multipart/form-data">
@@ -42,6 +41,10 @@
                     <li class="nav-item" role="presentation">
                         <button class="nav-link" id="health-tab" data-bs-toggle="tab"
                                 data-bs-target="#health-info" type="button" role="tab">Health Data</button>
+                    </li>
+                    <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="health-tab" data-bs-toggle="tab"
+                                data-bs-target="#membership-info" type="button" role="tab">Membership info</button>
                     </li>
                 </ul>
 
@@ -174,6 +177,25 @@
                                 <label asp-for="HealthRecordModelView.Note" class="form-label"></label>
                                 <input asp-for="HealthRecordModelView.Note" class="form-control" />
                                 <span asp-validation-for="HealthRecordModelView.Note" class="text-danger"></span>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- Membership Details -->
+                    <div class="tab-pane fade" id="membership-info" role="tabpanel">
+                        <div class="row g-3">
+
+                            <!-- Plan Selection -->
+                            <div class="col-12 col-md-6">
+                                <label class="form-label">Membership Plan</label>
+                                <select asp-for="PlanID" class="form-select">
+                                        <option value="">-- Select --</option>
+                                    @foreach(var Plan in Model.Plans){
+                                        <option value="@Plan.Id" >@Plan.Id - @Plan.Name - @Plan.DurationDays D - @Plan.Price$</option>
+                                    }
+                                </select>
+                                <span asp-validation-for="PlanID" class="text-danger"></span>
                             </div>
                         </div>
                     </div>

@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GymSystem.DAL.Entities;
 using GymSystemBLL.Models;
+using GymSystemBLL.Models.MemberModels;
+using GymSystemBLL.Models.PlanModels;
 using GymSystemBLL.Services.Interfaces;
+using GymSystemDAL.Entities;
 using GymSystemDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GymSystemBLL.Services.Classes
 {
-    public class MemberService(IUnitOfWork _UnitOfWork, IMapper _autoMapper) : IMemberService
+    public class MemberService(IUnitOfWork _UnitOfWork, IMapper _autoMapper , IPlanService _planService) : IMemberService
     {
         
         public async Task<IEnumerable<MemberModelView>> GetAllMembersAsync()
@@ -22,14 +25,14 @@ namespace GymSystemBLL.Services.Classes
         }
         
 
-        public async Task<MemberModelView?> GetMemberByIdAsync(int? id)
+        public async Task<MemberDetailsModelView?> GetMemberByIdAsync(int? id)
         {
             if(id is null ) return null;
             
             var Member = await GetRepo().GetByIdAsync(id.Value);
             if(Member is null) return null!;
 
-            return _autoMapper.Map<MemberModelView>(Member);
+            return _autoMapper.Map<MemberDetailsModelView>(Member);
         }
 
         public async Task<bool> CreateMemberAsync(CreateMemberModelView modelView)
@@ -38,6 +41,24 @@ namespace GymSystemBLL.Services.Classes
             if(res) return false;
 
             var Member = _autoMapper.Map<Member>(modelView);
+
+            
+
+            if(modelView.PlanID is null) return false;
+
+            var plan = await _planService.GetPlanDetails(modelView.PlanID);
+            
+            var MemberShip = new MemberShip
+            {
+                CreatedAt = Member.CreatedAt,
+                EndDate = Member.CreatedAt.AddDays(plan!.DurationDays - 1),
+                UpdatedAt = DateTime.Now,
+                PlanID = plan.Id
+            };
+
+            Member.MemberShip = MemberShip;
+            Member.MemberShipID = MemberShip.Id;
+
             await GetRepo().AddAsync(Member);
             
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;

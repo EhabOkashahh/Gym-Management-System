@@ -77,7 +77,8 @@
                                         <ul class="dropdown-menu dropdown-menu-start"
                                             aria-labelledby="dropdownMenuButton-member.Id">
                                             <li>
-                                                <a href="\Member\MemberDetails\memberId"
+                                                <a asp-action="MemberDetails"
+                                                   asp-route-Id="@member.Id" 
                                                    class="dropdown-item d-flex align-items-center gap-3">
                                                     <img src="~/images/info 1.jpg" alt="info icon"
                                                          style="width: 20px; height: 20px;" />
@@ -146,7 +147,7 @@
         });
     </script>
     <script src="../js/bootstrap.bundle.min.js"></script>
-
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 
 </html>

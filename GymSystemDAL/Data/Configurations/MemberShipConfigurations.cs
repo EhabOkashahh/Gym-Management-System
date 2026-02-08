@@ -13,8 +13,7 @@ namespace GymSystemDAL.Data.Configurations
         public void Configure(EntityTypeBuilder<MemberShip> builder)
         {
             builder.Property(MS => MS.CreatedAt).HasColumnName("StartDate").HasDefaultValueSql("GETDATE()");
-            builder.HasKey(X => new {X.MemberID , X.PlanID});
-            builder.Ignore(X => X.Id);
+            builder.HasOne(ms => ms.Plan).WithMany(p => p.MemberShips).HasForeignKey(ms => ms.PlanID).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

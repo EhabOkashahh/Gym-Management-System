@@ -8,20 +8,12 @@ namespace GymSystemDAL.Entities
 {
     public class MemberShip : BaseEntity
     {
-        public Member Member { get; set; } = null!;
-        public int MemberID { get; set; }
-
+        public ICollection<Member> Members { get; set; } = null!;
 
         public Plan Plan { get; set; } = null!;
         public int PlanID { get; set; }
 
         public DateTime EndDate { get; set; }
-        public string status {
-            get
-            {
-                if(EndDate >= DateTime.Now) return "Expired";
-                else return "Active";
-            }
-        }
+        public string status =>  EndDate < DateTime.Now ? "Expired" : "Active";
     }
 }

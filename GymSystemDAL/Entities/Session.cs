@@ -26,7 +26,7 @@ namespace GymSystem.DAL.Entities
         #endregion
         
         #region Member *--* Session
-            public IEnumerable<MemberSessions> MemberSessions { get; set; } = null!;
+            public ICollection<MemberSessions> MemberSessions { get; set; } = null!;
         #endregion
         
     }

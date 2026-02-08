@@ -21,6 +21,8 @@ namespace GymSystemDAL.Data.Configurations
             {
                 tb.HasCheckConstraint("GymSystem_PlanDuration_Check","[DurationDays] between 1 and 365");
             });
+
+            builder.HasMany(p => p.MemberShips).WithOne(ms => ms.Plan).HasForeignKey(ms => ms.PlanID).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }

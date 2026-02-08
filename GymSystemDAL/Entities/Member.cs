@@ -15,8 +15,12 @@ namespace GymSystem.DAL.Entities
 
 
         //relationships
-        public IEnumerable<MemberSessions> MemberSessions { get; set; } = null!;
+        public ICollection<MemberSessions> MemberSessions { get; set; } = null!;
 
-        public IEnumerable<MemberShip> MemberShips { get; set; } = null!;
+
+
+        public MemberShip MemberShip { get; set; } = null!;
+        public int MemberShipID { get; set; }
+        
     }
 }

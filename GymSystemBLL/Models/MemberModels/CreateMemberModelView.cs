@@ -5,8 +5,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using GymSystem.DAL.Entites.Enums;
 using GymSystem.DAL.Entities;
+using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using GymSystemBLL.Models.PlanModels;
+
 
 namespace GymSystemBLL.Models
 {
@@ -53,6 +57,11 @@ namespace GymSystemBLL.Models
 
         public AddressModelView AddressModel { get; set; } = null!;
         public HealthRecordModelView HealthRecordModelView { get; set; } = null!;
+
+        [Required(ErrorMessage = "Please select a membership plan")]
+        public int? PlanID { get; set; }
+
+        public IEnumerable<PlanModelView>? Plans { get; set; }
         
 
     }

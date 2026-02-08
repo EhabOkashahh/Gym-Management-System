@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymSystemDAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20251207160302_InitialCreation")]
-    partial class InitialCreation
+    [Migration("20251212085845_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -104,6 +104,9 @@ namespace GymSystemDAL.Migrations
                     b.Property<int>("Gender")
                         .HasColumnType("int");
 
+                    b.Property<int>("MemberShipID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasMaxLength(50)
@@ -124,6 +127,8 @@ namespace GymSystemDAL.Migrations
 
                     b.HasIndex("Email")
                         .IsUnique();
+
+                    b.HasIndex("MemberShipID");
 
                     b.HasIndex("Phone")
                         .IsUnique();
@@ -312,11 +317,11 @@ namespace GymSystemDAL.Migrations
 
             modelBuilder.Entity("GymSystemDAL.Entities.MemberShip", b =>
                 {
-                    b.Property<int>("MemberID")
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    b.Property<int>("PlanID")
-                        .HasColumnType("int");
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
                     b.Property<DateTime>("CreatedAt")
                         .ValueGeneratedOnAdd()
@@ -327,10 +332,13 @@ namespace GymSystemDAL.Migrations
                     b.Property<DateTime>("EndDate")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("PlanID")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("UpdatedAt")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("MemberID", "PlanID");
+                    b.HasKey("Id");
 
                     b.HasIndex("PlanID");
 
@@ -348,6 +356,12 @@ namespace GymSystemDAL.Migrations
 
             modelBuilder.Entity("GymSystem.DAL.Entities.Member", b =>
                 {
+                    b.HasOne("GymSystemDAL.Entities.MemberShip", "MemberShip")
+                        .WithMany("Members")
+                        .HasForeignKey("MemberShipID")
+                        .OnDelete(DeleteBehavior.Restrict)
+                        .IsRequired();
+
                     b.OwnsOne("GymSystem.DAL.Entities.Address", "Address", b1 =>
                         {
                             b1.Property<int>("MemberId")
@@ -379,6 +393,8 @@ namespace GymSystemDAL.Migrations
 
                     b.Navigation("Address")
                         .IsRequired();
+
+                    b.Navigation("MemberShip");
                 });
 
             modelBuilder.Entity("GymSystem.DAL.Entities.Session", b =>
@@ -456,19 +472,11 @@ namespace GymSystemDAL.Migrations
 
             modelBuilder.Entity("GymSystemDAL.Entities.MemberShip", b =>
                 {
-                    b.HasOne("GymSystem.DAL.Entities.Member", "Member")
-                        .WithMany("MemberShips")
-                        .HasForeignKey("MemberID")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
                     b.HasOne("GymSystem.DAL.Entities.Plan", "Plan")
                         .WithMany("MemberShips")
                         .HasForeignKey("PlanID")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
-
-                    b.Navigation("Member");
 
                     b.Navigation("Plan");
                 });
@@ -481,8 +489,6 @@ namespace GymSystemDAL.Migrations
             modelBuilder.Entity("GymSystem.DAL.Entities.Member", b =>
                 {
                     b.Navigation("MemberSessions");
-
-                    b.Navigation("MemberShips");
 
                     b.Navigation("healthRecord")
                         .IsRequired();
@@ -501,6 +507,11 @@ namespace GymSystemDAL.Migrations
             modelBuilder.Entity("GymSystem.DAL.Entities.Trainer", b =>
                 {
                     b.Navigation("Sessions");
+                });
+
+            modelBuilder.Entity("GymSystemDAL.Entities.MemberShip", b =>
+                {
+                    b.Navigation("Members");
                 });
 #pragma warning restore 612, 618
         }

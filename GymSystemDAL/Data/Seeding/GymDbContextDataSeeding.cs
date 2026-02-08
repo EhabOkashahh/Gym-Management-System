@@ -48,7 +48,7 @@ namespace GymSystemDAL.Data.Seeding
 
         private static List<T> LoadDataFromJsonFile<T>(string filename , IWebHostEnvironment environment)
         {
-            var filePath = Path.Combine(environment.WebRootPath,@$"wwwroot\Files\{filename}");
+            var filePath = Path.Combine(environment.WebRootPath,"Files",filename);
             if(!File.Exists(filePath)) throw new FileNotFoundException();
 
             string data = File.ReadAllText(filePath) ?? throw new Exception($"Cannot read data from file named{filename}");
