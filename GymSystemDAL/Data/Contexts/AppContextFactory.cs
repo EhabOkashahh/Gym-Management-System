@@ -12,7 +12,7 @@ namespace GymSystemDAL.Data.Contexts
     {
         public AppDbContext CreateDbContext(string[] args)
         {
-            // get the enviroment var uwu
+            // get the enviroment var
             var GetConnectionString = Environment.GetEnvironmentVariable("GYM_CONNECTION")?? throw new Exception("Invalid Connection");
            
             var optionsBuilder = new DbContextOptionsBuilder<AppDbContext>();

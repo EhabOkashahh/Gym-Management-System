@@ -42,16 +42,17 @@ namespace GymSystemBLL.Services.Classes
 
             var Member = _autoMapper.Map<Member>(modelView);
 
-            
-
             if(modelView.PlanID is null) return false;
 
             var plan = await _planService.GetPlanDetails(modelView.PlanID);
             
+
+            var MemberShipStartDate = DateTime.Now;
+
             var MemberShip = new MemberShip
             {
-                CreatedAt = Member.CreatedAt,
-                EndDate = Member.CreatedAt.AddDays(plan!.DurationDays - 1),
+                CreatedAt = MemberShipStartDate,
+                EndDate = MemberShipStartDate.AddDays(plan!.DurationDays - 1),
                 UpdatedAt = DateTime.Now,
                 PlanID = plan.Id
             };

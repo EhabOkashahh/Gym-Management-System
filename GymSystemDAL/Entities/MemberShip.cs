@@ -8,9 +8,9 @@ namespace GymSystemDAL.Entities
 {
     public class MemberShip : BaseEntity
     {
-        public ICollection<Member> Members { get; set; } = null!;
+        public virtual ICollection<Member> Members { get; set; } = null!;
 
-        public Plan Plan { get; set; } = null!;
+        public virtual Plan Plan { get; set; } = null!;
         public int PlanID { get; set; }
 
         public DateTime EndDate { get; set; }

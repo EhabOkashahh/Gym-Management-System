@@ -16,17 +16,17 @@ namespace GymSystem.DAL.Entities
 
         // relationships
         #region Category 1--* Session
-            public Category Category { get; set; } = null!;
+            public virtual Category Category { get; set; } = null!;
             public int CategoryID { get; set; }
         #endregion
         
         #region Trainer 1--* Session
-            public Trainer Trainer { get; set; } = null!;
+            public virtual Trainer Trainer { get; set; } = null!;
             public int TrainerID { get; set; }
         #endregion
         
         #region Member *--* Session
-            public ICollection<MemberSessions> MemberSessions { get; set; } = null!;
+            public virtual ICollection<MemberSessions> MemberSessions { get; set; } = null!;
         #endregion
         
     }

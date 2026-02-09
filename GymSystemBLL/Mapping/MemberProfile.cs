@@ -25,7 +25,8 @@ namespace GymSystemBLL.Mapping
             CreateMap<Member , MemberModelView>().ReverseMap();
 
             CreateMap<Member, MemberDetailsModelView>().ForMember(dest => dest.Address, opt => opt.MapFrom(src => $"{src.Address.BuildingNo}-{src.Address.Street}-{src.Address.City}"))
-                                                       .ForMember(dest => dest.MemberShip , opt => opt.MapFrom(src => src.MemberShip));
+                                                       .ForMember(dest => dest.MemberShip , opt => opt.MapFrom(src => src.MemberShip))
+                                                       .ForMember(dest => dest.Address , opt => opt.MapFrom(src => src.Address));
 
 
             CreateMap<Address,AddressModelView>().ReverseMap();

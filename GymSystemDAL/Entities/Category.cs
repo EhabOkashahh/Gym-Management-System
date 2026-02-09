@@ -11,7 +11,7 @@ namespace GymSystem.DAL.Entities
 
 
         //realtionships
-        public ICollection<Session> Sessions { get; set; } = null!;
+        public virtual ICollection<Session> Sessions { get; set; } = null!;
 
     }
 }

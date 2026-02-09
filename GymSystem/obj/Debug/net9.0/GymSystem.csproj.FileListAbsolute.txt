@@ -347,3 +347,5 @@ D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\GymSystem.pdb
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\GymSystem.genruntimeconfig.cache
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\ref\GymSystem.dll
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\7us2a7sthy-f5rcwpq8v9.gz
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Castle.Core.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Proxies.dll

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("GymSystemDAL")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+734f19cb6353a2afc5715bd838188abb76528e94")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+b7b038ea2176a1d3f84c6c972108392a56cdc01c")]
 [assembly: System.Reflection.AssemblyProductAttribute("GymSystemDAL")]
 [assembly: System.Reflection.AssemblyTitleAttribute("GymSystemDAL")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

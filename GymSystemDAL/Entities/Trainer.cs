@@ -9,10 +9,10 @@ namespace GymSystem.DAL.Entities
     public class Trainer : GymUser
     {
          // HiringDate == CreatdAt
-        public Specialities Specialities { get; set; }
+        public virtual Specialities Specialities { get; set; }
 
 
         // relationships
-        public ICollection<Session> Sessions { get; set; } = null!;
+        public virtual ICollection<Session> Sessions { get; set; } = null!;
     }
 }

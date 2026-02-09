@@ -22,7 +22,7 @@ namespace GymSystemBLL.Services.Classes
 
             var memberShip = _mapper.Map<MemberShipModelView>(await GetRepo().GetByIdAsync(Id));
             var plan = await _planService.GetPlanDetails(memberShip.PlanID);
-            memberShip.Plan = plan;
+            memberShip.Plan = plan!;
             return memberShip;
         }
         

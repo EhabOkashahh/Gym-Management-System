@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GymSystemBLL.Models.PlanModels;
+using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
 
 
 namespace GymSystemBLL.Models
@@ -49,18 +50,18 @@ namespace GymSystemBLL.Models
 
 
 
-        [Required(ErrorMessage = "DateOfBirth Is Required")]
+        [Required(ErrorMessage = "Date Of Birth Is Required")]
         [DataType(DataType.Date)]
-        public DateTime DateOfBirth { get; set; }
+        public DateTime? DateOfBirth { get; set; }
 
 
 
         public AddressModelView AddressModel { get; set; } = null!;
         public HealthRecordModelView HealthRecordModelView { get; set; } = null!;
 
-        [Required(ErrorMessage = "Please select a membership plan")]
+        
+        [Required(ErrorMessage = "Plan Is Required")]
         public int? PlanID { get; set; }
-
         public IEnumerable<PlanModelView>? Plans { get; set; }
         
 

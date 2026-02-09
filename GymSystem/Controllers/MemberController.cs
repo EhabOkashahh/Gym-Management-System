@@ -24,10 +24,8 @@ namespace GymSystem.Controllers
         #region Create Member
         [HttpGet]
         public async Task<IActionResult> AddMemberAsync() { 
-            var model = new CreateMemberModelView
-            {
-               Plans = await _planService.GetAllPlans()
-            };
+            var model = new CreateMemberModelView();
+            await PopulatePlans(model);
             return View(model); 
         }
     
@@ -51,18 +49,19 @@ namespace GymSystem.Controllers
                     if (!res) 
                     {
                         ViewData["CreationFailed"] = true;
+                        await PopulatePlans(model);
                         return View(model);
                     }
 
                 return RedirectToAction(nameof(Index));
             }
             ModelState.AddModelError(String.Empty , "There are some fields Empty");
+            await PopulatePlans(model);
             return View(model);
         } 
         #endregion   
 
-
-        #region Details
+        #region Details - HealthRecords
         [HttpGet]
         public async Task<IActionResult> MemberDetails(int? id)
         {
@@ -72,6 +71,31 @@ namespace GymSystem.Controllers
             return View(res);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> ViewHealthRecordData(int? Id)
+        {
+            var res = await _memberService.GetHealthRecordDetails(Id);
+            return View(res);
+        }
+
         #endregion
+
+        #region Edit - Delete
+        [HttpGet]
+        public async Task<IActionResult> Edit(int Id)
+        {
+            var res = await _memberService.GetMemberByIdAsync(Id);
+            return View(res);
+        }
+        #endregion 
+
+
+
+
+
+        private async Task PopulatePlans(CreateMemberModelView model)
+        {
+            model.Plans = await _planService.GetAllPlans();
+        }
     }
 }
