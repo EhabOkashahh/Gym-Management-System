@@ -3,9 +3,11 @@ using System.CodeDom.Compiler;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using GymSystem.Extension;
 using GymSystem.Extension.Classes;
 using GymSystemBLL.Models;
+using GymSystemBLL.Models.MemberModels;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
@@ -13,7 +15,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
 {
-    public class MemberController(IMemberService _memberService , FilesFactory _fileFactory ,IPlanService _planService, IMemberShipService _memberShip) : Controller
+    public class MemberController(IMemberService _memberService , FilesFactory _fileFactory ,IPlanService _planService, IMemberShipService _memberShip , IMapper _mapper) : Controller
     {
         public async Task<IActionResult> Index()
         {
@@ -66,7 +68,7 @@ namespace GymSystem.Controllers
         public async Task<IActionResult> MemberDetails(int? id)
         {
             var res = await _memberService.GetMemberByIdAsync(id);
-            var membership = await _memberShip.GetMemberShipDetails(res.MemberShipID);
+            var membership = await _memberShip.GetMemberShipDetails(res!.MemberShipID);
             res.MemberShip = membership;
             return View(res);
         }
@@ -85,15 +87,65 @@ namespace GymSystem.Controllers
         public async Task<IActionResult> Edit(int Id)
         {
             var res = await _memberService.GetMemberByIdAsync(Id);
-            return View(res);
+            var mappedModel = _mapper.Map<UpdateMemberModelView>(res);
+            mappedModel.PlanID = res!.MemberShip.PlanID;
+            await PopulatePlans(mappedModel);
+            return View(mappedModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Edit(UpdateMemberModelView model)
+        {
+            if (!ModelState.IsValid)
+            {   
+                ModelState.AddModelError(string.Empty,"Some fields are empty");
+                await PopulatePlans(model);
+                return View(model);
+            }
+
+            var res = await _memberService.UpdateMember(model.Id, model);
+
+            if (!res)
+            {
+                ViewData["CreationFailed"] = true;
+                return View(model);
+            }
+
+            return RedirectToAction(nameof(Index));
         }
         #endregion 
 
+        [HttpGet]
+        public IActionResult DeleteMember()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DeleteMemberAsync(int? Id)
+        {
+            if (Id is null)
+            {
+                // TempData survives the Redirect
+                TempData["DeletionError"] = "Invalid Member ID. Please try again.";
+                return RedirectToAction("Index");
+            }
+
+            var res = await _memberService.DeleteMember(Id.Value);
+
+            if (!res)
+            {
+                TempData["DeletionError"] = "Something went wrong while deleting. Try again later.";
+                return RedirectToAction("Index");
+            }
+
+            TempData["SuccessMessage"] = "Member deleted successfully!";
+            return RedirectToAction("Index");        
+        }
 
 
 
 
-        private async Task PopulatePlans(CreateMemberModelView model)
+        private async Task PopulatePlans<T>(T model) where T : IHasPlan
         {
             model.Plans = await _planService.GetAllPlans();
         }

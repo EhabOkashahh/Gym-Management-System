@@ -11,11 +11,12 @@ using Microsoft.EntityFrameworkCore.Storage;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using GymSystemBLL.Models.PlanModels;
 using Microsoft.AspNetCore.Mvc.ModelBinding.Validation;
+using GymSystemBLL.Models.MemberModels;
 
 
 namespace GymSystemBLL.Models
 {
-    public class CreateMemberModelView
+    public class CreateMemberModelView : IHasPlan
     {
         public IFormFile? PhotoFile { get; set; }
         public string? Photo { get; set; }

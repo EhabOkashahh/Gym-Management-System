@@ -82,6 +82,8 @@ namespace GymSystemBLL.Services.Classes
             if(member is null) return false;
 
             var UpdatedMember =_autoMapper.Map(model,member);
+
+            UpdatedMember.MemberShip.PlanID = model.PlanID;
             GetRepo().Update(UpdatedMember);
 
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;

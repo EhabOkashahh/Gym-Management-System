@@ -1,4 +1,4 @@
-﻿@model MemberDetailsModelView
+﻿@model UpdateMemberModelView
 
 <!DOCTYPE html>
 <html lang="en">
@@ -35,8 +35,10 @@
                                         style="width: 120px; height: 120px; object-fit: cover; border: 3px solid #fff; margin-top: -60px;" />
                                 </div>
                                 <div class="card-body text-center">
-                                    <h2 class="mb-1 text-primary-color">Name</h2>
+                                    <h2 class="mb-1 text-primary-color">@Model.Name</h2>
                                     <form method="post">
+                                        <input asp-for="Photo" hidden/>
+                                        <input asp-for="Name" hidden/>
                                         <div class="mt-4 text-start">
                                             <div class="row g-3">
                                                 <div class="col-12">
@@ -57,24 +59,35 @@
                                                 <div class="col-6">
                                                     <div class="p-3 bg-light rounded">
                                                         <small class="text-muted d-block mb-1">Building Number</small>
-                                                        <input asp-for="@Model.Address.BuildingNo" class="form-control" />
-                                                        <span asp-validation-for="@Model.Address.BuildingNo"
+                                                        <input asp-for="@Model.AddressModel.BuildingNo" class="form-control" />
+                                                        <span asp-validation-for="@Model.AddressModel.BuildingNo"
                                                             class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="p-3 bg-light rounded">
                                                         <small class="text-muted d-block mb-1">City</small>
-                                                        <input asp-for="@Model.Address.City" class="form-control" />
-                                                        <span asp-validation-for="@Model.Address.City" class="text-danger"></span>
+                                                        <input asp-for="@Model.AddressModel.City" class="form-control" />
+                                                        <span asp-validation-for="@Model.AddressModel.City" class="text-danger"></span>
                                                     </div>
                                                 </div>
                                                 <div class="col-6">
                                                     <div class="p-3 bg-light rounded">
                                                         <small class="text-muted d-block mb-1">Street</small>
-                                                        <input asp-for="@Model.Address.Street" class="form-control" />
-                                                        <span asp-validation-for="@Model.Address.Street" class="text-danger"></span>
+                                                        <input asp-for="@Model.AddressModel.Street" class="form-control" />
+                                                        <span asp-validation-for="@Model.AddressModel.Street" class="text-danger"></span>
                                                     </div>
+                                                </div>
+                                                <!-- Plan Selection -->
+                                                <div class="col-12 col-md-6">
+                                                    <label class="form-label">Membership Plan</label>
+                                                    <select asp-for="PlanID" class="form-select">
+                                                            <option value="">-- Select --</option>
+                                                        @foreach(var Plan in Model.Plans!){
+                                                            <option value="@Plan.Id" >@Plan.Id - @Plan.Name - @Plan.DurationDays D - @Plan.Price$</option>
+                                                        }
+                                                    </select>
+                                                    <span asp-validation-for="PlanID" class="text-danger"></span>
                                                 </div>
                                             </div>
                                         </div>

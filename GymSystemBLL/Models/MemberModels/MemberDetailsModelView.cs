@@ -11,7 +11,7 @@ namespace GymSystemBLL.Models.MemberModels
     public class MemberDetailsModelView : MemberModelView
     {
         public string? DateOfBirth { get; set; }
-        public Address? Address { get; set; }
+        public AddressModelView? Address { get; set; }
 
         public int MemberShipID { get; set; }
         public MemberShipModelView MemberShip { get; set; } = null!;
