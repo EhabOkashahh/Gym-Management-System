@@ -27,15 +27,16 @@ namespace GymSystemBLL.Services.Classes
             var Plan = await GetRepo().GetByIdAsync(id.Value);
 
             if(Plan is null) return null!;
-            return _mapper.Map<PlanModelView>(Plan);
+            var mappedVersion = _mapper.Map<PlanModelView>(Plan);
+            return mappedVersion;
         }
 
         public async Task<bool> UpdatePlanData(int id,UpdatePlanModelView model)
         {
             var plan = await GetRepo().GetByIdAsync(id);
-             if(plan is null || plan.MemberShips.Any(ms => ms.status.Equals("Active",StringComparison.OrdinalIgnoreCase))) return false;
+             if(plan is null || plan.MemberShips.Any(ms => ms.status.Equals("Expired",StringComparison.OrdinalIgnoreCase))) return false;
 
-            GetRepo().Update(_mapper.Map<Plan>(model)); 
+            GetRepo().Update(_mapper.Map(model,plan)); 
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 

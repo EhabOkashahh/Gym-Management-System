@@ -1,0 +1,46 @@
+﻿@model List<Member>
+
+<div class="modal-header">
+    <h5 class="modal-title">Active Members</h5>
+    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body">
+    @if (!Model.Any())
+    {
+        <p>No active members found.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th>Photo</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Phone</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var member in Model)
+                {
+                    <tr>
+                        <td>
+                            <span class="avatar">
+                                        <img src="~/images/@member.Photo" alt="Default Avatar" class="rounded-circle"
+                                             style="width: 40px; height: 40px;" />
+                            </span>
+                        </td>
+                        <td>@member.Name</td>
+                        <td>@member.Email</td>
+                        <td>@member.Phone</td>
+                        <td>
+                            <a asp-action="MemberDetails" asp-controller="Member" asp-route-id="@member.Id">Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+</div>

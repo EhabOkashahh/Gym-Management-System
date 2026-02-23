@@ -1,0 +1,135 @@
+﻿@model PlanModelView
+@{
+    var planUsers = Model.MemberShip
+                .Where(ms => ms.status.Equals("Active", StringComparison.OrdinalIgnoreCase))
+                .SelectMany(ms => ms.Members)
+                .Count();
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <!-- Header: Plan Name -->
+                <div class="card-header text-white text-center py-5 @(Model.IsActive ? "bg-primary" : "bg-secondary")">
+                    <i class="bi bi-award display-4 mb-3"></i>
+                    <h2 class="mb-0">@Model.Name</h2>
+                </div>
+
+                <!-- Body: Price & Details -->
+                <div class="card-body p-4">
+                    <!-- Price -->
+                    <div class="text-center mb-4 py-3 bg-light rounded">
+                        <div class="display-3 fw-bold text-primary">@Model.Price.ToString("N0")</div>
+                        <small class="text-muted fs-5">EGP</small>
+                    </div>
+
+                    <!-- Plan Details -->
+                    <div class="plan-details">
+
+                        <!-- Duration -->
+                        <div class="detail-item mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="icon-box me-3">
+                                    <i class="bi bi-calendar-check text-primary fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-muted">Duration</h6>
+                                    <p class="mb-0 fw-bold">@Model.DurationDays days</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="detail-item mb-4">
+                            <div class="d-flex align-items-start mb-2">
+                                <div class="icon-box me-3">
+                                    <i class="bi bi-file-text text-primary fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-2 text-muted">Description</h6>
+                                    <p class="mb-0">@Model.Description</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Status -->
+                        <div class="detail-item mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="icon-box me-3">
+                                    <i class="bi fs-4"></i>
+                                </div>
+                                <div>
+                                    <h6 class="mb-0 text-muted">Status</h6>
+                                    <p class="mb-0">
+                                        @if(Model.IsActive){
+                                            <span class="badge bg-success">Active</span>
+                                        } else {
+                                            <span class="badge bg-danger">Inactive</span>
+                                        }
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Members Count & View -->
+                        <div class="detail-item mb-4">
+                            <div class="d-flex align-items-center mb-2">
+                                <div class="icon-box me-3">
+                                    <i class="bi bi-people text-primary fs-4"></i>
+                                </div>
+                                <div class="flex-grow-1">
+                                    <h6 class="mb-0 text-muted">Members Count</h6>
+                                    <div class="d-flex align-items-center p-2">
+                                        <p class="mb-0 fw-bold">@planUsers</p>
+                                        @if(planUsers > 0){
+                                            <a href="javascript:void(0)" class="ms-auto" onclick="loadMembers(@Model.Id)">View</a>
+                                        }
+                                        else{
+                                            <a href="javascript:void(0)" class="ms-auto" onclick="loadMembers(@Model.Id)" hidden >View</a>
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                
+                <div class="modal fade" id="membersModal" tabindex="-1">
+                    <div class="modal-dialog modal-lg">
+                        <div class="modal-content" id="membersModalContent">
+                            <!-- Partial View content will be injected here -->
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-footer bg-white border-0 p-4">
+                    <div class="d-flex justify-content-between gap-2">
+                        <a asp-action="Index" class="btn btn-outline-secondary flex-fill">
+                            <i class="bi bi-arrow-left me-1"></i>Back
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Scripts -->
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        function loadMembers(planId) {
+            $.get('/Plan/PlanMembers/' + planId, function (data) {
+                $('#membersModalContent').html(data);
+                var myModal = new bootstrap.Modal(document.getElementById('membersModal'));
+                myModal.show();
+            });
+        }
+    </script>
+}

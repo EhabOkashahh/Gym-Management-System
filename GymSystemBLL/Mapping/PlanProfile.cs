@@ -12,8 +12,9 @@ namespace GymSystemBLL.Mapping
     {
         public PlanProfile()
         {
-            CreateMap<Plan, PlanModelView>().ReverseMap();
+            CreateMap<Plan, PlanModelView>().ForMember(dest => dest.MemberShip , opt => opt.MapFrom(src => src.MemberShips)).ReverseMap();
             CreateMap<Plan, UpdatePlanModelView>().ReverseMap();
+            CreateMap<PlanModelView, UpdatePlanModelView>().ReverseMap();
         }
     }
 }

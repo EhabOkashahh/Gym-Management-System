@@ -15,7 +15,7 @@ namespace GymSystemBLL.Models.PlanModels
 
 
         [Required(ErrorMessage = "Description Is Required")]
-        [StringLength(30,MinimumLength = 3,ErrorMessage = "Description must be between 10 and 100 char")]
+        [StringLength(55,MinimumLength = 3,ErrorMessage = "Description must be between 10 and 100 char")]
         public string Description { get; set; } = null!;
 
 
@@ -23,5 +23,9 @@ namespace GymSystemBLL.Models.PlanModels
         [Required(ErrorMessage = "DurationDays Is Required")]
         [Range(1,365,ErrorMessage = "DurationDays must be between 1 and 365 days")]
         public int DurationDays { get; set; }
+
+        [Required(ErrorMessage = "DurationDays Is Required")]
+        public decimal Price { get; set; }
+
     }
 }

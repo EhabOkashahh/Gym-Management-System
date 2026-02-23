@@ -60,6 +60,22 @@ build_metadata.AdditionalFiles.CssScope =
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcTWVtYmVyXFZpZXdIZWFsdGhSZWNvcmREYXRhLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
 
+[D:/VS PROJECTS/GymSystem/GymSystem/Views/Plan/Index.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhblxJbmRleC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/VS PROJECTS/GymSystem/GymSystem/Views/Plan/PlanDetails.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhblxQbGFuRGV0YWlscy5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/VS PROJECTS/GymSystem/GymSystem/Views/Plan/PlanEdit.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhblxQbGFuRWRpdC5jc2h0bWw=
+build_metadata.AdditionalFiles.CssScope = 
+
+[D:/VS PROJECTS/GymSystem/GymSystem/Views/Plan/_PlanMembersPartial.cshtml]
+build_metadata.AdditionalFiles.TargetPath = Vmlld3NcUGxhblxfUGxhbk1lbWJlcnNQYXJ0aWFsLmNzaHRtbA==
+build_metadata.AdditionalFiles.CssScope = 
+
 [D:/VS PROJECTS/GymSystem/GymSystem/Views/Shared/Error.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcU2hhcmVkXEVycm9yLmNzaHRtbA==
 build_metadata.AdditionalFiles.CssScope = 
