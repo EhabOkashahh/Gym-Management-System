@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using GymSystem.DAL.Entities;
 using GymSystemBLL.Models.PlanModels;
 
 namespace GymSystemBLL.Models.MeemberShipModels
@@ -22,6 +23,10 @@ namespace GymSystemBLL.Models.MeemberShipModels
         [Display(Name = "Membership UpdatedAt")]
         [DataType(DataType.Date)]
         public DateTime UpdatedAt { get; set; }
+
+        public ICollection<Member> Members { get; set; } = null!;
+
+        public string status =>  EndDate < DateTime.Now ? "Expired" : "Active";
 
         public int PlanID { get; set; }
         public PlanModelView Plan { get; set; } = null!;
