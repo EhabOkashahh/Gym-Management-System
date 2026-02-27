@@ -271,9 +271,6 @@ D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\5bun8x5jk5-b9sayi
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\lvea2rzzhh-m38wtjmxib.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\9uuskgzs3o-61n19gt1b8.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\oxk4q01lmy-hby4qdiqxa.gz
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\yqo8m5qwuo-gk6je6itwo.gz
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\ney16q42kd-ra89dd10vu.gz
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\17gzvyygdb-7y25oh2dzs.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\gtdbrstew4-xtxxf3hu2r.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\83d33lxigw-bqjiyaj88i.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\57jybr7v63-c2jlpeoesf.gz
@@ -349,3 +346,5 @@ D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\ref\GymSystem.dll
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\7us2a7sthy-f5rcwpq8v9.gz
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Castle.Core.dll
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Proxies.dll
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\yqo8m5qwuo-gk6je6itwo.gz
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\ney16q42kd-ra89dd10vu.gz

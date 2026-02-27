@@ -191,7 +191,7 @@
                                 <label class="form-label">Membership Plan</label>
                                 <select asp-for="PlanID" class="form-select">
                                         <option value="">-- Select --</option>
-                                    @foreach(var Plan in Model.Plans){
+                                    @foreach(var Plan in Model.Plans!){
                                         <option value="@Plan.Id" >@Plan.Id - @Plan.Name - @Plan.DurationDays D - @Plan.Price$</option>
                                     }
                                 </select>

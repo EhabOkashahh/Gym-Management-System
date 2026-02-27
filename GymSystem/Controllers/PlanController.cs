@@ -78,7 +78,7 @@ namespace GymSystem.Controllers
             var plan = await _PlanService.GetPlanDetails(id!.Value);
             if(plan is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
 
-            var members = plan!.MemberShip.Where(ms => ms.status.Equals("Active",StringComparison.OrdinalIgnoreCase)).SelectMany(ms => ms.Members).ToList();
+            var members = plan!.MemberShip.Where(ms => ms.MemberShipStatus == GymSystemDAL.Entities.Enums.MemberShipStatus.Canceled).SelectMany(ms => ms.Members).ToList();
 
             return PartialView("_PlanMembersPartial",members);
         }

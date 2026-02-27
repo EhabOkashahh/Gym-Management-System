@@ -1,7 +1,7 @@
 ﻿@model PlanModelView
 @{
     var planUsers = Model.MemberShip
-                .Where(ms => ms.status.Equals("Active", StringComparison.OrdinalIgnoreCase))
+                .Where(ms => ms.MemberShipStatus == GymSystemDAL.Entities.Enums.MemberShipStatus.Canceled)
                 .SelectMany(ms => ms.Members)
                 .Count();
 }

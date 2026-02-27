@@ -12,6 +12,7 @@ using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Entities;
 using GymSystemDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using GymSystemDAL.Entities.Enums;
 
 namespace GymSystemBLL.Services.Classes
 {
@@ -54,6 +55,8 @@ namespace GymSystemBLL.Services.Classes
                 CreatedAt = MemberShipStartDate,
                 EndDate = MemberShipStartDate.AddDays(plan!.DurationDays - 1),
                 UpdatedAt = DateTime.Now,
+                StartDate = DateTime.Now,
+                MemberShipStatus = MemberShipStatus.Active,
                 PlanID = plan.Id
             };
 

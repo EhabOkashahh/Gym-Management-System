@@ -28,7 +28,7 @@ namespace GymSystemBLL.Models
 
         [Required(ErrorMessage = "Phone Is Required")]
         [Phone(ErrorMessage = "Invalid Phone Format")]
-        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Error Message must be valid Egyptian number")]
+        [RegularExpression(@"^(010|011|012|015)\d{8}$", ErrorMessage = "Phone must be valid Egyptian number")]
         public string Phone { get; set; } = null!;
 
         public AddressModelView AddressModel { get; set; } = null!;

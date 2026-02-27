@@ -112,7 +112,7 @@ namespace GymSystem.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        #endregion 
+
 
         [HttpGet]
         public IActionResult DeleteMember()
@@ -125,7 +125,6 @@ namespace GymSystem.Controllers
         {
             if (Id is null)
             {
-                // TempData survives the Redirect
                 TempData["DeletionError"] = "Invalid Member ID. Please try again.";
                 return RedirectToAction("Index");
             }
@@ -143,6 +142,9 @@ namespace GymSystem.Controllers
         }
 
 
+        #endregion 
+
+        
 
 
         private async Task PopulatePlans<T>(T model) where T : IHasPlan
