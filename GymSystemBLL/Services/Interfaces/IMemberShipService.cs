@@ -13,7 +13,7 @@ namespace GymSystemBLL.Services.Interfaces
         Task<IEnumerable<MemberShipModelView>> GetAllMemberShipAsync();
         Task<MemberShipModelView> GetMemberShipDetails(int Id);
         Task<bool> UpdateMemberShip(int id , MemberShipModelView model);
-        Task<bool> CancelMemberShip(int id);
+        Task<bool> ToggleCancelMemberShip(int id);
         Task<bool> RenewMemberShip(int id, int months = 1);
         Task<IEnumerable<MemberShip>> GetActiveMemberships();
 

@@ -185,11 +185,12 @@
 
                                                 <ul class="dropdown-menu">
                                                     <li>
-                                                        <a asp-action="RestoreMember"
-                                                           asp-route-Id="@member.Id"
-                                                           class="dropdown-item">
-                                                            Restore Member
-                                                        </a>
+                                                        <button class="dropdown-item text-danger"
+                                                            data-bs-toggle="modal"
+                                                            data-bs-target="#RestoreModal"
+                                                            onclick="setMemberId(@member.Id)">
+                                                                RestoreMember
+                                                        </button>
                                                     </li>
                                                     <li>
                                                         <a asp-action="PermanentDelete"
@@ -218,8 +219,41 @@
 
         </div>
     </main>
+
+
+    @* RestoreMember Confirmation *@
+    <div class="modal fade" id="RestoreModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title">Confirm Restore</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+
+            <div class="modal-body">
+                Are you sure you want to restore this member ?
+            </div>
+
+            <div class="modal-footer">
+                <form asp-action="RestoreMember" method="post">
+                    <input type="hidden" id="RenewMemberId" name="id" />
+                    <button type="submit" class="btn btn-light">Yes, Restore</button>
+                </form>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+            </div>
+
+        </div>
+    </div>
+</div>
 </div>
 
 <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    function setMemberId(id) {
+        document.getElementById("RenewMemberId").value = id;
+    }
+</script>
 </body>
 </html>

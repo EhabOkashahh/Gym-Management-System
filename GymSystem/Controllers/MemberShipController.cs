@@ -17,12 +17,12 @@ namespace GymSystem.Controllers
             return View(MS);
         }
 
-        public async Task<IActionResult> CancelMemberShip(int? id)
+        public async Task<IActionResult> ToggleCancelMemberShip(int? id)
         {
             if (id is null)
                 return BadRequest();
 
-            var result = await  _memberShipService.CancelMemberShip(id.Value);
+            var result = await  _memberShipService.ToggleCancelMemberShip(id.Value);
 
             if (!result)
                 return NotFound();

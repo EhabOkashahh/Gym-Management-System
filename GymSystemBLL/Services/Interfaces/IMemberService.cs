@@ -15,6 +15,7 @@ namespace GymSystemBLL.Services.Interfaces
         Task<HealthRecordModelView?> GetHealthRecordDetails(int? id);
         Task<bool> CreateMemberAsync(CreateMemberModelView Model);
         Task<bool> UpdateMember(int id , UpdateMemberModelView model);
+        Task<bool> RestoreMember(int id);
         Task<bool> DeleteMember(int? id);
     }
 }

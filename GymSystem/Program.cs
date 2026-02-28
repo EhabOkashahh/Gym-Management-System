@@ -1,4 +1,6 @@
 using GymSystem.Extension.Classes;
+using GymSystemBLL.Extensions.Classes;
+using GymSystemBLL.Extensions.Interfaces;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
@@ -16,6 +18,7 @@ builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddScoped<IUnitOfWork , UnitOfWork>();
 builder.Services.AddScoped<IMemberService , MemberService>();
 builder.Services.AddScoped<IPlanService,PlanService>();
+builder.Services.AddScoped<IMemberShipExtensionsMethods,MemberShipExtensions>();
 builder.Services.AddScoped<IMemberShipService,MemberShipService>();
 builder.Services.AddScoped<FilesFactory>();
 builder.Services.AddScoped<ImageUploader>();

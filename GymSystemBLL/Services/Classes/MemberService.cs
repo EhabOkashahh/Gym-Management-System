@@ -76,6 +76,7 @@ namespace GymSystemBLL.Services.Classes
             if(user is null) return false;
 
             await GetRepo().Delete(id.Value);
+            user.MemberShip.MemberShipStatus = MemberShipStatus.InTrashCan;
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
 
         }
@@ -102,7 +103,15 @@ namespace GymSystemBLL.Services.Classes
             return _autoMapper.Map<HealthRecordModelView>(member.healthRecord);
         }
 
+        public async Task<bool> RestoreMember(int id)
+        {
+           var member = await GetRepo().GetByIdAsync(id);
+           if(member is null) return false;
 
+           member.IsDeleted = false;
+           member.MemberShip.MemberShipStatus = MemberShipStatus.Active;
+           return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
+        }
 
         private async Task<bool> FindByEmailOrPhone(string phone , string email)
         {

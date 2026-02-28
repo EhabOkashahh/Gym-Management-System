@@ -126,7 +126,7 @@ namespace GymSystem.Controllers
             if (Id is null)
             {
                 TempData["DeletionError"] = "Invalid Member ID. Please try again.";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             var res = await _memberService.DeleteMember(Id.Value);
@@ -134,18 +134,24 @@ namespace GymSystem.Controllers
             if (!res)
             {
                 TempData["DeletionError"] = "Something went wrong while deleting. Try again later.";
-                return RedirectToAction("Index");
+                return RedirectToAction(nameof(Index));
             }
 
             TempData["SuccessMessage"] = "Member deleted successfully!";
-            return RedirectToAction("Index");        
+           return RedirectToAction(nameof(Index));
         }
 
 
         #endregion 
 
         
-
+        public async Task<IActionResult> RestoreMember(int id)
+        {
+            var res = await _memberService.RestoreMember(id);
+            if(!res) TempData["DeletionError"] = "Something went wrong while deleting. Try again later.";
+            
+            return RedirectToAction(nameof(Index));
+        }
 
         private async Task PopulatePlans<T>(T model) where T : IHasPlan
         {

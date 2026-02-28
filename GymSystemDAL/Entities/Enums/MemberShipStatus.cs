@@ -5,5 +5,6 @@ namespace GymSystemDAL.Entities.Enums
         Active = 1,
         Expired = 2,
         Canceled = 3,
+        InTrashCan = 4
     }
 }

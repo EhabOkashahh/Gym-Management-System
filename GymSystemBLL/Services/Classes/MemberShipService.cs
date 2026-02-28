@@ -57,13 +57,16 @@ namespace GymSystemBLL.Services.Classes
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 
-        public async Task<bool> CancelMemberShip(int id)
+        public async Task<bool> ToggleCancelMemberShip(int id)
         {
             var membership = await GetRepo().GetByIdAsync(id);
-            if (membership == null || membership.MemberShipStatus == MemberShipStatus.Canceled)
+            if (membership == null)
             return false;
 
-            membership.MemberShipStatus = MemberShipStatus.Canceled;
+             if (membership.MemberShipStatus == MemberShipStatus.Canceled)
+                membership.MemberShipStatus = MemberShipStatus.Active;
+            else
+                membership.MemberShipStatus = MemberShipStatus.Canceled;
             
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0 ;
         }
