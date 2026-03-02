@@ -27,24 +27,6 @@ namespace GymSystemDAL.Data.Contexts
         {
             base.OnModelCreating(modelBuilder);
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            // foreach (var entityType in modelBuilder.Model.GetEntityTypes())
-            // {
-            //     if (typeof(BaseEntity).IsAssignableFrom(entityType.ClrType))
-            //     {
-            //         modelBuilder.Entity(entityType.ClrType)
-            //             .HasQueryFilter(
-            //                 GenerateIsDeletedFilter(entityType.ClrType));
-            //     }
-            // }
         }
-
-        // private static LambdaExpression GenerateIsDeletedFilter(Type type)
-        // {
-        //     var param = Expression.Parameter(type, "e");
-        //     var prop = Expression.Property(param, "IsDeleted");
-        //     var condition = Expression.Equal(prop, Expression.Constant(false));
-        //     return Expression.Lambda(condition, param);
-        // }
     }
 }   

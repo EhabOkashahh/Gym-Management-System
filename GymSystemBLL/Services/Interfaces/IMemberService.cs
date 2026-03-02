@@ -16,6 +16,6 @@ namespace GymSystemBLL.Services.Interfaces
         Task<bool> CreateMemberAsync(CreateMemberModelView Model);
         Task<bool> UpdateMember(int id , UpdateMemberModelView model);
         Task<bool> RestoreMember(int id);
-        Task<bool> DeleteMember(int? id);
+        Task<bool> SoftDeleteMember(int? id);
     }
 }

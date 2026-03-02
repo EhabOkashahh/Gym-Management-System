@@ -12,6 +12,7 @@ using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace GymSystem.Controllers
 {
@@ -113,15 +114,8 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
-        [HttpGet]
-        public IActionResult DeleteMember()
-        {
-            return View();
-        }
-
         [HttpPost]
-        public async Task<IActionResult> DeleteMemberAsync(int? Id)
+        public async Task<IActionResult> SoftDeleteMemberAsync(int? Id)
         {
             if (Id is null)
             {
@@ -129,7 +123,7 @@ namespace GymSystem.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            var res = await _memberService.DeleteMember(Id.Value);
+            var res = await _memberService.SoftDeleteMember(Id.Value);
 
             if (!res)
             {

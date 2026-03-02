@@ -68,18 +68,18 @@ namespace GymSystemBLL.Services.Classes
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 
-        public async Task<bool> DeleteMember(int? id)
+        public async Task<bool> SoftDeleteMember(int? id)
         {
             if(id is null) return false;
 
             var user = await GetRepo().GetByIdAsync(id.Value);
             if(user is null) return false;
 
-            await GetRepo().Delete(id.Value);
+            await GetRepo().SoftDelete(id.Value);
             user.MemberShip.MemberShipStatus = MemberShipStatus.InTrashCan;
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
-
         }
+
         public async Task<bool> UpdateMember(int id , UpdateMemberModelView model)
         {
             var member = await GetRepo().GetByIdAsync(id);

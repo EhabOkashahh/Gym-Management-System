@@ -12,6 +12,6 @@ namespace GymSystemDAL.Repositories.Interfaces
         Task<TEntity?> GetByIdAsync(int id);
         Task AddAsync(TEntity entity);
         void Update(TEntity entity);
-        Task Delete(int id);
+        Task SoftDelete(int id);
     }
 }
