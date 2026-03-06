@@ -18,7 +18,7 @@ namespace GymSystemDAL.Repositories.Classes
         public async Task<TEntity?> GetByIdAsync(int id) =>  await _context.Set<TEntity>().FirstOrDefaultAsync(e => e.Id == id);
 
         public async Task AddAsync(TEntity entity) => await _context.Set<TEntity>().AddAsync(entity);
-        
+
         public async Task SoftDelete(int id)
         {
             var entity = await GetByIdAsync(id);
@@ -31,6 +31,17 @@ namespace GymSystemDAL.Repositories.Classes
 
             _context.Update(entity);
         }
+        
+        public async Task Delete(int id)
+        {
+            var entity = await GetByIdAsync(id);
+
+            if (entity == null)
+                return;
+
+            _context.Remove(entity);
+        }
+
         public void Update(TEntity entity) => _context.Set<TEntity>().Update(entity);
         
     }

@@ -21,6 +21,7 @@ builder.Services.AddScoped<IPlanService,PlanService>();
 builder.Services.AddScoped<IMemberShipExtensionsMethods,MemberShipExtensions>();
 builder.Services.AddScoped<IMemberShipService,MemberShipService>();
 builder.Services.AddScoped<ITrainerService,TrainerService>();
+builder.Services.AddScoped<ISessionService,SessionService>();
 builder.Services.AddScoped<FilesFactory>();
 builder.Services.AddScoped<ImageUploader>();
 
