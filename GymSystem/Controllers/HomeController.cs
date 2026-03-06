@@ -2,21 +2,19 @@ using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using GymSystem.Models;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
+using GymSystemBLL.Services.Classes;
+using GymSystemBLL.Services.Interfaces;
+using System.Threading.Tasks;
 
 namespace GymSystem.Controllers;
 
-public class HomeController : Controller
+public class HomeController(IAnalyticsService _analyticsService) : Controller
 {
-    private readonly ILogger<HomeController> _logger;
 
-    public HomeController(ILogger<HomeController> logger )
+    public async Task<IActionResult> Index()
     {
-        _logger = logger;
-    }
-
-    public IActionResult Index()
-    {
-        return View();
+        var Analytics = await _analyticsService.GetAnalyticsData();
+        return View(Analytics);
     }
 
     public IActionResult Privacy()

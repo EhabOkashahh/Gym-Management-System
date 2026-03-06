@@ -91,12 +91,26 @@ namespace GymSystem.Controllers
             return View(model);
         }
 
+        
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateSessionModelView model)
         {
+            if (model.StartDate > model.EndDate)
+            {
+                ModelState.AddModelError("EndDate", "End date must be after start date.");
+                await PopulateTrainers(model);
+                return View(model);
+            }
+
+            if ((model.EndDate - model.StartDate).TotalHours < 1)
+            {
+                ModelState.AddModelError("EndDate", "Total Duration must be at least 1 hour.");
+                await PopulateTrainers(model);
+                return View(model);
+            }
+
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty, "Some fields are empty");
                 await PopulateTrainers(model);
                 return View(model);
             }

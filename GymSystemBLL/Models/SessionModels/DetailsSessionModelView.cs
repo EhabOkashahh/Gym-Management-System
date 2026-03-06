@@ -14,8 +14,8 @@ namespace GymSystemBLL.Models.SessionModels
         public int Capacity { get; set; }
         public int AvailableSlots { get; set; }
 
-        public DateOnly StartDate { get; set; }
-        public DateOnly EndDate { get; set; }
+        public DateTime StartDate { get; set; }
+        public DateTime EndDate { get; set; }
 
         public string CategoryName { get; set; } = null!;
         public string TrainerName { get; set; } = null!;
