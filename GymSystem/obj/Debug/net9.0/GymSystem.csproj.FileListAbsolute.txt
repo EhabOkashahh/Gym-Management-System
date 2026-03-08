@@ -348,3 +348,13 @@ D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Castle.Core.dll
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.EntityFrameworkCore.Proxies.dll
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\yqo8m5qwuo-gk6je6itwo.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\ney16q42kd-ra89dd10vu.gz
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.Internal.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Cryptography.KeyDerivation.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.EntityFrameworkCore.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.AspNetCore.Identity.UI.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Abstractions.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.FileProviders.Embedded.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
+D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\GymSystem.MvcApplicationPartsAssemblyInfo.cs
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\mfawmp6avc-zihl4qxq9i.gz

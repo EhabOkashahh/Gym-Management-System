@@ -5,12 +5,14 @@ using Microsoft.AspNetCore.Mvc.ModelBinding;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace GymSystem.Controllers;
 
 public class HomeController(IAnalyticsService _analyticsService) : Controller
 {
 
+    [Authorize]
     public async Task<IActionResult> Index()
     {
         var Analytics = await _analyticsService.GetAnalyticsData();
