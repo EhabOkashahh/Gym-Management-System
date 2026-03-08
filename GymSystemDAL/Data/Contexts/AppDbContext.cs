@@ -6,11 +6,12 @@ using System.Reflection;
 using System.Threading.Tasks;
 using GymSystem.DAL.Entities;
 using GymSystemDAL.Entities;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymSystemDAL.Data.Contexts
 {
-    public class AppDbContext(DbContextOptions<AppDbContext> _options) : DbContext(_options)
+    public class AppDbContext(DbContextOptions<AppDbContext> _options) : IdentityDbContext<AppUser>(_options)
     {
         #region DbSets
         public DbSet<Category> Categories { get; set; }

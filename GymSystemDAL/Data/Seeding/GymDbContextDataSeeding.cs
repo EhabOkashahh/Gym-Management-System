@@ -9,7 +9,9 @@ using System.Text.Json.Nodes;
 using System.Threading.Tasks;
 using GymSystem.DAL.Entities;
 using GymSystemDAL.Data.Contexts;
+using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 
@@ -19,8 +21,11 @@ namespace GymSystemDAL.Data.Seeding
     {
         public static async Task<bool> SeedData(AppDbContext Dbcontext,IWebHostEnvironment environment)
         {
+
+            
             try
             {
+
                 var hasPlans = Dbcontext.Plans.Any();
                 var hasCats = Dbcontext.Categories.Any();
                 if (!hasPlans)
