@@ -11,19 +11,23 @@ using GymSystemBLL.Models.MemberModels;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace GymSystem.Controllers
 {
+    
     public class MemberController(IMemberService _memberService , FilesFactory _fileFactory ,IPlanService _planService, IMemberShipService _memberShip , IMapper _mapper) : Controller
     {
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Index()
         {
             var Members = await _memberService.GetAllMembersAsync();
             return View(Members);
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         #region Create Member
         [HttpGet]
         public async Task<IActionResult> AddMemberAsync() { 
@@ -31,40 +35,44 @@ namespace GymSystem.Controllers
             await PopulatePlans(model);
             return View(model); 
         }
-    
 
-        [HttpPost]
+        [Authorize(Roles = "Admin,SuperAdmin")]
+        [HttpPost] 
         public async Task<IActionResult> AddMember(CreateMemberModelView model)
         {
-            if(ModelState.IsValid){
-                if(model.PhotoFile is not null) {
+            if (ModelState.IsValid)
+            {
+                if (model.PhotoFile is not null)
+                {
 
-                        // Upload PhotoFile
-                        var UploadedFile = _fileFactory.GetFileUploader(model.PhotoFile.ContentType);
-                        model.Photo = await UploadedFile.UploadFile(model.PhotoFile);
-                    } else model.Photo = "Default.png";
+                    // Upload PhotoFile
+                    var UploadedFile = _fileFactory.GetFileUploader(model.PhotoFile.ContentType);
+                    model.Photo = await UploadedFile.UploadFile(model.PhotoFile);
+                }
+                else model.Photo = "Default.png";
 
-                    
-                    // Add Member
-                    var res = await _memberService.CreateMemberAsync(model);
 
-                    // Creation Failed
-                    if (!res) 
-                    {
-                        ViewData["CreationFailed"] = true;
-                        await PopulatePlans(model);
-                        return View(model);
-                    }
+                // Add Member
+                var res = await _memberService.CreateMemberAsync(model);
+
+                // Creation Failed
+                if (!res)
+                {
+                    ViewData["CreationFailed"] = true;
+                    await PopulatePlans(model);
+                    return View(model);
+                }
 
                 return RedirectToAction(nameof(Index));
             }
-            ModelState.AddModelError(String.Empty , "There are some fields Empty");
+            ModelState.AddModelError(String.Empty, "There are some fields Empty");
             await PopulatePlans(model);
             return View(model);
         } 
         #endregion   
 
         #region Details - HealthRecords
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> MemberDetails(int? id)
         {
@@ -73,7 +81,7 @@ namespace GymSystem.Controllers
             res.MemberShip = membership;
             return View(res);
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> ViewHealthRecordData(int? Id)
         {
@@ -84,6 +92,7 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Edit - Delete
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
@@ -93,6 +102,7 @@ namespace GymSystem.Controllers
             await PopulatePlans(mappedModel);
             return View(mappedModel);
         }
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateMemberModelView model)
         {
@@ -113,7 +123,7 @@ namespace GymSystem.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> SoftDeleteMemberAsync(int? Id)
         {
@@ -138,7 +148,7 @@ namespace GymSystem.Controllers
 
         #endregion 
 
-        
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> RestoreMember(int id)
         {
             var res = await _memberService.RestoreMember(id);

@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GymSystemBLL.Models.PlanModels;
 using GymSystemBLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
@@ -19,7 +20,7 @@ namespace GymSystem.Controllers
 
         public async Task<IActionResult> PlanDetails(int? Id)
         {
-            if(Id is null)
+            if (Id is null)
             {
                 TempData["ErrorMessage"] = "Someething went wrong, Try again later";
                 return RedirectToAction(nameof(Index));
@@ -27,7 +28,8 @@ namespace GymSystem.Controllers
             var plan = await _PlanService.GetPlanDetails(Id);
             return View(plan);
         }
-
+        
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> ToggleStatus(int? Id)
         {
@@ -42,27 +44,29 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> PlanEdit(int? id)
         {
-            if(id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
+            if (id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
             var plan = await _PlanService.GetPlanDetails(id!.Value);
-            var MappedModel = _mapper.Map<UpdatePlanModelView>(plan) ;
+            var MappedModel = _mapper.Map<UpdatePlanModelView>(plan);
             return View(MappedModel);
         }
+
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
-        public async Task<IActionResult> PlanEdit(int? id , UpdatePlanModelView model)
+        public async Task<IActionResult> PlanEdit(int? id, UpdatePlanModelView model)
         {
-            if(id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
+            if (id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
 
             if (!ModelState.IsValid)
             {
-                ModelState.AddModelError(string.Empty,"Some Fields are empty");
-                return View(model);    
+                ModelState.AddModelError(string.Empty, "Some Fields are empty");
+                return View(model);
             }
 
-            var res = await _PlanService.UpdatePlanData(id!.Value,model);
-            
+            var res = await _PlanService.UpdatePlanData(id!.Value, model);
+
             if (!res)
             {
                 TempData["ErrorMessage"] = "Something went wrong, Try again later";
@@ -71,6 +75,7 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        
         public async Task<IActionResult> PlanMembers(int? id)
         {
             if(id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";

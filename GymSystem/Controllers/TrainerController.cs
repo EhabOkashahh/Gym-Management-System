@@ -2,6 +2,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using GymSystemBLL.Models.TrainerModels;
 using GymSystemBLL.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
@@ -9,6 +10,7 @@ namespace GymSystem.Controllers
     public class TrainerController(ITrainerService _trainerService, IMapper _mapper) : Controller
     {
         #region Index
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -18,13 +20,14 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Create Trainer
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public IActionResult AddTrainer()
         {
             var model = new CreateTrainerModelView();
             return View(model);
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> AddTrainer(CreateTrainerModelView model)
         {
@@ -46,6 +49,7 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Details
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Details(int? id)
         {
@@ -59,6 +63,7 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Edit / Update
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -68,7 +73,7 @@ namespace GymSystem.Controllers
             var model = _mapper.Map<UpdateTrainerModelView>(trainer);
             return View(model);
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateTrainerModelView model)
         {
@@ -90,12 +95,13 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Delete
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public IActionResult Delete()
         {
             return View();
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> SoftDelete(int? id)
         {
@@ -116,6 +122,7 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> RestoreTrainer(int id)
         {
             var res = await _trainerService.RestoreTrainer(id);

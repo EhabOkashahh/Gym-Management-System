@@ -4,6 +4,7 @@ using GymSystemBLL.Models;
 using GymSystemBLL.Models.SessionModels;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
@@ -22,6 +23,7 @@ namespace GymSystem.Controllers
 
 
         #region Create Session
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -29,7 +31,7 @@ namespace GymSystem.Controllers
             await PopulateTrainers(model);
             return View(model);
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Create(CreateSessionModelView model)
         {
@@ -80,6 +82,7 @@ namespace GymSystem.Controllers
 
 
         #region Edit / Update
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -91,7 +94,7 @@ namespace GymSystem.Controllers
             return View(model);
         }
 
-        
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateSessionModelView model)
         {
@@ -130,13 +133,14 @@ namespace GymSystem.Controllers
 
 
         #region Delete
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public IActionResult Delete(int id)
         {
             ViewBag.Id = id;
             return View();
         }
-
+        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Delete(int? id)
         {

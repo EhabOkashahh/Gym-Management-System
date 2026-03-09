@@ -60,5 +60,10 @@ namespace GymSystem.Controllers
             await _SignInManager.SignOutAsync();
             return RedirectToAction("Login", "Account");
         }
+
+        public async Task<IActionResult> AccessDenied()
+        {
+            return View();
+        }
     }
 }
