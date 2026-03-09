@@ -13,7 +13,7 @@ namespace GymSystemBLL.Services.Interfaces
         Task<IEnumerable<MemberModelView>> GetAllMembersAsync();
         Task<MemberDetailsModelView?> GetMemberByIdAsync(int? id);
         Task<HealthRecordModelView?> GetHealthRecordDetails(int? id);
-        Task<bool> CreateMemberAsync(CreateMemberModelView Model);
+        Task<CreateMemberResult> CreateMemberAsync(CreateMemberModelView Model);
         Task<bool> UpdateMember(int id , UpdateMemberModelView model);
         Task<bool> RestoreMember(int id);
         Task<bool> SoftDeleteMember(int? id);

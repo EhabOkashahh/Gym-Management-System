@@ -11,7 +11,9 @@ using GymSystemBLL.Models.MemberModels;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
+using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
@@ -51,14 +53,13 @@ namespace GymSystem.Controllers
                 }
                 else model.Photo = "Default.png";
 
-
-                // Add Member
                 var res = await _memberService.CreateMemberAsync(model);
 
                 // Creation Failed
-                if (!res)
+                if (!res.IsSuccessed)
                 {
                     ViewData["CreationFailed"] = true;
+                    ViewData["ErrorMessage"] = res.Error;
                     await PopulatePlans(model);
                     return View(model);
                 }

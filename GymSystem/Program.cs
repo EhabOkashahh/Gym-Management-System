@@ -1,4 +1,5 @@
 using GymSystem.Extension.Classes;
+using GymSystem.Middlewares;
 using GymSystemBLL.Extensions.Classes;
 using GymSystemBLL.Extensions.Interfaces;
 using GymSystemBLL.Services.Classes;
@@ -23,6 +24,7 @@ builder.Services.AddScoped<IMemberService , MemberService>();
 builder.Services.AddScoped<IPlanService,PlanService>();
 builder.Services.AddScoped<IMemberShipExtensionsMethods,MemberShipExtensions>();
 builder.Services.AddScoped<IMemberShipService, MemberShipService>();
+builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
 builder.Services.AddIdentity<AppUser, IdentityRole>(config =>
@@ -74,6 +76,7 @@ app.UseHttpsRedirection();
 app.UseRouting();
 
 app.UseAuthentication();
+app.UseMiddleware<SoftDeleteMiddleWare>();
 app.UseAuthorization();
 
 app.MapStaticAssets();

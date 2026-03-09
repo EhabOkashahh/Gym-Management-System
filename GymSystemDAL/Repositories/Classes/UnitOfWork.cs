@@ -15,11 +15,11 @@ namespace GymSystemDAL.Repositories.Classes
         public ConcurrentDictionary<Type,object> ReposContainer { get; set; } = new ConcurrentDictionary<Type,object>();
         public IGenericRepository<T> GenerateRepository<T>() where T : BaseEntity
         {
-            var repo = (IGenericRepository<T>)ReposContainer.GetOrAdd(typeof(T),(Type) => new GenericRepository<T>(_context) );
+            var repo = (IGenericRepository<T>)ReposContainer.GetOrAdd(typeof(T), (Type) => new GenericRepository<T>(_context));
             return repo;
         }
 
         public async Task<int> ApplyToDataBaseAsync() => await _context.SaveChangesAsync();
-
+        
     }
 }

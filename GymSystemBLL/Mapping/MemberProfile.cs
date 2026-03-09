@@ -7,6 +7,7 @@ using GymSystem.DAL.Entities;
 using GymSystemBLL.Models;
 using GymSystemBLL.Models.MeemberShipModels;
 using GymSystemBLL.Models.MemberModels;
+using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.DataProtection;
 using Microsoft.Data.SqlClient;
 
@@ -71,8 +72,6 @@ namespace GymSystemBLL.Mapping
                 .ForMember(d => d.Id, o => o.MapFrom(s => s.Id))
                 .ForMember(d => d.Photo, o => o.MapFrom(s => s.Photo))
                 .ForMember(dest => dest.Name , o => o.MapFrom(S => S.Name));
-
-                
         }
     }
 }   

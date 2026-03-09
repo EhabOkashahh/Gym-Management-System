@@ -13,10 +13,13 @@ using GymSystemDAL.Entities;
 using GymSystemDAL.Repositories.Interfaces;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using GymSystemDAL.Entities.Enums;
+using Microsoft.AspNetCore.Identity;
+using GymSystemDAL.Data.Contexts;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace GymSystemBLL.Services.Classes
 {
-    public class MemberService(IUnitOfWork _UnitOfWork, IMapper _autoMapper , IPlanService _planService) : IMemberService
+    public class MemberService(IUnitOfWork _UnitOfWork, IMapper _autoMapper , IPlanService _planService,UserManager<AppUser> _userManager, IEmailService _emailService) : IMemberService
     {
         
         public async Task<IEnumerable<MemberModelView>> GetAllMembersAsync()
@@ -36,36 +39,64 @@ namespace GymSystemBLL.Services.Classes
             return _autoMapper.Map<MemberDetailsModelView>(Member);
         }
 
-        public async Task<bool> CreateMemberAsync(CreateMemberModelView modelView)
+        public async Task<CreateMemberResult> CreateMemberAsync(CreateMemberModelView modelView)
         {
-            var res = await FindByEmailOrPhone(modelView.Phone , modelView.Email);
-            if(res) return false;
+            // Check if phone or email already exists
+            var exists = await FindByEmailOrPhone(modelView.Phone, modelView.Email);
+            if (exists) 
+                return new CreateMemberResult { IsSuccessed = false, Error = "Phone or Email already exists." };
 
-            var Member = _autoMapper.Map<Member>(modelView);
-
-            if(modelView.PlanID is null) return false;
+            // Validate plan
+            if (modelView.PlanID is null) 
+                return new CreateMemberResult { IsSuccessed = false, Error = "Plan ID is required." };
 
             var plan = await _planService.GetPlanDetails(modelView.PlanID);
-            
+            if (plan == null) 
+                return new CreateMemberResult { IsSuccessed = false, Error = "Plan not found." };
 
-            var MemberShipStartDate = DateTime.Now;
+            var now = DateTime.Now;
 
-            var MemberShip = new MemberShip
+            // Map Member and create membership
+            var member = _autoMapper.Map<Member>(modelView);
+            var membership = new MemberShip
             {
-                CreatedAt = MemberShipStartDate,
-                EndDate = MemberShipStartDate.AddDays(plan!.DurationDays - 1),
-                UpdatedAt = DateTime.Now,
-                StartDate = DateTime.Now,
+                CreatedAt = now,
+                StartDate = now,
+                EndDate = now.AddDays(plan.DurationDays - 1),
+                UpdatedAt = now,
                 MemberShipStatus = MemberShipStatus.Active,
                 PlanID = plan.Id
             };
+            member.MemberShip = membership;
+            member.MemberShipID = membership.Id;
 
-            Member.MemberShip = MemberShip;
-            Member.MemberShipID = MemberShip.Id;
 
-            await GetRepo().AddAsync(Member);
-            
-            return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
+            // Create AppUser
+            var appUser = new AppUser
+            {
+                Email = modelView.Email,
+                PhoneNumber = modelView.Phone,
+                UserName = modelView.Name.Replace(" ", "").ToLower()
+            };
+            member.appUser = appUser;
+            member.UserId = appUser.Id;
+            var password = GeneratePassword();
+
+            var result = await _userManager.CreateAsync(appUser, password);
+            if (!result.Succeeded)
+            {
+                var errors = string.Join(", ", result.Errors.Select(e => e.Description));
+                return new CreateMemberResult { IsSuccessed = false, Error = $"User creation failed: {errors}" };
+            }
+            await GetRepo().AddAsync(member);
+
+            // Send email
+            _emailService.SendEmail(appUser.UserName, appUser.Email, password);
+
+            // Apply changes to database
+            await _UnitOfWork.ApplyToDataBaseAsync();
+
+            return new CreateMemberResult { IsSuccessed = true};
         }
 
         public async Task<bool> SoftDeleteMember(int? id)
@@ -122,6 +153,15 @@ namespace GymSystemBLL.Services.Classes
         private IGenericRepository<Member> GetRepo()
         {
             return _UnitOfWork.GenerateRepository<Member>();
+        }
+
+        private string GeneratePassword()
+        {
+            var ch =  Enumerable.Range('A', 26).Select(x => (char)x).ToArray(); 
+            var guid = Guid.NewGuid().ToString("N"); // removes dashes
+            var random = new Random();
+            // take first 6 chars + add an uppercase, a digit, and a special char
+            return char.ToUpper(ch[random.Next(0,25)]) + guid.Substring(1,6) + char.ToLower(ch[random.Next(0,25)]) + random.Next(0,9) + "!";
         }
     }
 }

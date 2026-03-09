@@ -23,11 +23,11 @@
             </header>
 
              @if (ViewData["CreationFailed"] is bool creationFailed && creationFailed)
-        {
-            <div class="alert alert-danger">
-                Creation Failed. Please try again.
-            </div>
-        }
+            {
+                <div class="alert alert-danger">
+                    @ViewData["ErrorMessage"]
+                </div>
+            }
 
 
             <form method="post" enctype="multipart/form-data">

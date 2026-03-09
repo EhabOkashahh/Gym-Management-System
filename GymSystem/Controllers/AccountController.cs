@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Internal;
 
 namespace GymSystem.Controllers
 {
-    public class AccountController(IAccountService _accountService, SignInManager<AppUser> _SignInManager) : Controller
+    public class AccountController(IAccountService _accountService, SignInManager<AppUser> _SignInManager, IMemberService _MemberService) : Controller
     {
 
 
@@ -31,6 +31,15 @@ namespace GymSystem.Controllers
             if (user is null)
             {
                 ModelState.AddModelError("InvalidLogin", "Invalid Email Or Password");
+                return View(model);
+            }
+
+            var res = await _MemberService.GetAllMembersAsync();
+            var member = res.FirstOrDefault(m => m.Email == user.Email);
+
+            if (member!.IsDeleted)
+            {
+                ModelState.AddModelError("InvalidLogin", "Your Account have be restricted, call your gym Administrator");
                 return View(model);
             }
 
