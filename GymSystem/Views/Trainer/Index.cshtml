@@ -3,6 +3,7 @@
 @{
     var activeTrainers = Model.Where(t => !t.IsDeleted).ToList();
     var deletedTrainers = Model.Where(t => t.IsDeleted).ToList();
+    ViewData["Title"] = "Trainers";
 }
 
 <!DOCTYPE html>

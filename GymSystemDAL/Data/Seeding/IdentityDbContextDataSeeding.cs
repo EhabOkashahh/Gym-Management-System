@@ -54,7 +54,7 @@ namespace GymSystemDAL.Data.Seeding
 
                     foreach (var item in admins)
                     {
-                        await userManager.CreateAsync(item);
+                        await userManager.CreateAsync(item,"P@ssw0rd");
                         if (item.UserName == "Ehab") await userManager.AddToRoleAsync(item, "SuperAdmin");
                         else await userManager.AddToRoleAsync(item, "Admin");
                     }

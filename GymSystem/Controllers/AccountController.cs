@@ -19,32 +19,46 @@ namespace GymSystem.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public async Task<IActionResult> Login(LoginModelView model)
         {
-            if (!ModelState.IsValid) return View(model);
+            if (!ModelState.IsValid)
+                return View(model);
 
-            var User = await _accountService.ValidateUser(model);
-            if (User is null)
+            var user = await _accountService.ValidateUser(model);
+
+            if (user is null)
             {
                 ModelState.AddModelError("InvalidLogin", "Invalid Email Or Password");
                 return View(model);
             }
 
-            var Result = await _SignInManager.PasswordSignInAsync(User, model.Password, model.RememberMe, true);
-            if (Result.IsLockedOut) ModelState.AddModelError("InvalidLogin", "Account Is Locked Try Again Later.");
-            if (Result.IsNotAllowed) ModelState.AddModelError("InvalidLogin", "Your are not Allowed to Login.");
+            var result = await _SignInManager.PasswordSignInAsync(user, model.Password, model.RememberMe, true);
 
-            if (Result.Succeeded) return RedirectToAction("Index", "Home");
+            if (result.Succeeded)
+                return RedirectToAction("Index", "Home");
 
-            ModelState.AddModelError("InvalidLogin", "Something went wrong while logging you in, Try again later");
+            if (result.IsLockedOut)
+            {
+                ModelState.AddModelError("InvalidLogin", "Account is locked.");
+                return View(model);
+            }
+
+            if (result.IsNotAllowed)
+            {
+                ModelState.AddModelError("InvalidLogin", "Login not allowed.");
+                return View(model);
+            }
+
+            ModelState.AddModelError("InvalidLogin", "Invalid Email Or Password");
             return View(model);
-
         }
 
-        public IActionResult Logout()
+        public async Task<IActionResult> LogoutAsync()
         {
-            return RedirectToAction("Index", "Home");
+            await _SignInManager.SignOutAsync();
+            return RedirectToAction("Login", "Account");
         }
     }
 }

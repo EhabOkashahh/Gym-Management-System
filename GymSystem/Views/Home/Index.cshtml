@@ -1,7 +1,29 @@
 ﻿@model AnalyticsModelView
 <!DOCTYPE html>
 <html lang="en">
+<style>
+  .logout-btn {
+    position: fixed;
+    bottom: 25px;
+    right: 25px;
+    z-index: 9999;
+  }
 
+  .logout-btn button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    border-radius: 50px;
+    padding: 10px 22px;
+    font-weight: 500;
+    transition: 0.3s;
+  }
+
+  .logout-btn button:hover {
+    background-color: #bb2d3b;
+    transform: scale(1.05);
+  }
+</style>
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -15,8 +37,14 @@
   <!-- ^ Bootstrap 5.3.8 css file -->
 <link rel="stylesheet" href="./css/bootstrap.min.css" />
 <link rel="stylesheet" href="./css/style.css" />
-  <title>Power fitness | Home</title>
+  <title>Power fitness | @ViewData["Title"]</title>
 </head>
+
+<form asp-controller="Account" asp-action="Logout" method="post" class="logout-btn">
+    <button type="submit">
+        <i class="bi bi-box-arrow-right"></i> Logout
+    </button>
+</form>
 
 <body>
   <div class="container">
