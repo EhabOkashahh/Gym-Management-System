@@ -45,7 +45,7 @@ namespace GymSystemBLL.Mapping
             .ForMember(dest => dest.Id, opt => opt.MapFrom(src => src.Id))
 
             // Computed fields
-            .ForMember(dest => dest.AvailableSlots, opt => opt.MapFrom(src => src.Capacity - src.MemberSessions.Count))
+            .ForMember(dest => dest.ReservedSeats, opt => opt.MapFrom(src => src.Capacity - src.MemberSessions.Count))
             .ForMember(dest => dest.Duration, opt => opt.MapFrom(src => src.EndDate - src.StartDate))
             .ForMember(dest => dest.Status, opt => opt.MapFrom(src =>
                 src.StartDate > DateTime.Now ? "Upcoming" :

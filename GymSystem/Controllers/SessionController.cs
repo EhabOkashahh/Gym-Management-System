@@ -4,19 +4,43 @@ using GymSystemBLL.Models;
 using GymSystemBLL.Models.SessionModels;
 using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
+using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymSystem.Controllers
 {
-    public class SessionController(ISessionService _sessionService, IMapper _mapper, ITrainerService _trainerService, AppDbContext _context) : Controller
+    public class SessionController(ISessionService _sessionService, IMapper _mapper, ITrainerService _trainerService, AppDbContext _context,UserManager<AppUser> _userManager,IMemberSessionService _memberSessionsService) : Controller
     {
 
         #region Index
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var sessions = await _sessionService.GetAllSessionsAsync();
+            var user = await _userManager.GetUserAsync(User);
+            var now = DateTime.Now;
+            var sessions = await _context.Sessions
+                .Include(s => s.MemberSessions)
+                .Select(s => new SessionModelView
+                {
+                    Id = s.Id,
+                    Description = s.Description,
+                    Capacity = s.Capacity,
+                    ReservedSeats = s.ReservedSeats,
+                    TrainerName = s.Trainer.Name,
+                    DateDisplay = s.StartDate.ToString("dd MMM yyyy"),
+                    TimeRangeDisplay = $"{s.StartDate:HH:mm} - {s.EndDate:HH:mm}",
+                    Duration = s.EndDate - s.StartDate,
+                    IsEnrolled = s.MemberSessions.Any(ms => ms.Member.UserId == user.Id),
+                    CategoryName = s.Category.Name,
+                    Status = now < s.StartDate
+                    ? "Upcoming"
+                    : DateTime.Now > s.EndDate
+                        ? "Completed"
+                        : "Ongoing"
+                }).ToListAsync();   
             return View(sessions);
         }
         #endregion
@@ -163,7 +187,36 @@ namespace GymSystem.Controllers
         }
         #endregion
 
+        [HttpPost]
+        public async Task<IActionResult> Enroll(int sessionId)
+        {
+            var user = await _userManager.GetUserAsync(User);
 
+            var result = await _memberSessionsService.EnrollAsync(user!.Id, sessionId);
+
+            if (!result.IsSuccessed)
+            {
+                TempData["EnrollError"] = result.Message;
+                return RedirectToAction("Index");
+            }
+
+            TempData["EnrollSuccess"] = "You have successfully enrolled!";
+            return RedirectToAction("Details", new { id = sessionId });
+        }
+        [HttpPost]
+        public async Task<IActionResult> Withdraw(int sessionId)
+        {
+            var user = await _userManager.GetUserAsync(User);
+            var result = await _memberSessionsService.WithdrawAsync(user.Id, sessionId);
+
+            if (!result.IsSuccessed)
+                TempData["EnrollError"] = result.Message;
+            else
+                TempData["EnrollSuccess"] = "You have successfully withdrawn from the session.";
+
+            return RedirectToAction("Index");
+        }
+        
         private async Task PopulateTrainers<T>(T model) where T : IPopuateNaviagtionsProp
         {
             model.Trainers = await _trainerService.GetAllTrainersAsync();

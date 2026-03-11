@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using GymSystemDAL.Entities;
@@ -12,6 +13,11 @@ namespace GymSystem.DAL.Entities
         public int Capacity { get; set; }
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }
+
+        public int ReservedSeats { get; set; }
+        
+        [Timestamp]
+        public byte[] RowVersion { get; set; } = null!;
 
 
         // relationships

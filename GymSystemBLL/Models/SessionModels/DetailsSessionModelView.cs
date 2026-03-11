@@ -12,7 +12,7 @@ namespace GymSystemBLL.Models.SessionModels
         public string Description { get; set; } = null!;
 
         public int Capacity { get; set; }
-        public int AvailableSlots { get; set; }
+        public int ReservedSeats { get; set; }
 
         public DateTime StartDate { get; set; }
         public DateTime EndDate { get; set; }

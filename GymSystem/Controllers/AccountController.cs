@@ -37,7 +37,7 @@ namespace GymSystem.Controllers
             var res = await _MemberService.GetAllMembersAsync();
             var member = res.FirstOrDefault(m => m.Email == user.Email);
 
-            if (member!.IsDeleted)
+            if (member is not null && member!.IsDeleted)
             {
                 ModelState.AddModelError("InvalidLogin", "Your Account have be restricted, call your gym Administrator");
                 return View(model);

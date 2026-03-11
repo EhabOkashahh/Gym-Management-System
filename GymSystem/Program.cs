@@ -24,6 +24,7 @@ builder.Services.AddScoped<IMemberService , MemberService>();
 builder.Services.AddScoped<IPlanService,PlanService>();
 builder.Services.AddScoped<IMemberShipExtensionsMethods,MemberShipExtensions>();
 builder.Services.AddScoped<IMemberShipService, MemberShipService>();
+builder.Services.AddScoped<IMemberSessionService, MemberSessionService>();
 builder.Services.AddScoped<IEmailService, EmailService>();
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<ITrainerService, TrainerService>();
