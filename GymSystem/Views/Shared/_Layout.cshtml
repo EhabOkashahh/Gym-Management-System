@@ -1,21 +1,5 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-<style>
-    .logout-btn button {
-        background: none;
-        border: none;
-        color: #dc3545;
-        font-weight: 700;
-        font-size: 1.25rem;
-        padding: 8px 16px;
-        transition: 0.3s;
-    }
-
-    .logout-btn button:hover {
-        color: #bb2d3b;
-        transform: scale(1.05);
-    }
-</style>
 
 <head>
     <meta charset="utf-8" />
@@ -25,7 +9,100 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/GymSystem.styles.css" asp-append-version="true" />
+
+    <style>
+        .logout-btn button {
+            background: none;
+            border: none;
+            color: #dc3545;
+            font-weight: 700;
+            font-size: 1.25rem;
+            padding: 8px 16px;
+            transition: 0.3s;
+        }
+
+        .logout-btn button:hover {
+            color: #bb2d3b;
+            transform: scale(1.05);
+        }
+    </style>
+
+@if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+{
+<style>
+
+#chatButton{
+    position:fixed;
+    bottom:20px;
+    left:20px;
+    width:60px;
+    height:60px;
+    background:#0d6efd;
+    color:white;
+    font-size:26px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 4px 10px rgba(0,0,0,0.25);
+    z-index:9999;
+}
+
+#chatWindow{
+    position:fixed;
+    bottom:90px;
+    left:20px;
+    width:320px;
+    height:420px;
+    background:white;
+    border-radius:10px;
+    border:1px solid #ddd;
+    display:none;
+    flex-direction:column;
+    box-shadow:0 5px 15px rgba(0,0,0,0.3);
+    z-index:9999;
+}
+
+.chat-header{
+    background:#0d6efd;
+    color:white;
+    padding:10px;
+    font-weight:bold;
+    display:flex;
+    justify-content:space-between;
+    border-radius:10px 10px 0 0;
+}
+
+.chat-messages{
+    flex:1;
+    padding:10px;
+    overflow-y:auto;
+    font-size:14px;
+}
+
+.chat-input{
+    display:flex;
+    border-top:1px solid #ddd;
+}
+
+.chat-input input{
+    flex:1;
+    border:none;
+    padding:10px;
+}
+
+.chat-input button{
+    border:none;
+    background:#0d6efd;
+    color:white;
+    padding:10px 15px;
+}
+
+</style>
+}
 </head>
+
 
 <body>
 
@@ -35,27 +112,23 @@
 
 <div class="container">
 
-<a class="navbar-brand" href="#">
-<img src="~/images/logo.jpg" alt="" />
+<a class="navbar-brand" asp-controller="Home" asp-action="Index">
+<img src="~/images/logo.jpg" alt="Logo"/>
 </a>
 
 <button class="navbar-toggler"
 type="button"
 data-bs-toggle="collapse"
 data-bs-target="#navbarSupportedContent">
-
 <span class="navbar-toggler-icon"></span>
-
 </button>
 
 <div class="collapse navbar-collapse" id="navbarSupportedContent">
 
 <ul class="navbar-nav m-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
 
-<!-- HOME -->
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Home" ? "active" : "")"
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
 asp-action="Index"
 asp-controller="Home">
 Home
@@ -66,28 +139,25 @@ Home
 {
 
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Member" ? "active" : "")"
-asp-action="Index"
-asp-controller="Member">
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
+asp-controller="Member"
+asp-action="Index">
 Members
 </a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Trainer" ? "active" : "")"
-asp-action="Index"
-asp-controller="Trainer">
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
+asp-controller="Trainer"
+asp-action="Index">
 Trainers
 </a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "MemberShip" ? "active" : "")"
-asp-action="Index"
-asp-controller="MemberShip">
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
+asp-controller="MemberShip"
+asp-action="Index">
 Memberships
 </a>
 </li>
@@ -95,24 +165,21 @@ Memberships
 }
 
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Session" ? "active" : "")"
-asp-action="Index"
-asp-controller="Session">
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
+asp-controller="Session"
+asp-action="Index">
 Sessions
 </a>
 </li>
 
 <li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5
-@(ViewContext.RouteData.Values["Controller"]?.ToString() == "Plan" ? "active" : "")"
-asp-action="Index"
-asp-controller="Plan">
+<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
+asp-controller="Plan"
+asp-action="Index">
 Plans
 </a>
 </li>
 
-<!-- LOGOUT -->
 <li class="nav-item">
 <form asp-controller="Account"
       asp-action="Logout"
@@ -120,7 +187,7 @@ Plans
       class="logout-btn">
 
 <button type="submit" class="nav-link px-3 py-2 mx-2 fw-bolder fs-5">
-<i class="bi bi-box-arrow-right"></i> Logout
+Logout
 </button>
 
 </form>
@@ -135,17 +202,107 @@ Plans
 
 </header>
 
-<div class="container">
 
+<div class="container">
 <main role="main" class="pb-3">
 @RenderBody()
 </main>
+</div>
+
+
+@if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+{
+
+<div id="chatButton" onclick="toggleChat()">💬</div>
+
+<div id="chatWindow">
+
+<div class="chat-header">
+Chat Support
+<span onclick="toggleChat()" style="cursor:pointer;">✖</span>
+</div>
+
+<div id="chatMessages" class="chat-messages"></div>
+
+<div class="chat-input">
+<input type="text" id="messageInput" placeholder="Type message..." />
+<button onclick="sendMessage()">Send</button>
+</div>
 
 </div>
 
-<script src="~/Scripts/jquery-3.6.0.min.js"></script>
-<script src="~/Scripts/jquery.validate.min.js"></script>
-<script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+
+<script>
+
+let connection = new signalR.HubConnectionBuilder()
+    .withUrl("/chatHub")
+    .build();
+
+connection.start()
+.then(()=>console.log("Chat connected"))
+.catch(err=>console.error(err));
+
+
+function toggleChat(){
+
+const chat = document.getElementById("chatWindow");
+
+chat.style.display =
+chat.style.display === "flex" ? "none" : "flex";
+
+}
+
+
+function appendMessage(sender,message){
+
+const messages=document.getElementById("chatMessages");
+
+const div=document.createElement("div");
+
+if(sender==="user")
+div.innerHTML="<b>You:</b> "+message;
+else
+div.innerHTML="<b>Admin:</b> "+message;
+
+messages.appendChild(div);
+
+messages.scrollTop=messages.scrollHeight;
+
+}
+
+
+function sendMessage(){
+
+const input=document.getElementById("messageInput");
+
+const msg=input.value.trim();
+
+if(!msg) return;
+
+connection.invoke("SendMessageToAdmins",msg)
+.catch(err=>console.error(err));
+
+appendMessage("user",msg);
+
+input.value="";
+
+}
+
+
+connection.on("ReceiveMessageFromAdmin",(adminId,message)=>{
+
+appendMessage("admin",message);
+
+});
+
+</script>
+
+}
+
+
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
 
 @await RenderSectionAsync("Scripts", required: false)
 

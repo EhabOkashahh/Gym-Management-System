@@ -47,6 +47,7 @@ builder.Services.AddScoped<IAnalyticsService, AnalyticsService>();
 builder.Services.AddScoped<ISessionService,SessionService>();
 builder.Services.AddScoped<FilesFactory>();
 builder.Services.AddScoped<ImageUploader>();
+builder.Services.AddSignalR();
 
 var app = builder.Build();
 
@@ -87,5 +88,5 @@ app.MapControllerRoute(
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-
+app.MapHub<ChatHub>("/chatHub");
 app.Run();
