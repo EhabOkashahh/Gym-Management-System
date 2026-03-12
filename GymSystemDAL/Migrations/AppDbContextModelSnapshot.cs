@@ -405,6 +405,36 @@ namespace GymSystemDAL.Migrations
                     b.ToTable("AspNetUsers", (string)null);
                 });
 
+            modelBuilder.Entity("GymSystemDAL.Entities.Chat", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTime>("CreatedAt")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("UserId1")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("Chat");
+                });
+
             modelBuilder.Entity("GymSystemDAL.Entities.MemberSessions", b =>
                 {
                     b.Property<int>("MemberID")
@@ -487,26 +517,25 @@ namespace GymSystemDAL.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("ChatID")
+                        .HasColumnType("int");
+
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<bool>("IsRead")
-                        .HasColumnType("bit");
-
-                    b.Property<string>("ReceiverId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.Property<string>("SenderId")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("SentAt")
-                        .HasColumnType("datetime2");
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("datetime2")
+                        .HasDefaultValueSql("GETDATE()");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ReceiverId");
+                    b.HasIndex("ChatID");
 
                     b.HasIndex("SenderId");
 
@@ -760,6 +789,17 @@ namespace GymSystemDAL.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GymSystemDAL.Entities.Chat", b =>
+                {
+                    b.HasOne("GymSystemDAL.Entities.AppUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId1")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("GymSystemDAL.Entities.MemberSessions", b =>
                 {
                     b.HasOne("GymSystem.DAL.Entities.Member", "Member")
@@ -792,10 +832,11 @@ namespace GymSystemDAL.Migrations
 
             modelBuilder.Entity("GymSystemDAL.Entities.Message", b =>
                 {
-                    b.HasOne("GymSystemDAL.Entities.AppUser", "Receiver")
-                        .WithMany()
-                        .HasForeignKey("ReceiverId")
-                        .OnDelete(DeleteBehavior.Restrict);
+                    b.HasOne("GymSystemDAL.Entities.Chat", "Chat")
+                        .WithMany("Messages")
+                        .HasForeignKey("ChatID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("GymSystemDAL.Entities.AppUser", "Sender")
                         .WithMany()
@@ -803,7 +844,7 @@ namespace GymSystemDAL.Migrations
                         .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
-                    b.Navigation("Receiver");
+                    b.Navigation("Chat");
 
                     b.Navigation("Sender");
                 });
@@ -885,6 +926,11 @@ namespace GymSystemDAL.Migrations
             modelBuilder.Entity("GymSystem.DAL.Entities.Trainer", b =>
                 {
                     b.Navigation("Sessions");
+                });
+
+            modelBuilder.Entity("GymSystemDAL.Entities.Chat", b =>
+                {
+                    b.Navigation("Messages");
                 });
 
             modelBuilder.Entity("GymSystemDAL.Entities.MemberShip", b =>
