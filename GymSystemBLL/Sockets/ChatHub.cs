@@ -45,6 +45,8 @@ namespace GymSystemBLL.Sockets
 
             await Groups.AddToGroupAsync(Context.ConnectionId, chatId.ToString());
 
+            bool FirstMessage = !chat.Messages.Any();
+
             var dbMessage = new Message
             {
                 ChatID = chatId,
@@ -62,6 +64,15 @@ namespace GymSystemBLL.Sockets
                 chatId = chatId,
                 msg = message
             });
+
+            if (FirstMessage)
+            {
+                await Clients.Group("Admin").SendAsync("NewMessage", new
+                {
+                    chatid = chatId,
+                    userName = username
+                });
+            }
         }
     }
 }

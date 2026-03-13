@@ -21,7 +21,7 @@ namespace GymSystem.Controllers
             var user = await _userManager.GetUserAsync(User);
             if (await _userManager.IsInRoleAsync(user, "Admin") || await _userManager.IsInRoleAsync(user, "SuperAdmin"))
             {
-                chats = _context.Chat.ToList();
+                chats = await _context.Chat.Where(c => c.Status == Status.Open && c.Messages.Any()).ToListAsync();
             }
             else
             {
@@ -39,7 +39,10 @@ namespace GymSystem.Controllers
 
                     chatId = newChat.Id;
                 }
-                else chatId = IsInChat.Id;
+                else
+                {
+                    chatId = IsInChat.Id;
+                }
             }
 
             var model = new ChatModel()
@@ -50,24 +53,38 @@ namespace GymSystem.Controllers
 
             return View(model);
         }
-        
+
         [HttpGet]
         public async Task<IActionResult> GetMessages(int chatId)
         {
             var messages = await _context.Messages
                 .Where(m => m.ChatID == chatId)
                 .OrderBy(m => m.SentAt)
-                .Select(m => new {
-                    id              = m.Id,
-                    content         = m.Content,
-                    sentAt          = m.SentAt,
-                    senderId        = m.SenderId,          
-                    chatId          = m.ChatID,
-                    senderUserName  = m.Sender.UserName
+                .Select(m => new
+                {
+                    userName = m.Sender.UserName,
+                    msg = m.Content,
+                    sentAt = m.SentAt
                 })
                 .ToListAsync();
 
             return Json(messages);
         }
+        
+        [HttpPost]
+        public async Task<IActionResult> CloseTicket(int chatId)
+        {
+            var chat = await _context.Chat.FirstOrDefaultAsync(c => c.Id == chatId);
+
+            if (chat == null)
+                return NotFound();
+
+            chat.Status = Status.Cancelled;
+
+            await _context.SaveChangesAsync();
+
+            return Ok();
+        }
+
     }
 }
