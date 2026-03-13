@@ -23,6 +23,7 @@ namespace GymSystemDAL.Data.Contexts
         public DbSet<Session> Sessions { get; set; }
         public DbSet<MemberShip> MemberShips { get; set; }
         public DbSet<Message> Messages { get; set; }
+        public DbSet<Chat> Chat { get; set; }
         #endregion
 
         override protected void OnModelCreating(ModelBuilder modelBuilder)

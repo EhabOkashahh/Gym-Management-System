@@ -17,8 +17,7 @@ namespace GymSystemDAL.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    UserId1 = table.Column<string>(type: "nvarchar(450)", nullable: false),
-                    UserId = table.Column<int>(type: "int", nullable: false),
+                    UserID = table.Column<string>(type: "nvarchar(450)", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     CreatedAt = table.Column<DateTime>(type: "datetime2", nullable: false, defaultValueSql: "GETDATE()")
                 },
@@ -26,8 +25,8 @@ namespace GymSystemDAL.Migrations
                 {
                     table.PrimaryKey("PK_Chat", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Chat_AspNetUsers_UserId1",
-                        column: x => x.UserId1,
+                        name: "FK_Chat_AspNetUsers_UserID",
+                        column: x => x.UserID,
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -62,9 +61,9 @@ namespace GymSystemDAL.Migrations
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Chat_UserId1",
+                name: "IX_Chat_UserID",
                 table: "Chat",
-                column: "UserId1");
+                column: "UserID");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Messages_ChatID",

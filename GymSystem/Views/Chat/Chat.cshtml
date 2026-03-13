@@ -1,0 +1,493 @@
+@model ChatModel
+@{
+    Layout = null;
+    var currentUserId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value ?? "";
+    var currentUserName = User.Identity?.Name ?? "";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Chat</title>
+<style>
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    background: #f0ede8;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+}
+
+.layout {
+    display: flex;
+    width: 860px;
+    height: 580px;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #ffffff;
+    box-shadow: 0 4px 32px rgba(0,0,0,0.10);
+}
+
+/* ── Sidebar ── */
+.sidebar {
+    width: 210px;
+    border-right: 1px solid #ece9e3;
+    display: flex;
+    flex-direction: column;
+    background: #faf9f7;
+    flex-shrink: 0;
+}
+
+.sidebar-top {
+    padding: 20px 16px 12px;
+    border-bottom: 1px solid #ece9e3;
+}
+
+.sidebar-top h2 { font-size: 13px; font-weight: 600; color: #1a1a18; }
+.sidebar-top p  { font-size: 11px; color: #aaa9a1; margin-top: 2px; }
+
+.sidebar-label {
+    padding: 14px 16px 6px;
+    font-size: 10px;
+    font-weight: 600;
+    color: #aaa9a1;
+    text-transform: uppercase;
+    letter-spacing: 0.09em;
+}
+
+.group-list {
+    flex: 1;
+    overflow-y: auto;
+    padding: 4px 8px 8px;
+}
+.group-list::-webkit-scrollbar { width: 3px; }
+.group-list::-webkit-scrollbar-thumb { background: #dedad4; border-radius: 4px; }
+
+.group-item {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    padding: 8px 10px;
+    border-radius: 9px;
+    cursor: pointer;
+    transition: background 0.13s;
+    margin-bottom: 1px;
+}
+.group-item:hover { background: #f0ede8; }
+.group-item.active { background: #eae7ff; }
+.group-item.active .group-name { color: #4a42b0; font-weight: 500; }
+
+.group-avatar {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 11px;
+    font-weight: 600;
+    flex-shrink: 0;
+    background: #e8e6f0;
+    color: #534AB7;
+}
+.group-item.active .group-avatar { background: #7F77DD; color: #fff; }
+
+.group-name {
+    font-size: 13px;
+    color: #3a3a38;
+    flex: 1;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* ── Chat Area ── */
+.chat-area {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    background: #ffffff;
+    min-width: 0;
+}
+
+.chat-header {
+    padding: 14px 20px;
+    border-bottom: 1px solid #ece9e3;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+}
+
+.header-avatar {
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: #eae7ff;
+    color: #534AB7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+.header-info { flex: 1; min-width: 0; }
+.chat-title { font-size: 14px; font-weight: 600; color: #1a1a18; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chat-sub { font-size: 11px; color: #3B9E6A; margin-top: 1px; }
+.chat-sub.muted { color: #aaa9a1; }
+
+/* ── Messages ── */
+.messages {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px 20px 8px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 0;
+}
+.messages::-webkit-scrollbar { width: 4px; }
+.messages::-webkit-scrollbar-thumb { background: #dedad4; border-radius: 4px; }
+
+/* ── Empty State ── */
+.empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: #c0bdb6;
+    margin: auto;
+}
+.empty-icon {
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    background: #f5f3ef;
+    display: flex; align-items: center; justify-content: center;
+}
+.empty-icon svg { width: 20px; height: 20px; stroke: #c0bdb6; fill: none; }
+.empty-state p { font-size: 13px; }
+
+/* ── Message Row ──
+   .mine  → your own message  → RIGHT side, blue bubble
+   .theirs → other person     → LEFT  side, gray bubble
+*/
+.msg {
+    display: flex;
+    align-items: flex-end;
+    gap: 8px;
+}
+
+/* other person: avatar on the LEFT, bubble on the right of avatar */
+.msg.theirs { flex-direction: row; }
+
+/* your message: avatar on the RIGHT, bubble on the left of avatar */
+.msg.mine   { flex-direction: row-reverse; }
+
+.msg-avatar {
+    width: 26px;
+    height: 26px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: 600;
+    flex-shrink: 0;
+}
+
+/* other person avatar */
+.msg.theirs .msg-avatar { background: #f0ede8; color: #534AB7; }
+
+/* your avatar */
+.msg.mine .msg-avatar { background: #4a42b0; color: #fff; }
+
+.msg-body {
+    display: flex;
+    flex-direction: column;
+    max-width: 62%;
+}
+
+.msg.mine   .msg-body { align-items: flex-end; }
+.msg.theirs .msg-body { align-items: flex-start; }
+
+.sender-name {
+    font-size: 10px;
+    font-weight: 500;
+    color: #aaa9a1;
+    margin-bottom: 3px;
+    padding: 0 4px;
+}
+
+.bubble {
+    padding: 9px 13px;
+    border-radius: 16px;
+    font-size: 13px;
+    line-height: 1.55;
+    word-break: break-word;
+    white-space: pre-wrap;
+}
+
+/* other person → gray, left-side tail */
+.msg.theirs .bubble {
+    background: #f2f0ec;
+    color: #1a1a18;
+    border-bottom-left-radius: 4px;
+}
+
+/* you → blue, right-side tail */
+.msg.mine .bubble {
+    background: #4a42b0;
+    color: #ffffff;
+    border-bottom-right-radius: 4px;
+}
+
+.msg-time {
+    font-size: 10px;
+    color: #c0bdb6;
+    margin-top: 3px;
+    padding: 0 4px;
+}
+
+/* ── Input Bar ── */
+.input-bar {
+    padding: 12px 16px 14px;
+    border-top: 1px solid #ece9e3;
+    display: flex;
+    gap: 8px;
+    align-items: flex-end;
+    flex-shrink: 0;
+}
+
+.input-bar textarea {
+    flex: 1;
+    resize: none;
+    font-family: inherit;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 9px 14px;
+    border: 1px solid #e0ddd6;
+    border-radius: 22px;
+    background: #faf9f7;
+    color: #1a1a18;
+    outline: none;
+    height: 38px;
+    max-height: 100px;
+    overflow-y: auto;
+    transition: border-color 0.15s, background 0.15s;
+}
+.input-bar textarea::placeholder { color: #bbb9b2; }
+.input-bar textarea:focus { border-color: #7F77DD; background: #fff; }
+
+.send-btn {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: none;
+    background: #4a42b0;
+    color: #fff;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    transition: background 0.15s, transform 0.1s;
+}
+.send-btn:hover  { background: #3d36a0; }
+.send-btn:active { transform: scale(0.94); }
+.send-btn svg { width: 15px; height: 15px; }
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+    @* ── Sidebar (Admin / SuperAdmin only) ── *@
+    @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+    {
+        <div class="sidebar">
+            <div class="sidebar-top">
+                <h2>Messages</h2>
+                <p>@Model.Chats.Count() conversations</p>
+            </div>
+            <div class="sidebar-label">Users</div>
+            <div class="group-list">
+                @foreach (var chat in Model.Chats)
+                {
+                    var ini = chat.User.UserName.Length >= 2
+                        ? chat.User.UserName.Substring(0, 2).ToUpper()
+                        : chat.User.UserName.ToUpper();
+                    <div class="group-item" onclick="switchGroup(this, @chat.Id, '@chat.User.UserName', '@ini')">
+                        <div class="group-avatar">@ini</div>
+                        <span class="group-name">@chat.User.UserName</span>
+                    </div>
+                }
+            </div>
+        </div>
+    }
+
+    @* ── Chat Area ── *@
+    <div class="chat-area">
+
+        <div class="chat-header">
+            <div class="header-avatar" id="header-avatar">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                </svg>
+            </div>
+            <div class="header-info">
+                <div class="chat-title" id="chat-title">
+                    @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+                    { <text>Select a conversation</text> }
+                    else
+                    { <text>Support Chat</text> }
+                </div>
+                <div class="chat-sub @(User.IsInRole("Admin") || User.IsInRole("SuperAdmin") ? "muted" : "")" id="chat-sub">
+                    @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+                    { <text>No chat selected</text> }
+                    else
+                    { <text>Online</text> }
+                </div>
+            </div>
+        </div>
+
+        <div class="messages" id="messages">
+            <div class="empty-state" id="empty-state">
+                <div class="empty-icon">
+                    <svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path>
+                    </svg>
+                </div>
+                <p>No messages yet</p>
+            </div>
+        </div>
+
+        <div class="input-bar">
+            <textarea id="msg-input" placeholder="Type a message…" rows="1"
+                      onkeydown="handleKey(event)" oninput="autoResize(this)"></textarea>
+            <button class="send-btn" onclick="sendMessage()" title="Send">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                     stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                    <line x1="22" y1="2" x2="11" y2="13"></line>
+                    <polygon points="22 2 15 22 11 13 2 9 22 2"></polygon>
+                </svg>
+            </button>
+        </div>
+
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/microsoft-signalr/7.0.5/signalr.min.js"></script>
+<script>
+    let chatId = null;
+
+    // The current logged-in username — injected from server
+    const ME = @Json.Serialize(currentUserName);
+
+    const connection = new signalR.HubConnectionBuilder()
+        .withUrl("/chatHub")
+        .withAutomaticReconnect()
+        .build();
+
+    connection.start().then(() => {
+        const isAdmin = @Json.Serialize(User.IsInRole("Admin") || User.IsInRole("SuperAdmin"));
+        if (!isAdmin) {
+            chatId = @Model.ChatId;
+            if (chatId) connection.invoke("JoinChat", chatId);
+        }
+    }).catch(err => console.error("SignalR error:", err));
+
+    // data = { userName, msg, isAdmin }
+    connection.on("ReceiveMessage", (data) => {
+        hideEmpty();
+
+        // Is this message from ME?
+        const isMe = data.userName === ME;
+        const side = isMe ? 'mine' : 'theirs';
+        const initials = (data.userName || '?').substring(0, 2).toUpperCase();
+
+        const html = `
+        <div class="msg ${side}">
+            <div class="msg-avatar">${initials}</div>
+            <div class="msg-body">
+                <div class="sender-name">${isMe ? 'You' : escapeHtml(data.userName)}</div>
+                <div class="bubble">${escapeHtml(data.msg)}</div>
+                <div class="msg-time">${getTime()}</div>
+            </div>
+        </div>`;
+
+        const messages = document.getElementById('messages');
+        messages.insertAdjacentHTML('beforeend', html);
+        messages.scrollTop = messages.scrollHeight;
+    });
+
+    function sendMessage() {
+        const input = document.getElementById('msg-input');
+        const text = input.value.trim();
+        if (!text || !chatId) return;
+        connection.invoke("SendMessage", chatId, text);
+        input.value = '';
+        input.style.height = '38px';
+    }
+
+    function switchGroup(el, id, name, initials) {
+        document.querySelectorAll('.group-item').forEach(g => g.classList.remove('active'));
+        el.classList.add('active');
+        chatId = id;
+
+        const ha = document.getElementById('header-avatar');
+        ha.textContent = initials;
+        ha.style.background = '#eae7ff';
+        ha.style.color = '#534AB7';
+
+        document.getElementById('chat-title').textContent = name;
+        const sub = document.getElementById('chat-sub');
+        sub.textContent = 'Online';
+        sub.classList.remove('muted');
+
+        document.getElementById('messages').innerHTML =
+            '<div class="empty-state" id="empty-state">' +
+            '<div class="empty-icon"><svg viewBox="0 0 24 24" fill="none" stroke="#c0bdb6" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg></div>' +
+            '<p>No messages yet</p></div>';
+
+        connection.invoke("JoinChat", chatId);
+    }
+
+    function hideEmpty() {
+        const el = document.getElementById('empty-state');
+        if (el) el.remove();
+    }
+
+    function handleKey(e) {
+        if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage(); }
+    }
+
+    function autoResize(el) {
+        el.style.height = '38px';
+        el.style.height = Math.min(el.scrollHeight, 100) + 'px';
+    }
+
+    function getTime() {
+        const d = new Date();
+        const h = d.getHours(), m = d.getMinutes();
+        return (h % 12 || 12) + ':' + String(m).padStart(2, '0') + ' ' + (h < 12 ? 'AM' : 'PM');
+    }
+
+    function escapeHtml(t) {
+        return String(t)
+            .replace(/&/g, '&amp;')
+            .replace(/</g, '&lt;')
+            .replace(/>/g, '&gt;')
+            .replace(/"/g, '&quot;');
+    }
+</script>
+</body>
+</html>

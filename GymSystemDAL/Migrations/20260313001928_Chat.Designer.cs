@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace GymSystemDAL.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260312222205_Chat")]
+    [Migration("20260313001928_Chat")]
     partial class Chat
     {
         /// <inheritdoc />
@@ -424,16 +424,13 @@ namespace GymSystemDAL.Migrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<int>("UserId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId1")
+                    b.Property<string>("UserID")
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("UserId1");
+                    b.HasIndex("UserID");
 
                     b.ToTable("Chat");
                 });
@@ -796,7 +793,7 @@ namespace GymSystemDAL.Migrations
                 {
                     b.HasOne("GymSystemDAL.Entities.AppUser", "User")
                         .WithMany()
-                        .HasForeignKey("UserId1")
+                        .HasForeignKey("UserID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 

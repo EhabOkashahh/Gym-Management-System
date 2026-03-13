@@ -70,7 +70,7 @@ namespace GymSystem.Controllers
             return RedirectToAction("Login", "Account");
         }
 
-        public async Task<IActionResult> AccessDenied()
+        public IActionResult AccessDenied()
         {
             return View();
         }

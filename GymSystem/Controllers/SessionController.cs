@@ -33,7 +33,7 @@ namespace GymSystem.Controllers
                     DateDisplay = s.StartDate.ToString("dd MMM yyyy"),
                     TimeRangeDisplay = $"{s.StartDate:HH:mm} - {s.EndDate:HH:mm}",
                     Duration = s.EndDate - s.StartDate,
-                    IsEnrolled = s.MemberSessions.Any(ms => ms.Member.UserId == user.Id),
+                    IsEnrolled = s.MemberSessions.Any(ms => ms.Member.UserId == user!.Id),
                     CategoryName = s.Category.Name,
                     Status = now < s.StartDate
                     ? "Upcoming"
@@ -207,7 +207,8 @@ namespace GymSystem.Controllers
         public async Task<IActionResult> Withdraw(int sessionId)
         {
             var user = await _userManager.GetUserAsync(User);
-            var result = await _memberSessionsService.WithdrawAsync(user.Id, sessionId);
+            if (user is null) TempData["EnrollError"] = "Somthing Went wrong, try again later";
+            var result = await _memberSessionsService.WithdrawAsync(user!.Id, sessionId);
 
             if (!result.IsSuccessed)
                 TempData["EnrollError"] = result.Message;

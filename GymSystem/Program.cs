@@ -4,6 +4,7 @@ using GymSystemBLL.Extensions.Classes;
 using GymSystemBLL.Extensions.Interfaces;
 using GymSystemBLL.Services.Classes;
 using GymSystemBLL.Services.Interfaces;
+using GymSystemBLL.Sockets;
 using GymSystemDAL.Data.Contexts;
 using GymSystemDAL.Data.Seeding;
 using GymSystemDAL.Entities;
@@ -82,11 +83,10 @@ app.UseMiddleware<SoftDeleteMiddleWare>();
 app.UseAuthorization();
 
 app.MapStaticAssets();
-
+app.MapHub<ChatHub>("/chatHub");
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
 
-app.MapHub<ChatHub>("/chatHub");
 app.Run();
