@@ -15,11 +15,15 @@ namespace GymSystemBLL.Services.Classes
         {
             try
             {
-                var EmailSettings = _config.GetSection("EmailSettings");
+                var Host = _config["SMTP:Host"];
+                var Port = _config["SMTP:Port"];
+                var smtpEmail = _config["SMTP:Email"];
+                var smtpPassword = _config["SMTP:Password"];
+                var From = _config["SMTP:From"];
 
-                using var Client = new SmtpClient(EmailSettings["Host"], int.Parse(EmailSettings["Port"]!))
+                using var Client = new SmtpClient(Host, int.Parse(Port!))
                 {
-                    Credentials = new NetworkCredential(EmailSettings["Username"], EmailSettings["Password"]),
+                    Credentials = new NetworkCredential(smtpEmail, smtpPassword),
                     EnableSsl = true
                 };
 
@@ -130,7 +134,7 @@ namespace GymSystemBLL.Services.Classes
 
                 var mailMessage = new MailMessage()
                 {
-                    From = new MailAddress(EmailSettings["From"]!),
+                    From = new MailAddress(From!),
                     Subject = $"Gym Login Password",
                     Body = htmlBody,
                     IsBodyHtml = true
