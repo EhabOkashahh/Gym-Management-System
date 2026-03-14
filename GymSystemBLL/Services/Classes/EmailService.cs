@@ -9,19 +9,19 @@ using GymSystemBLL.Services.Interfaces;
 
 namespace GymSystemBLL.Services.Classes
 {
-    public class EmailService(IConfiguration _config) : IEmailService
+    public class EmailService : IEmailService
     {
         public bool SendEmail(string username, string Email, string password)
         {
             try
             {
-                var Host = _config["SMTP:Host"];
-                var Port = _config["SMTP:Port"];
-                var smtpEmail = _config["SMTP:Email"];
-                var smtpPassword = _config["SMTP:Password"];
-                var From = _config["SMTP:From"];
+                var server = Environment.GetEnvironmentVariable("SMTP_HOST");
+                var Port = Environment.GetEnvironmentVariable("SMTP_PORT");
+                var smtpEmail = Environment.GetEnvironmentVariable("SMTP_USER");
+                var smtpPassword = Environment.GetEnvironmentVariable("SMTP_PASS");
+                var From = Environment.GetEnvironmentVariable("SMTP_FROM");
 
-                using var Client = new SmtpClient(Host, int.Parse(Port!))
+                using var Client = new SmtpClient(server, int.Parse(Port!))
                 {
                     Credentials = new NetworkCredential(smtpEmail, smtpPassword),
                     EnableSsl = true
