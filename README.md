@@ -21,9 +21,17 @@ Built with **C#** · **ASP.NET** · **3-Layer Architecture**
 ## Add your screenshots below 
 
 <div align="center">
-  <img src="screenshots/dashboard.png" alt="Dashboard" width="800"/>
+  <img src="screenshots/1.png" alt="Dashboard" width="800"/>
   <br/><br/>
-  <img src="screenshots/members.png" alt="Members Management" width="800"/>
+  <img src="screenshots/22.png" alt="Members Management" width="800"/>
+  <br/><br/>
+  <img src="screenshots/3.png" alt="Members Management" width="800"/>
+  <br/><br/>
+  <img src="screenshots/4.png" alt="Members Management" width="800"/>
+  <br/><br/>
+  <img src="screenshots/5.png" alt="Members Management" width="800"/>
+  <br/><br/>
+  <img src="screenshots/6.png" alt="Members Management" width="800"/>
 </div>
 
 ---
