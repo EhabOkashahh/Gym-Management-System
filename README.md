@@ -16,22 +16,21 @@ Built with **C#** · **ASP.NET** · **3-Layer Architecture**
 
 ## Screenshots
 
-> _Screenshots coming soon — stay tuned!_
 
-## Add your screenshots below 
+## Some System Screenshots
 
 <div align="center">
-  <img src="screenshots/1.png" alt="Dashboard" width="800"/>
+  <img src="screenshots/1.png" alt="Home" width="800"/>
   <br/><br/>
-  <img src="screenshots/22.png" alt="Members Management" width="800"/>
+  <img src="screenshots/22.png" alt="Plans" width="800"/>
   <br/><br/>
-  <img src="screenshots/3.png" alt="Members Management" width="800"/>
+  <img src="screenshots/3.png" alt="MemberShips" width="800"/>
   <br/><br/>
-  <img src="screenshots/4.png" alt="Members Management" width="800"/>
+  <img src="screenshots/4.png" alt="User Side Suppot chat" width="800"/>
   <br/><br/>
-  <img src="screenshots/5.png" alt="Members Management" width="800"/>
+  <img src="screenshots/5.png" alt="Admin side suuport chat" width="800"/>
   <br/><br/>
-  <img src="screenshots/6.png" alt="Members Management" width="800"/>
+  <img src="screenshots/6.png" alt="Session Enrollment" width="800"/>
 </div>
 
 ---
