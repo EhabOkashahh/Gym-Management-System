@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
 {
+        [Authorize(Roles = "Admin,SuperAdmin")]
     public class PlanController(IPlanService _PlanService , IMapper _mapper) : Controller
     {
         public async Task<IActionResult> Index()
@@ -29,7 +30,6 @@ namespace GymSystem.Controllers
             return View(plan);
         }
         
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> ToggleStatus(int? Id)
         {
@@ -44,7 +44,6 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> PlanEdit(int? id)
         {
             if (id is null) TempData["ErrorMessage"] = "Something went wrong, Try again later";
@@ -53,7 +52,6 @@ namespace GymSystem.Controllers
             return View(MappedModel);
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> PlanEdit(int? id, UpdatePlanModelView model)
         {

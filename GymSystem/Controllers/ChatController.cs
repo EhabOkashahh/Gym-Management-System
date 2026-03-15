@@ -6,12 +6,14 @@ using GymSystem.Models;
 using GymSystemDAL.Data.Contexts;
 using GymSystemDAL.Entities;
 using GymSystemDAL.Entities.Enums;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace GymSystem.Controllers
 {
+    [Authorize]
     public class ChatController(AppDbContext _context, UserManager<AppUser> _userManager) : Controller
     {
         public async Task<IActionResult> ChatAsync()

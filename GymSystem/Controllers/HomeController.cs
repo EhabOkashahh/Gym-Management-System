@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace GymSystem.Controllers;
 
+[Authorize]
 public class HomeController(IAnalyticsService _analyticsService) : Controller
 {
 
-    [Authorize]
     public async Task<IActionResult> Index()
     {
         var Analytics = await _analyticsService.GetAnalyticsData();

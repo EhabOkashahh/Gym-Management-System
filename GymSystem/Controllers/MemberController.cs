@@ -19,17 +19,15 @@ using Microsoft.VisualStudio.Web.CodeGenerators.Mvc.Templates.Blazor;
 
 namespace GymSystem.Controllers
 {
-    
+    [Authorize(Roles = "Admin,SuperAdmin")]
     public class MemberController(IMemberService _memberService , FilesFactory _fileFactory ,IPlanService _planService, IMemberShipService _memberShip , IMapper _mapper) : Controller
     {
-        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> Index()
         {
             var Members = await _memberService.GetAllMembersAsync();
             return View(Members);
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         #region Create Member
         [HttpGet]
         public async Task<IActionResult> AddMemberAsync() { 
@@ -38,7 +36,6 @@ namespace GymSystem.Controllers
             return View(model); 
         }
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost] 
         public async Task<IActionResult> AddMember(CreateMemberModelView model)
         {
@@ -73,7 +70,6 @@ namespace GymSystem.Controllers
         #endregion   
 
         #region Details - HealthRecords
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> MemberDetails(int? id)
         {
@@ -82,7 +78,6 @@ namespace GymSystem.Controllers
             res.MemberShip = membership;
             return View(res);
         }
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> ViewHealthRecordData(int? Id)
         {
@@ -93,7 +88,6 @@ namespace GymSystem.Controllers
         #endregion
 
         #region Edit - Delete
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpGet]
         public async Task<IActionResult> Edit(int Id)
         {
@@ -103,7 +97,6 @@ namespace GymSystem.Controllers
             await PopulatePlans(mappedModel);
             return View(mappedModel);
         }
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> Edit(UpdateMemberModelView model)
         {
@@ -124,7 +117,6 @@ namespace GymSystem.Controllers
 
             return RedirectToAction(nameof(Index));
         }
-        [Authorize(Roles = "Admin,SuperAdmin")]
         [HttpPost]
         public async Task<IActionResult> SoftDeleteMemberAsync(int? Id)
         {
@@ -149,7 +141,6 @@ namespace GymSystem.Controllers
 
         #endregion 
 
-        [Authorize(Roles = "Admin,SuperAdmin")]
         public async Task<IActionResult> RestoreMember(int id)
         {
             var res = await _memberService.RestoreMember(id);

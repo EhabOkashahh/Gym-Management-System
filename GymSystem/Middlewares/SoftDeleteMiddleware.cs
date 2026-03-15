@@ -6,6 +6,7 @@ using GymSystemBLL.Services.Interfaces;
 using GymSystemDAL.Data.Contexts;
 using GymSystemDAL.Entities;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 
 namespace GymSystem.Middlewares
 {
@@ -19,11 +20,10 @@ namespace GymSystem.Middlewares
         {
             if (context.User.Identity?.IsAuthenticated ?? false)
             {
-                var user = await userManager.GetUserAsync(context.User);
 
-                if (user != null)
+                if (context.User != null)
                 {
-                    var member = db.Members.FirstOrDefault(m => m.UserId == user.Id);
+                    var member = db.Members.Where(m => m.Name.Trim().ToLower() == context.User.Identity.Name.Trim().ToLower()).Select(m => new { m.IsDeleted}).AsNoTracking().FirstOrDefault();
 
                     // Only check soft delete if this user is a member
                     if (member != null && member.IsDeleted)
