@@ -6,6 +6,7 @@
 <title>Gym Management System</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,600&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
 <style>
+```css
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --ink:#18191c;
@@ -355,6 +356,7 @@ section:nth-child(even){background:var(--surface)}
 </style>
 </head>
 <body>
+```
 
 <!-- Hero -->
 <div class="hero">
