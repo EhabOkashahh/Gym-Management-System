@@ -1,11 +1,14 @@
 <div align="center">
+<a href"powerfit.runasp.net"></a>
 
 # Gym Management System 
-## Visit The Gym from here 
-<a href"powerfit.runasp.net"></a>
+
 ## Member Account
-  email: Demo@gmail.com
-  password: Tcecaf8a8!
+  
+  <div>
+    <p>email: Demo@gmail.com</p>
+    <p>password: Tcecaf8a8!/p>
+  </div>
 
 **A full-featured desktop application for managing gym operations efficiently.**  
 Built with **C#** · **ASP.NET** · **3-Layer Architecture**
