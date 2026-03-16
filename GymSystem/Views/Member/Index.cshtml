@@ -6,417 +6,336 @@
     ViewData["Title"] = "Members";
 }
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
-<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
-<link rel="stylesheet" href="~/css/style.css" />
-
 <style>
-.members-table-wrapper .table-responsive{
-    overflow-x: visible;
-}
+    .members-table-wrapper .table-responsive {
+        overflow-x: visible;
+    }
 
-.dropdown-menu{
-    z-index:1055;
-    border-radius:10px;
-    box-shadow:0 8px 24px rgba(0,0,0,.12);
-}
+    .dropdown-menu {
+        z-index: 1055;
+        border-radius: 10px;
+        box-shadow: 0 8px 24px rgba(0,0,0,.12);
+    }
 </style>
 
-</head>
-<body>
-
 <div class="container">
-<main class="pb-3">
+    <main class="pb-3">
 
-<header class="d-flex justify-content-end mt-4 mb-4">
-<a asp-action="AddMember" class="btn btn-fill fw-medium rounded-pill px-3 py-3">
-+ Add Member
-</a>
-</header>
+        <header class="d-flex justify-content-end mt-4 mb-4">
+            <a asp-action="AddMember" class="btn btn-fill fw-medium rounded-pill px-3 py-3">
+                + Add Member
+            </a>
+        </header>
 
-<ul class="nav nav-tabs">
-<li class="nav-item">
-<button class="nav-link active" data-bs-toggle="tab" data-bs-target="#active">
-Active Members
-</button>
-</li>
+        <ul class="nav nav-tabs">
+            <li class="nav-item">
+                <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#active">
+                    Active Members
+                </button>
+            </li>
 
-<li class="nav-item">
-<button class="nav-link" data-bs-toggle="tab" data-bs-target="#deleted">
-Deleted Members
-</button>
-</li>
-</ul>
+            <li class="nav-item">
+                <button class="nav-link" data-bs-toggle="tab" data-bs-target="#deleted">
+                    Deleted Members
+                </button>
+            </li>
+        </ul>
 
-<div class="tab-content mt-3">
+        <div class="tab-content mt-3">
 
-<!-- ACTIVE MEMBERS -->
-<div class="tab-pane fade show active" id="active">
+            <!-- ACTIVE MEMBERS -->
+            <div class="tab-pane fade show active" id="active">
 
-@if(activeMembers.Any())
-{
-<div class="members-table-wrapper">
-<div class="table-responsive">
+                @if (activeMembers.Any())
+                {
+                    <div class="members-table-wrapper">
+                        <div class="table-responsive">
 
-<table class="table table-borderless align-middle">
+                            <table class="table table-borderless align-middle">
 
-<thead>
-<tr>
-<th>Photo</th>
-<th>Name</th>
-<th>Email</th>
-<th>Gender</th>
-<th>Phone</th>
-<th>IsDeleted</th>
-<th>Action</th>
-</tr>
-</thead>
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Phone</th>
+                                        <th>IsDeleted</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
 
-<tbody>
+                                <tbody>
 
-@foreach(var member in activeMembers)
-{
-<tr>
+                                    @foreach (var member in activeMembers)
+                                    {
+                                        <tr>
 
-<td>
-<img src="~/images/@member.Photo"
-class="rounded-circle"
-style="width:40px;height:40px"/>
-</td>
+                                            <td>
+                                                <img src="~/images/@member.Photo"
+                                                     class="rounded-circle"
+                                                     style="width:40px;height:40px" />
+                                            </td>
 
-<td>@member.Name</td>
-<td>@member.Email</td>
-<td>@member.Gender</td>
-<td>@member.Phone</td>
-<td>@member.IsDeleted</td>
+                                            <td>@member.Name</td>
+                                            <td>@member.Email</td>
+                                            <td>@member.Gender</td>
+                                            <td>@member.Phone</td>
+                                            <td>@member.IsDeleted</td>
 
-<td>
+                                            <td>
 
-<div class="dropdown position-static">
+                                                <div class="dropdown">
 
-<button class="btn btn-link p-0 border-0"
-data-bs-toggle="dropdown">
+                                                    <button class="btn btn-link p-0 border-0"
+                                                            data-bs-toggle="dropdown">
 
-<img src="~/images/action dots.jpg" />
+                                                        <img src="~/images/action dots.jpg" />
 
-</button>
+                                                    </button>
 
-<ul class="dropdown-menu">
+                                                    <ul class="dropdown-menu">
 
-<li>
-<a asp-action="MemberDetails"
-asp-route-Id="@member.Id"
-class="dropdown-item">
+                                                        <li>
+                                                            <a asp-action="MemberDetails"
+                                                               asp-route-Id="@member.Id"
+                                                               class="dropdown-item">
+                                                                View Member Data
+                                                            </a>
+                                                        </li>
 
-View Member Data
+                                                        <li>
+                                                            <a asp-action="ViewHealthRecordData"
+                                                               asp-route-Id="@member.Id"
+                                                               class="dropdown-item">
+                                                                View Health Record Data
+                                                            </a>
+                                                        </li>
 
-</a>
-</li>
+                                                        <li><hr class="dropdown-divider"></li>
 
-<li>
-<a asp-action="ViewHealthRecordData"
-asp-route-Id="@member.Id"
-class="dropdown-item">
+                                                        <li>
+                                                            <a asp-action="Edit"
+                                                               asp-route-Id="@member.Id"
+                                                               class="dropdown-item">
+                                                                Edit Member Data
+                                                            </a>
+                                                        </li>
 
-View Health Record Data
+                                                        <li><hr class="dropdown-divider"></li>
 
-</a>
-</li>
+                                                        <li>
+                                                            <button class="dropdown-item text-danger"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#SoftDeleteModal"
+                                                                    onclick="setSoftDeleteId(@member.Id)">
+                                                                Soft Delete
+                                                            </button>
+                                                        </li>
 
-<li><hr class="dropdown-divider"></li>
+                                                    </ul>
 
-<li>
-<a asp-action="Edit"
-asp-route-Id="@member.Id"
-class="dropdown-item">
+                                                </div>
 
-Edit Member Data
+                                            </td>
 
-</a>
-</li>
+                                        </tr>
+                                    }
 
-<li><hr class="dropdown-divider"></li>
+                                </tbody>
+                            </table>
 
-<li>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5 text-muted">
+                        <h4>No Active Members</h4>
+                    </div>
+                }
 
-<button class="dropdown-item text-danger"
-data-bs-toggle="modal"
-data-bs-target="#SoftDeleteModal"
-onclick="setSoftDeleteId(@member.Id)">
+            </div>
 
-Soft Delete
 
-</button>
+            <!-- DELETED MEMBERS -->
+            <div class="tab-pane fade" id="deleted">
 
-</li>
+                @if (deletedMembers.Any())
+                {
+                    <div class="members-table-wrapper">
+                        <div class="table-responsive">
 
-</ul>
+                            <table class="table table-borderless align-middle">
+
+                                <thead>
+                                    <tr>
+                                        <th>Photo</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                        <th>Gender</th>
+                                        <th>Phone</th>
+                                        <th>IsDeleted</th>
+                                        <th>Action</th>
+                                    </tr>
+                                </thead>
+
+                                <tbody>
+
+                                    @foreach (var member in deletedMembers)
+                                    {
+                                        <tr class="text-muted">
+
+                                            <td>
+                                                <img src="~/images/@member.Photo"
+                                                     class="rounded-circle"
+                                                     style="width:40px;height:40px" />
+                                            </td>
+
+                                            <td>@member.Name</td>
+                                            <td>@member.Email</td>
+                                            <td>@member.Gender</td>
+                                            <td>@member.Phone</td>
+                                            <td>@member.IsDeleted</td>
+
+                                            <td>
+
+                                                <div class="dropdown">
+
+                                                    <button class="btn btn-link p-0 border-0"
+                                                            data-bs-toggle="dropdown">
+
+                                                        <img src="~/images/action dots.jpg" />
+
+                                                    </button>
+
+                                                    <ul class="dropdown-menu">
+
+                                                        <li>
+                                                            <button class="dropdown-item text-success"
+                                                                    data-bs-toggle="modal"
+                                                                    data-bs-target="#RestoreModal"
+                                                                    onclick="setRestoreId(@member.Id)">
+                                                                Restore Member
+                                                            </button>
+                                                        </li>
+
+                                                    </ul>
+
+                                                </div>
+
+                                            </td>
+
+                                        </tr>
+                                    }
+
+                                </tbody>
+                            </table>
+
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="text-center py-5 text-muted">
+                        <h4>No Deleted Members</h4>
+                    </div>
+                }
+
+            </div>
+
+        </div>
+    </main>
+
+
+    <!-- SOFT DELETE MODAL -->
+    <div class="modal fade" id="SoftDeleteModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title text-danger">Confirm Soft Delete</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    Are you sure you want to delete this member?
+                </div>
+
+                <div class="modal-footer">
+
+                    <form asp-action="SoftDeleteMember" method="post">
+                        <input type="hidden" id="SoftDeleteMemberId" name="Id" />
+
+                        <button type="submit" class="btn btn-danger">
+                            Yes, Delete
+                        </button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- RESTORE MODAL -->
+    <div class="modal fade" id="RestoreModal" tabindex="-1">
+        <div class="modal-dialog">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title">Confirm Restore</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    Are you sure you want to restore this member?
+                </div>
+
+                <div class="modal-footer">
+
+                    <form asp-action="RestoreMember" method="post">
+                        <input type="hidden" id="RestoreMemberId" name="Id" />
+
+                        <button type="submit" class="btn btn-success">
+                            Yes, Restore
+                        </button>
+                    </form>
+
+                    <button type="button"
+                            class="btn btn-secondary"
+                            data-bs-dismiss="modal">
+                        Cancel
+                    </button>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 </div>
 
-</td>
 
-</tr>
+@section Scripts {
+
+    <script>
+
+        function setRestoreId(id){
+        document.getElementById("RestoreMemberId").value = id;
+        }
+
+        function setSoftDeleteId(id){
+        document.getElementById("SoftDeleteMemberId").value = id;
+        }
+
+    </script>
+
 }
-
-</tbody>
-</table>
-
-</div>
-</div>
-}
-else
-{
-<div class="text-center py-5 text-muted">
-<h4>No Active Members</h4>
-</div>
-}
-
-</div>
-
-
-<!-- DELETED MEMBERS -->
-<div class="tab-pane fade" id="deleted">
-
-@if(deletedMembers.Any())
-{
-<div class="members-table-wrapper">
-<div class="table-responsive">
-
-<table class="table table-borderless align-middle">
-
-<thead>
-<tr>
-<th>Photo</th>
-<th>Name</th>
-<th>Email</th>
-<th>Gender</th>
-<th>Phone</th>
-<th>IsDeleted</th>
-<th>Action</th>
-</tr>
-</thead>
-
-<tbody>
-
-@foreach(var member in deletedMembers)
-{
-<tr class="text-muted">
-
-<td>
-<img src="~/images/@member.Photo"
-class="rounded-circle"
-style="width:40px;height:40px"/>
-</td>
-
-<td>@member.Name</td>
-<td>@member.Email</td>
-<td>@member.Gender</td>
-<td>@member.Phone</td>
-<td>@member.IsDeleted</td>
-
-<td>
-
-<div class="dropdown position-static">
-
-<button class="btn btn-link p-0 border-0"
-data-bs-toggle="dropdown">
-
-<img src="~/images/action dots.jpg" />
-
-</button>
-
-<ul class="dropdown-menu">
-
-<li>
-
-<button class="dropdown-item text-success"
-data-bs-toggle="modal"
-data-bs-target="#RestoreModal"
-onclick="setRestoreId(@member.Id)">
-
-Restore Member
-
-</button>
-
-</li>
-
-</ul>
-
-</div>
-
-</td>
-
-</tr>
-}
-
-</tbody>
-</table>
-
-</div>
-</div>
-}
-else
-{
-<div class="text-center py-5 text-muted">
-<h4>No Deleted Members</h4>
-</div>
-}
-
-</div>
-
-</div>
-</main>
-
-
-<!-- SOFT DELETE MODAL -->
-
-<div class="modal fade"
-id="SoftDeleteModal"
-tabindex="-1">
-
-<div class="modal-dialog">
-
-<div class="modal-content">
-
-<div class="modal-header">
-
-<h5 class="modal-title text-danger">
-Confirm Soft Delete
-</h5>
-
-<button type="button"
-class="btn-close"
-data-bs-dismiss="modal"></button>
-
-</div>
-
-<div class="modal-body">
-
-Are you sure you want to delete this member?
-
-</div>
-
-<div class="modal-footer">
-
-<form asp-action="SoftDeleteMember" method="post">
-
-<input type="hidden"
-id="SoftDeleteMemberId"
-name="Id" />
-
-<button type="submit"
-class="btn btn-danger">
-
-Yes, Delete
-
-</button>
-
-</form>
-
-<button type="button"
-class="btn btn-secondary"
-data-bs-dismiss="modal">
-
-Cancel
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-<!-- RESTORE MODAL -->
-
-<div class="modal fade"
-id="RestoreModal"
-tabindex="-1">
-
-<div class="modal-dialog">
-
-<div class="modal-content">
-
-<div class="modal-header">
-
-<h5 class="modal-title">
-Confirm Restore
-</h5>
-
-<button type="button"
-class="btn-close"
-data-bs-dismiss="modal"></button>
-
-</div>
-
-<div class="modal-body">
-
-Are you sure you want to restore this member?
-
-</div>
-
-<div class="modal-footer">
-
-<form asp-action="RestoreMember"
-method="post">
-
-<input type="hidden"
-id="RestoreMemberId"
-name="Id"/>
-
-<button type="submit"
-class="btn btn-success">
-
-Yes, Restore
-
-</button>
-
-</form>
-
-<button type="button"
-class="btn btn-secondary"
-data-bs-dismiss="modal">
-
-Cancel
-
-</button>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
-
-</div>
-
-
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-<script>
-
-function setRestoreId(id)
-{
-document.getElementById("RestoreMemberId").value = id;
-}
-
-function setSoftDeleteId(id)
-{
-document.getElementById("SoftDeleteMemberId").value = id;
-}
-
-</script>
-
-</body>
-</html>

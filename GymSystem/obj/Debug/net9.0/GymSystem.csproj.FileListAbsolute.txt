@@ -358,3 +358,4 @@ D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identit
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\GymSystem.MvcApplicationPartsAssemblyInfo.cs
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\mfawmp6avc-zihl4qxq9i.gz
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
