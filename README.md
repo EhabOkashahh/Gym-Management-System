@@ -1,6 +1,10 @@
 <div align="center">
 
-# Gym Management System
+# Gym Management System 
+## Visit The Gym from here => powerfit.runasp.net
+## Member Account
+  email: Demo@gmail.com
+  password: Tcecaf8a8!
 
 **A full-featured desktop application for managing gym operations efficiently.**  
 Built with **C#** · **ASP.NET** · **3-Layer Architecture**
@@ -17,7 +21,7 @@ Built with **C#** · **ASP.NET** · **3-Layer Architecture**
 ## Screenshots
 
 
-## Some System Screenshots
+## Some System Screenshots As an Admin
 
 <div align="center">
   <img src="screenshots/1.png" alt="Home" width="800"/>
@@ -112,6 +116,7 @@ Gym-Management-System/
 | HTML / CSS | Frontend structure & styling |
 | JavaScript | Client-side interactivity |
 | SQL Server | Database |
+| SignalR | WebSocket |
 
 ---
 
