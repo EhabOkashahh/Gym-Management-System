@@ -1,5 +1,5 @@
 <div align="center">
-<a href"powerfit.runasp.net"></a>
+<a href"powerfit.runasp.net">Visit the Gym from here</a>
 
 # Gym Management System 
 
@@ -7,7 +7,7 @@
   
   <div>
     <p>email: Demo@gmail.com</p>
-    <p>password: Tcecaf8a8!/p>
+    <p>password: Tcecaf8a8!</p>
   </div>
 
 **A full-featured desktop application for managing gym operations efficiently.**  
