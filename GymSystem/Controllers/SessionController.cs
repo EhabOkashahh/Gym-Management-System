@@ -14,8 +14,7 @@ namespace GymSystem.Controllers
 {
     public class SessionController(ISessionService _sessionService, IMapper _mapper, ITrainerService _trainerService, AppDbContext _context,UserManager<AppUser> _userManager,IMemberSessionService _memberSessionsService) : Controller
     {
-
-        [Authorize(Roles = "Admin,SuperAdmin")]
+        [Authorize]
         #region Index
         [HttpGet]
         public async Task<IActionResult> Index()
