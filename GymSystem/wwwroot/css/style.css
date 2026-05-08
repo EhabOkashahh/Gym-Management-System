@@ -1,6 +1,6 @@
 /* ^ global style */
 
-:root {
+/*:root {
     --primary-color: #070093;
     --main-duration: 300ms;
     --black-alternative: #242424;
@@ -65,10 +65,10 @@ h6,
 p,
 pre {
     font-family: 'Rubik', sans-serif;
-}
+}*/
 
 /* ^ Start Navbar */
-.navbar .navbar-nav a {
+/*.navbar .navbar-nav a {
     border-radius: 19px;
     transition: color var(--main-duration), background-color var(--main-duration);
 }
@@ -76,11 +76,11 @@ pre {
     .navbar .navbar-nav a.active {
         background-color: var(--primary-color);
         color: #fff;
-    }
+    }*/
 
 
 /* ^ Start Header */
-header.home-section header p {
+/*header.home-section header p {
     position: relative;
     padding-left: 22px;
     font-size: 18px;
@@ -105,12 +105,12 @@ header.home-section header p {
         header.home-section header p::before {
             display: none !important;
         }
-}
+}*/
 
 
 
 /* ^ about section */
-section.about {
+/*section.about {
     overflow: hidden !important;
 }
 
@@ -153,11 +153,11 @@ section.about {
 
         section.about .features button:hover {
             background-color: var(--primary-color);
-        }
+        }*/
 
 /* ^ workout section */
 
-section.workout {
+/*section.workout {
     margin-top: 200px !important;
     background-image: linear-gradient(var(--primary-color) 65%, #fff 65%);
     padding-bottom: 80px;
@@ -220,11 +220,11 @@ section.workout {
                 width: 30px;
                 background-color: var(--primary-color);
                 border-radius: 100px;
-            }
+            }*/
 
 
 /* Button Base Styles */
-.btn-fill,
+/*.btn-fill,
 .btn-outline {
     padding: 12px 24px;
     border-radius: 8px;
@@ -236,45 +236,45 @@ section.workout {
     text-align: center;
     border-width: 2px;
     border-style: solid;
-}
+}*/
 
 /* Filled Button - Default State */
-.btn-fill {
+/*.btn-fill {
     background-color: #070093;
     border-color: #070093;
     color: #fff;
-}
+}*/
 
     /* Filled Button - Hover State (Switch to Outline) */
-    .btn-fill:hover {
+    /*.btn-fill:hover {
         background-color: transparent;
         border-color: #070093;
         color: #070093;
-    }
+    }*/
 
 /* Outline Button - Default State */
-.btn-outline {
+/*.btn-outline {
     background-color: transparent;
     border-color: #070093;
     color: #070093;
-}
+}*/
 
     /* Outline Button - Hover State (Switch to Fill) */
-    .btn-outline:hover {
+    /*.btn-outline:hover {
         background-color: #070093;
         border-color: #070093;
         color: #fff;
-    }
+    }*/
 
     /* Focus States for Accessibility */
-    .btn-fill:focus,
+    /*.btn-fill:focus,
     .btn-outline:focus {
         outline: 3px solid rgba(7, 0, 147, 0.3);
         outline-offset: 2px;
-    }
+    }*/
 
 /* Active/Pressed States */
-.btn-fill:active {
+/*.btn-fill:active {
     background-color: #050070;
     border-color: #050070;
     transform: scale(0.98);
@@ -285,18 +285,18 @@ section.workout {
     border-color: #050070;
     color: #fff;
     transform: scale(0.98);
-}
+}*/
 
 /* Disabled States */
-.btn-fill:disabled,
+/*.btn-fill:disabled,
 .btn-outline:disabled {
     opacity: 0.5;
     cursor: not-allowed;
     pointer-events: none;
-}
+}*/
 
 /* Optional: Button Sizes */
-.btn-sm {
+/*.btn-sm {
     padding: 8px 16px;
     font-size: 14px;
 }
@@ -304,14 +304,14 @@ section.workout {
 .btn-lg {
     padding: 16px 32px;
     font-size: 18px;
-}
+}*/
 
 /* Optional: Rounded Pill Style */
-.btn-pill {
+/*.btn-pill {
     border-radius: 50px;
-}
+}*/
 /* ^ Why Us */
-section.why-us .feature .count {
+/*section.why-us .feature .count {
     width: 110px;
     height: 70px;
     display: flex;
@@ -325,10 +325,10 @@ section.why-us .feature .count {
 
 section.why-us .feature p {
     line-height: 1.8;
-}
+}*/
 
 /* ^ footer */
-footer .footer-content .logo p {
+/*footer .footer-content .logo p {
     line-height: 1.7;
 }
 
@@ -343,20 +343,20 @@ footer .footer-content .contact li p {
 footer .footer-content .time p,
 footer .footer-content .location p {
     line-height: 2.2;
-}
+}*/
 
 /* ^ About page */
 
-:root {
+/*:root {
     --border-table-color: #e9ecff;
 }
 
 .about-page {
     margin-bottom: 160px !important;
-}
+}*/
 
 /* ^ Session, Trainers, Trainees Pages */
-.page {
+/*.page {
     min-height: 70vh;
 }
 
@@ -431,15 +431,15 @@ footer .footer-content .location p {
     }
 
     .page table td.action {
-        position: relative; /* anchor for absolute children */
-    }
+        position: relative;*/ /* anchor for absolute children */
+    /*}
 
         .page table td.action ul.action-menu {
             position: absolute;
-            top: 100%; /* directly below the dots */
-            left: 0; /* align with left edge */
-            margin-top: 6px; /* little spacing */
-            width: max-content;
+            top: 100%;*/ /* directly below the dots */
+            /*left: 0;*/ /* align with left edge */
+            /*margin-top: 6px;*/ /* little spacing */
+            /*width: max-content;
             min-width: 160px;
             background: #fff;
             border-radius: 10px;
@@ -468,13 +468,13 @@ footer .footer-content .location p {
 
         .page table td.action:has(input:checked) input + ul.action-menu {
             display: block;
-        }
+        }*/
 
 /* ^ Modals */
 
-.modal-content {
-    margin-top: 2vh; /* 10% of viewport height */
-}
+/*.modal-content {
+    margin-top: 2vh;*/ /* 10% of viewport height */
+/*}
 
 .card-details ul {
     margin-left: -20px;
@@ -569,22 +569,22 @@ footer .footer-content .location p {
         background-color: transparent;
         color: var(--primary-color);
         border-color: var(--primary-color);
-        -webkit-background-clip: border-box; /* cancel any text-clip */
-        background-clip: border-box; /* ensure normal coloring */
-        -webkit-text-fill-color: var(--primary-color); /* fix text rendering */
-    }
+        -webkit-background-clip: border-box;*/ /* cancel any text-clip */
+        /*background-clip: border-box;*/ /* ensure normal coloring */
+        /*-webkit-text-fill-color: var(--primary-color);*/ /* fix text rendering */
+    /*}
 .explore-more {
     background-color: transparent;
     color: var(--primary-color);
     border: 2px solid var(--primary-color);
     border-radius: 30px;
     transition: all 0.3s ease;
-    -webkit-text-fill-color: var(--primary-color); /* fix Chrome text rendering */
-}
+    -webkit-text-fill-color: var(--primary-color);*/ /* fix Chrome text rendering */
+/*}
 
     .explore-more:hover {
         background-color: var(--primary-color);
         color: #fff;
         border-color: var(--primary-color);
-        -webkit-text-fill-color: #fff; /* ensures text stays visible on hover */
-    }
+        -webkit-text-fill-color: #fff;*/ /* ensures text stays visible on hover */
+    /*}*/

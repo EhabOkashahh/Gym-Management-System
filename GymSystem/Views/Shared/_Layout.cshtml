@@ -1,222 +1,111 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - GymSystem</title>
+    <title>@ViewData["Title"] - PowerFit</title>
 
-    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=Barlow+Condensed:wght@600;700;800&display=swap" rel="stylesheet" />
+
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/GymSystem.styles.css" asp-append-version="true" />
 
-    <style>
-        .logout-btn button {
-            background: none;
-            border: none;
-            color: #dc3545;
-            font-weight: 700;
-            font-size: 1.25rem;
-            padding: 8px 16px;
-            transition: 0.3s;
-        }
-
-        .logout-btn button:hover {
-            color: #bb2d3b;
-            transform: scale(1.05);
-        }
-    </style>
-
-@if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
-{
-<style>
-
-#chatButton{
-    position:fixed;
-    bottom:20px;
-    left:20px;
-    width:60px;
-    height:60px;
-    background:#0d6efd;
-    color:white;
-    font-size:26px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    box-shadow:0 4px 10px rgba(0,0,0,0.25);
-    z-index:9999;
-}
-
-#chatWindow{
-    position:fixed;
-    bottom:90px;
-    left:20px;
-    width:320px;
-    height:420px;
-    background:white;
-    border-radius:10px;
-    border:1px solid #ddd;
-    display:none;
-    flex-direction:column;
-    box-shadow:0 5px 15px rgba(0,0,0,0.3);
-    z-index:9999;
-}
-
-.chat-header{
-    background:#0d6efd;
-    color:white;
-    padding:10px;
-    font-weight:bold;
-    display:flex;
-    justify-content:space-between;
-    border-radius:10px 10px 0 0;
-}
-
-.chat-messages{
-    flex:1;
-    padding:10px;
-    overflow-y:auto;
-    font-size:14px;
-}
-
-.chat-input{
-    display:flex;
-    border-top:1px solid #ddd;
-}
-
-.chat-input input{
-    flex:1;
-    border:none;
-    padding:10px;
-}
-
-.chat-input button{
-    border:none;
-    background:#0d6efd;
-    color:white;
-    padding:10px 15px;
-}
-
-</style>
-}
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-
 
 <body>
 
-<header>
+    <!-- ══ NAV ══════════════════════════════════════════════════ -->
+    <nav class="pf-nav">
 
-<nav class="navbar navbar-expand-lg bg-white my-3">
+        <a asp-action="Index" asp-controller="Home" class="pf-logo">
+            POWER<span>FIT</span>
+        </a>
 
-<div class="container">
+        <ul class="pf-links">
+            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
 
-<button class="navbar-toggler"
-type="button"
-data-bs-toggle="collapse"
-data-bs-target="#navbarSupportedContent">
-<span class="navbar-toggler-icon"></span>
-</button>
+            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+            {
+                <li><a asp-controller="Member" asp-action="Index">Members</a></li>
+                <li><a asp-controller="Trainer" asp-action="Index">Trainers</a></li>
+                <li><a asp-controller="MemberShip" asp-action="Index">Memberships</a></li>
+            }
 
-<div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <li><a asp-controller="Session" asp-action="Index">Sessions</a></li>
+            <li><a asp-controller="Plan" asp-action="Index">Plans</a></li>
+            <li><a asp-controller="Chat" asp-action="Chat">Support</a></li>
 
-<ul class="navbar-nav m-auto mb-2 mb-lg-0 mt-3 mt-lg-0">
+            <li>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:contents">
+                    <button type="submit" class="pf-logout-btn">Logout</button>
+                </form>
+            </li>
+        </ul>
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-action="Index"
-asp-controller="Home">
-Home
-</a>
-</li>
+        <button class="pf-hamburger" id="pfHamburger" aria-label="Menu">
+            <span></span><span></span><span></span>
+        </button>
+    </nav>
 
-@if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
-{
+    <!-- ══ MOBILE DRAWER ════════════════════════════════════════ -->
+    <div class="pf-drawer" id="pfDrawer">
+        <ul>
+            <li><a asp-action="Index" asp-controller="Home">Home</a></li>
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="Member"
-asp-action="Index">
-Members
-</a>
-</li>
+            @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+            {
+                <li><a asp-controller="Member" asp-action="Index">Members</a></li>
+                <li><a asp-controller="Trainer" asp-action="Index">Trainers</a></li>
+                <li><a asp-controller="MemberShip" asp-action="Index">Memberships</a></li>
+            }
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="Trainer"
-asp-action="Index">
-Trainers
-</a>
-</li>
+            <li><a asp-controller="Session" asp-action="Index">Sessions</a></li>
+            <li><a asp-controller="Plan" asp-action="Index">Plans</a></li>
+            <li><a asp-controller="Chat" asp-action="Chat">Support</a></li>
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="MemberShip"
-asp-action="Index">
-Memberships
-</a>
-</li>
+            <li>
+                <form asp-controller="Account" asp-action="Logout" method="post" style="display:contents">
+                    <button type="submit" class="pf-logout-btn">Logout</button>
+                </form>
+            </li>
+        </ul>
+    </div>
 
-}
+    <!-- ══ PAGE BODY ═════════════════════════════════════════════ -->
+    <div class="pf-body">
+        @RenderBody()
+    </div>
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="Session"
-asp-action="Index">
-Sessions
-</a>
-</li>
+    <!-- ══ CHAT (non-admin only) ═════════════════════════════════ -->
+    @if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
+    {
+        <button id="chatButton" onclick="toggleChat()" title="Support Chat">&#128172;</button>
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="Plan"
-asp-action="Index">
-Plans
-</a>
-</li>
+        <div id="chatWindow">
+            <div class="chat-header">
+                <span>Support Chat</span>
+                <button class="chat-header-close" onclick="toggleChat()">&#10005;</button>
+            </div>
+            <div class="chat-messages" id="chatMessages">
+                <div class="chat-bubble received">Hi! How can we help you today?</div>
+            </div>
+            <div class="chat-input">
+                <input type="text"
+                       id="chatInputField"
+                       placeholder="Type a message..."
+                       onkeydown="if(event.key==='Enter') sendChat()" />
+                <button onclick="sendChat()">Send</button>
+            </div>
+        </div>
+    }
 
-<li class="nav-item">
-<a class="nav-link px-3 py-2 mx-2 fw-bolder fs-5"
-asp-controller="Chat"
-asp-action="Chat">
-Support
-</a>
-</li>
+    <!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
 
-<li class="nav-item">
-<form asp-controller="Account"
-      asp-action="Logout"
-      method="post"
-      class="logout-btn">
-
-<button type="submit" class="nav-link px-3 py-2 mx-2 fw-bolder fs-5">
-Logout
-</button>
-
-</form>
-</li>
-
-</ul>
-
-</div>
-</div>
-
-</nav>
-
-</header>
-
-
-<div class="container">
-<main role="main" class="pb-3">
-@RenderBody()
-</main>
-</div>
-
-
-<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-
-@await RenderSectionAsync("Scripts", required: false)
+    @await RenderSectionAsync("Scripts", required: false)
 
 </body>
 </html>

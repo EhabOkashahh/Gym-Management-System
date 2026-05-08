@@ -1,195 +1,144 @@
 @model IEnumerable<SessionModelView>
 
 @{
-    ViewData["Title"] = "Session";
+    ViewData["Title"] = "Sessions";
 }
 
-<div class="container">
+<div class="sessions-page">
 
-    <!-- Alerts -->
-    @if (TempData["EnrollSuccess"] != null)
-    {
-        <div id="Alert" class="alert alert-success alert-dismissible fade show mt-4">
-            <i class="bi bi-check-circle-fill me-2"></i>
-            @TempData["EnrollSuccess"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    }
-    else if (TempData["EnrollError"] != null)
-    {
-        <div id="Alert" class="alert alert-danger alert-dismissible fade show mt-4">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>
-            @TempData["EnrollError"]
-            <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
-        </div>
-    }
-
-    <header class="d-flex justify-content-between mt-5 mb-4 align-items-center">
+    <!-- HEADER -->
+    <div class="sessions-header">
         <div>
-            <h2 class="text-primary-color mb-0">Training Sessions</h2>
-            <p class="text-muted">Manage gym training sessions and classes</p>
+            <div class="eyebrow">
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Sessions</span>
+            </div>
+
+            <h2 class="sec-heading">
+                TRAINING <span class="accent">SESSIONS</span>
+            </h2>
+
+            <p class="sessions-sub">
+                Explore and manage all available training sessions.
+            </p>
         </div>
 
         @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
         {
-            <a asp-action="Create"
-               class="btn fw-medium rounded-pill px-3 py-3 text-white"
-               style="background-color: #070093;">
+            <a asp-action="Create" class="btn-primary-pf">
                 + Add Session
             </a>
         }
-    </header>
+    </div>
 
+    <!-- ALERT -->
+    @if (TempData["EnrollSuccess"] != null || TempData["EnrollError"] != null)
+    {
+        <div class="pf-alert @(TempData["EnrollSuccess"] != null ? "success" : "error")" id="pfAlert">
+            @TempData["EnrollSuccess"] ?? TempData["EnrollError"]
+        </div>
+    }
+
+    <!-- CONTENT -->
     @if (Model != null && Model.Any())
     {
-        <div class="row g-4">
+        <div class="sessions-grid">
             @foreach (var session in Model)
             {
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="card h-100 shadow-sm border-0 session-card">
+                <div class="session-card-pf">
 
-                        <!-- HEADER -->
-                       <div class="card-header text-white py-3
-                            @(session.Status == "Ongoing" ? "bg-success" :
-                            session.Status == "Upcoming" ? "bg-primary" :
-                            session.Status == "Completed" ? "bg-dark" :
-                            "bg-secondary")">
-                            <div class="d-flex justify-content-between align-items-center">
-                                <h5 class="mb-0">
-                                    <i class="bi bi-calendar-event me-2"></i>
-                                    @session.CategoryName
-                                </h5>
-                                <span class="badge bg-light text-dark">
-                                    @session.Status
-                                </span>
-                            </div>
-                        </div>
+                    <!-- STATUS BAR -->
+                    <div class="session-status @session.Status.ToLower()">
+                        <span>@session.Status</span>
+                    </div>
 
-                        <!-- BODY -->
-                        <div class="card-body">
-                            <p class="text-muted mb-3">
-                                @session.Description
-                            </p>
+                    <!-- BODY -->
+                    <div class="session-body">
+                        <h3 class="session-title">@session.CategoryName</h3>
 
-                            <div class="session-info mb-3">
-                                <div class="info-item mb-2">
-                                    <i class="bi bi-person-circle text-primary-color me-2"></i>
-                                    <strong>Trainer:</strong> @session.TrainerName
-                                </div>
+                        <p class="session-desc">
+                            @session.Description
+                        </p>
 
-                                <div class="info-item mb-2">
-                                    <i class="bi bi-calendar3 text-primary-color me-2"></i>
-                                    <strong>Date:</strong> @session.DateDisplay
-                                </div>
-
-                                <div class="info-item mb-2">
-                                    <i class="bi bi-clock text-primary-color me-2"></i>
-                                    <strong>Time:</strong> @session.TimeRangeDisplay
-                                </div>
-
-                                <div class="info-item mb-2">
-                                    <i class="bi bi-hourglass-split text-primary-color me-2"></i>
-                                    <strong>Duration:</strong> @session.Duration
-                                </div>
-
-                                <div class="info-item">
-                                    <i class="bi bi-people text-primary-color me-2"></i>
-                                    <strong>Capacity:</strong> @session.ReservedSeats / @session.Capacity slots
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- FOOTER -->
-                        <div class="card-footer bg-white border-0">
-                            <div class="d-grid gap-2">
-
-                                <a asp-action="Details"
-                                   asp-route-id="@session.Id"
-                                   class="btn btn-outline btn-sm">
-                                    <i class="bi bi-eye me-1"></i>
-                                    View Details
-                                </a>
-
-                                @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
-                                {
-                                    <div class="d-flex gap-2">
-                                        <a asp-action="Edit"
-                                           asp-route-id="@session.Id"
-                                           class="btn btn-outline btn-sm flex-fill">
-                                            <i class="bi bi-pencil me-1"></i>
-                                            Edit
-                                        </a>
-
-                                        <a asp-action="Delete"
-                                           asp-route-id="@session.Id"
-                                           class="btn btn-outline text-danger btn-sm flex-fill">
-                                            <i class="bi bi-trash me-1"></i>
-                                            Delete
-                                        </a>
-                                    </div>
-                                }
-                                else
-                                {
-                                    @if (session.Status == "Completed")
-                                    {
-                                        <button class="btn btn-sm btn-secondary fw-medium" disabled>
-                                            <i class="bi bi-x-circle me-1"></i> Session Ended
-                                        </button>
-                                    }
-                                    else if (!session.IsEnrolled && session.Capacity - session.ReservedSeats == 0)
-                                    {
-                                        <button class="btn btn-sm btn-secondary fw-medium" disabled>
-                                            <i class="bi bi-x-circle me-1"></i> Session Full
-                                        </button>
-                                    }
-                                    else if (!session.IsEnrolled)
-                                    {
-                                        <form asp-action="Enroll" asp-controller="Session" method="post" class="d-grid">
-                                            <input type="hidden" name="sessionId" value="@session.Id" />
-                                            <button type="submit" class="btn btn-sm text-white fw-medium" style="background-color:#070093;">
-                                                <i class="bi bi-check-circle me-1"></i> Enroll
-                                            </button>
-                                        </form>
-                                    }
-                                    else
-                                    {
-                                        <form asp-action="Withdraw" asp-controller="Session" method="post" class="d-grid">
-                                            <input type="hidden" name="sessionId" value="@session.Id" />
-                                            <button type="submit" class="btn btn-sm btn-warning fw-medium">
-                                                <i class="bi bi-x-circle me-1"></i> Withdraw
-                                            </button>
-                                        </form>
-                                    }
-                                }
+                        <div class="session-meta">
+                            <div><strong>Trainer:</strong> @session.TrainerName</div>
+                            <div><strong>Date:</strong> @session.DateDisplay</div>
+                            <div><strong>Time:</strong> @session.TimeRangeDisplay</div>
+                            <div><strong>Duration:</strong> @session.Duration</div>
+                            <div>
+                                <strong>Capacity:</strong>
+                                @session.ReservedSeats / @session.Capacity
                             </div>
                         </div>
                     </div>
+
+                    <!-- ACTIONS -->
+                    <div class="session-actions">
+
+                        <a asp-action="Details"
+                           asp-route-id="@session.Id"
+                           class="btn-outline-pf">
+                            View
+                        </a>
+
+                        @if (User.IsInRole("Admin") || User.IsInRole("SuperAdmin"))
+                        {
+                            <a asp-action="Edit"
+                               asp-route-id="@session.Id"
+                               class="btn-outline-pf">
+                                Edit
+                            </a>
+
+                            <a asp-action="Delete"
+                               asp-route-id="@session.Id"
+                               class="btn-outline-pf danger">
+                                Delete
+                            </a>
+                        }
+                        else
+                        {
+                            @if (session.Status == "Completed")
+                            {
+                                <button class="btn-disabled">Ended</button>
+                            }
+                            else if (!session.IsEnrolled && session.Capacity - session.ReservedSeats == 0)
+                            {
+                                <button class="btn-disabled">Full</button>
+                            }
+                            else if (!session.IsEnrolled)
+                            {
+                                <form asp-action="Enroll" method="post">
+                                    <input type="hidden" name="sessionId" value="@session.Id" />
+                                    <button type="submit" class="btn-primary-pf">
+                                        Enroll
+                                    </button>
+                                </form>
+                            }
+                            else
+                            {
+                                <form asp-action="Withdraw" method="post">
+                                    <input type="hidden" name="sessionId" value="@session.Id" />
+                                    <button type="submit" class="btn-outline-pf warning">
+                                        Withdraw
+                                    </button>
+                                </form>
+                            }
+                        }
+                    </div>
+
                 </div>
             }
         </div>
     }
     else
     {
-        <div class="text-center py-5">
-            <i class="bi bi-calendar-x display-1 text-muted"></i>
-            <h4 class="mt-3 text-muted">No Sessions Available</h4>
-            <p class="text-muted">Create your first training session to get started</p>
+        <div class="empty-state">
+            <h3>No Sessions Available</h3>
+            <p>Create your first training session to get started</p>
         </div>
     }
+
 </div>
 
 @section Scripts {
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-            const alertBox = document.getElementById("Alert");
-            if (alertBox)
-            {
-                setTimeout(() => {
-                    alertBox.style.transition = "opacity 0.5s ease";
-                    alertBox.style.opacity = "0";
-                    setTimeout(() => alertBox.remove(), 500);
-                }, 1500);
-            }
-        });
-    </script>
 }

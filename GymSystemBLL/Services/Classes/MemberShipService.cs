@@ -45,11 +45,17 @@ namespace GymSystemBLL.Services.Classes
             var membership =  await GetRepo().GetByIdAsync(id);
             if(membership == null || membership.MemberShipStatus == MemberShipStatus.Canceled) return false;
 
-            if(membership.EndDate > DateTime.Now) membership.EndDate = membership.EndDate.AddDays(membership.Plan.DurationDays);
+            var plan = await _planService.GetPlanDetails(membership.PlanID);
+            if (plan == null) return false;
+
+            if (membership.EndDate > DateTime.Now) 
+            {
+                membership.EndDate = membership.EndDate.AddDays(plan.DurationDays);
+            }
             else
             {
                 membership.StartDate = DateTime.Now;
-                membership.EndDate = membership.CreatedAt.AddDays(membership.Plan.DurationDays);
+                membership.EndDate = DateTime.Now.AddDays(plan.DurationDays);
             }
             
             membership.MemberShipStatus = MemberShipStatus.Active;

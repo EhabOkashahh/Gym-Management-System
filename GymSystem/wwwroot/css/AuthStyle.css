@@ -1,4 +1,4 @@
-        :root {
+        /*:root {
             --primary-blue: #0a1172;
             --secondary-blue: #1a2396;
             --accent-blue: #2d3fdb;
@@ -31,10 +31,10 @@
             width: 100%;
             display: grid;
             grid-template-columns: 1fr 1fr;
-        }
+        }*/
 
         /* Left Side - Login Form */
-        .login-form-section {
+        /*.login-form-section {
             padding: 60px 50px;
             display: flex;
             flex-direction: column;
@@ -150,10 +150,10 @@
             color: #c62828;
             padding: 12px 20px;
             margin-bottom: 20px;
-        }
+        }*/
 
         /* Right Side - Gym Image/Info */
-        .gym-info-section {
+        /*.gym-info-section {
             background: linear-gradient(135deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
             padding: 60px 50px;
             display: flex;
@@ -228,12 +228,12 @@
             opacity: 0.9;
             text-transform: uppercase;
             letter-spacing: 1px;
-        }
+        }*/
 
 
 
         /* Loading Animation */
-        .btn-login.loading {
+        /*.btn-login.loading {
             position: relative;
             color: transparent;
         }
@@ -251,4 +251,4 @@
             border-top-color: white;
             border-radius: 50%;
             animation: spin 0.6s linear infinite;
-        }
+        }*/

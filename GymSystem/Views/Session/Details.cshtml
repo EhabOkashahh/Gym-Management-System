@@ -1,113 +1,103 @@
 @model DetailsSessionModelView
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card shadow-lg border-0">
-                       <!-- If Session Ongoing  bg-success -->
-                        <!-- If Session Upcoming  bg-primary -->
-                        <!-- If Session Completed  bg-secondary -->
-                <div class="card-header text-white text-center py-4" style="background-color: #070093;">
-                    <i class="bi bi-calendar-event display-4 mb-3"></i>
-                    <h2 class="mb-2">@Model.CategoryName</h2>
-                    <span class="badge bg-light text-dark fs-6">@Model.Status</span>
-                </div>
 
-                <div class="card-body p-4">
-                    <!-- Description -->
-                    <div class="mb-4 p-3 bg-light rounded">
-                        <h6 class="text-primary-color mb-2">
-                            <i class="bi bi-file-text me-2"></i>Description
-                        </h6>
-                        <p class="mb-0">@Model.Description</p>
-                    </div>
+@{
+    var statusClass = Model.Status == "Ongoing" ? "ongoing" :
+                      Model.Status == "Upcoming" ? "upcoming" :
+                      Model.Status == "Completed" ? "completed" : "";
+}
 
-                    <!-- Session Details -->
-                    <div class="row g-4">
-                        <div class="col-md-6">
-                            <div class="detail-box p-3 border rounded">
-                                <div class="d-flex align-items-center">
-                                    <div class="icon-box me-3">
-                                        <i class="bi bi-person-circle text-primary-color fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">Trainer</small>
-                                        <strong>@Model.TrainerName</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+<div class="session-details-page">
 
-                        <div class="col-md-6">
-                            <div class="detail-box p-3 border rounded">
-                                <div class="d-flex align-items-center">
-                                    <div class="icon-box me-3">
-                                        <i class="bi bi-people text-primary-color fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">Capacity</small>
-                                        <strong>@Model.ReservedSeats / @Model.Capacity spots</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- HEADER -->
+    <div class="session-details-header">
+        <h3>Session Details</h3>
+        <p>Full information about the training session</p>
+    </div>
 
-                        <div class="col-md-6">
-                            <div class="detail-box p-3 border rounded">
-                                <div class="d-flex align-items-center">
-                                    <div class="icon-box me-3">
-                                        <i class="bi bi-calendar-check text-primary-color fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">Start Time</small>
-                                        <strong>@Model.StartDate</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+    <!-- CARD -->
+    <div class="session-details-card">
 
-                        <div class="col-md-6">
-                            <div class="detail-box p-3 border rounded">
-                                <div class="d-flex align-items-center">
-                                    <div class="icon-box me-3">
-                                        <i class="bi bi-calendar-x text-primary-color fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">End Time</small>
-                                        <strong>@Model.EndDate</strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+        <!-- TOP SECTION -->
+        <div class="session-details-top @statusClass">
+            <i class="bi bi-calendar-event"></i>
 
-                        <div class="col-12">
-                            <div class="detail-box p-3 border rounded bg-light">
-                                <div class="d-flex align-items-center">
-                                    <div class="icon-box me-3">
-                                        <i class="bi bi-hourglass-split text-primary-color fs-3"></i>
-                                    </div>
-                                    <div>
-                                        <small class="text-muted d-block">Duration</small>
-                                        <strong class="text-primary-color fs-5">
-                                           @{
-                                            var time = Model.EndDate - Model.StartDate;
-                                           }
-                                           @time
-                                        </strong>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+            <h2 class="session-details-title">
+                @Model.CategoryName
+            </h2>
+
+            <span class="session-details-badge @statusClass">
+                @Model.Status
+            </span>
+        </div>
+
+        <!-- BODY -->
+        <div class="session-details-body">
+
+            <!-- DESCRIPTION -->
+            <div class="session-details-block">
+                <h6>Description</h6>
+                <p>@Model.Description</p>
+            </div>
+
+            <!-- GRID -->
+            <div class="session-details-grid">
+
+                <div class="session-details-item">
+                    <i class="bi bi-person-circle"></i>
+                    <div>
+                        <small>Trainer</small>
+                        <strong>@Model.TrainerName</strong>
                     </div>
                 </div>
 
-                <div class="card-footer bg-white border-0 p-4">
-                    <div class="d-flex justify-content-between gap-2">
-                        <a asp-action="Index" class="btn btn-outline flex-fill">
-                            <i class="bi bi-arrow-left me-1"></i>Back to List
-                        </a>
+                <div class="session-details-item">
+                    <i class="bi bi-people"></i>
+                    <div>
+                        <small>Capacity</small>
+                        <strong>@Model.ReservedSeats / @Model.Capacity spots</strong>
                     </div>
                 </div>
+
+                <div class="session-details-item">
+                    <i class="bi bi-calendar-check"></i>
+                    <div>
+                        <small>Start Time</small>
+                        <strong>@Model.StartDate</strong>
+                    </div>
+                </div>
+
+                <div class="session-details-item">
+                    <i class="bi bi-calendar-x"></i>
+                    <div>
+                        <small>End Time</small>
+                        <strong>@Model.EndDate</strong>
+                    </div>
+                </div>
+
+                @{
+                    var time = Model.EndDate - Model.StartDate;
+                }
+
+                <div class="session-details-item full">
+                    <i class="bi bi-hourglass-split"></i>
+                    <div>
+                        <small>Duration</small>
+                        <strong>@time</strong>
+                    </div>
+                </div>
+
             </div>
         </div>
+
+        <!-- FOOTER -->
+        <div class="session-details-actions">
+
+            <a asp-action="Index" class="btn-outline-pf">
+                Back
+            </a>
+
+        </div>
+
     </div>
+
 </div>

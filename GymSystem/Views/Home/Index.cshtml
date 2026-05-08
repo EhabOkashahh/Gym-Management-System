@@ -1,430 +1,316 @@
 ﻿@model AnalyticsModelView
-<!DOCTYPE html>
-<html lang="en">
+@{
+    ViewData["Title"] = "Home";
+}
 
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="author" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Baloo+Thambi+2:wght@400..800&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap"
-    rel="stylesheet" />
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" />
-  <!-- ^ Bootstrap 5.3.8 css file -->
-<link rel="stylesheet" href="./css/bootstrap.min.css" />
-<link rel="stylesheet" href="./css/style.css" />
-  <title>Power fitness | @ViewData["Title"]</title>
-</head>
+<div class="home-wrap">
 
+    <!-- ══ HERO ══════════════════════════════════════════════════ -->
+    <section class="hero">
+        <div class="hero-grid-lines"></div>
+        <div class="hero-divider"></div>
 
+        <div class="hero-left">
+            <div class="h-eyebrow">
+                <div class="h-eyebrow-line"></div>
+                <span class="h-eyebrow-text">Elite Training &middot; Est. 2015</span>
+            </div>
 
-<body>
-  <div class="container">
-    <main role="main" class="pb-3">
-      <div class="row">
-        <div class="col-md-6 col-lg-7 col-12">
-          <div class="info mt-4">
-            <header class="text-black-alternative">
-              <h2 class="fw-bolder display-2 mb-4">
-                Your body can
-                <span class="text-primary-color">stand almost</span> anything
-              </h2>
+            <h1 class="hero-heading">
+                YOUR BODY<br>
+                CAN STAND<br>
+                <span class="accent">ALMOST</span><br>
+                ANYTHING
+            </h1>
 
-              <p class="mb-6">
+            <p class="hero-subtext">
                 It's your mind that needs convincing. Push past your limits,
-                stay <br />
-                committed, and watch as your body transform into powerhouse of
-                <br />
-                strength and resilience. Start your journey today & truly
-                capable of!
-              </p>
-            </header>
+                stay committed, and watch your body transform into a powerhouse
+                of strength and resilience. Start your journey today.
+            </p>
 
-            <div class="stats-bar">
-              <div class="row g-0">
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.TotalMembers</span>
-                    <h3 class="fs-5 fw-normal">Total Members</h3>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.ActiveMembers</span>
-                    <h3 class="fs-5 fw-normal">Active Members</h3>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.Trainers</span>
-                    <h3 class="fs-5 fw-normal">Trainers</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="row g-0">
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.UpcomingSessions</span>
-                    <h3 class="fs-5 fw-normal">Upcoming Sessions</h3>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.OngoingSessions</span>
-                    <h3 class="fs-5 fw-normal">Ongoing Sessions</h3>
-                  </div>
-                </div>
-                <div class="col-4">
-                  <div class="stat">
-                    <span class="fw-bolder fs-5 d-block mb-1">@Model.CompletedSessions</span>
-                    <h3 class="fs-5 fw-normal">Completed Sessions</h3>
-                  </div>
-                </div>
-              </div>
+            <div class="hero-btns">
+                <button class="btn-primary-pf">Get Started</button>
+                <button class="btn-outline-pf">Explore More</button>
             </div>
-
-            <div class="buttons my-4">
-              <button
-                class="get-started bg-primary-color text-white btn rounded-5 fw-medium px-3 py-2 me-5 border-2 border-primary-color">
-                Get Started
-              </button>
-
-              <button
-                class="explore-more border-primary-color btn rounded-5 fw-medium px-3 py-2 border-2 text-primary-color fw-medium">
-                Explore More
-              </button>
-            </div>
-          </div>
         </div>
 
-        <div class="col-md-1 offset-md-2 col-12 order-first order-md-last">
-          <div class="character d-md-block d-flex justify-content-center">
-            <img src="./images/Theo Vance.jpg" alt="Theo Vance" />
-          </div>
+        <div class="hero-right">
+            <div class="hero-photo">
+                <img src="~/images/download.png" alt="Theo Vance"
+                     onerror="this.style.display='none'" />
+                <div class="hero-photo-bg">PWR</div>
+            </div>
         </div>
-      </div>
+    </section>
 
-      <div class="bar bg-primary-color d-flex py-4 text-white fw-bolder align-items-center">
-        <p class="py-0 my-0 overflow-hidden text-nowrap">
-          outdoor & online trainers
-          <img src="./images/star.svg" alt="star icon" /> personal training
-          <img src="./images/star.svg" alt="star icon" /> live classes
-          <img src="./images/star.svg" alt="star icon" /> personal trainers
-          <img src="./images/star.svg" alt="star icon" /> personal training
-        </p>
-      </div>
+    <!-- ══ STATS BAR ══════════════════════════════════════════════ -->
+    <div class="stats-bar">
+        <div class="stat-card">
+            <div class="stat-icon">&#128101;</div>
+            <div class="stat-value">@Model.TotalMembers</div>
+            <div class="stat-label">Total Members</div>
+            <div class="stat-bar"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">&#9889;</div>
+            <div class="stat-value">@Model.ActiveMembers</div>
+            <div class="stat-label">Active Members</div>
+            <div class="stat-bar"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">&#127947;</div>
+            <div class="stat-value">@Model.Trainers</div>
+            <div class="stat-label">Trainers</div>
+            <div class="stat-bar"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">&#128197;</div>
+            <div class="stat-value">@Model.UpcomingSessions</div>
+            <div class="stat-label">Upcoming Sessions</div>
+            <div class="stat-bar"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">&#9654;</div>
+            <div class="stat-value">@Model.OngoingSessions</div>
+            <div class="stat-label">Ongoing Sessions</div>
+            <div class="stat-bar"></div>
+        </div>
+        <div class="stat-card">
+            <div class="stat-icon">&#10003;</div>
+            <div class="stat-value">@Model.CompletedSessions</div>
+            <div class="stat-label">Completed Sessions</div>
+            <div class="stat-bar"></div>
+        </div>
+    </div>
 
-      <!-- ^ all other section -->
-      <main>
-        <!-- ^ about section -->
-        <section class="about my-5 text-black-alternative">
-          <div class="container">
-            <div class="row g-5 justify-content-center">
-              <div class="col-12 col-lg-6 w-50 w-md-100">
-                <div class="characters position-relative">
-                  <div class="image">
-                    <img class="" src="./images/about p1.jpg" alt="person" />
-                  </div>
+    <!-- ══ TICKER ══════════════════════════════════════════════════ -->
+    <div class="ticker">
+        <div class="ticker-track">
+            <span class="ticker-item">Outdoor &amp; Online Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Training <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Live Classes <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Group Workouts <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Nutrition Plans <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Outdoor &amp; Online Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Training <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Live Classes <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Group Workouts <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Nutrition Plans <span class="ticker-dot"></span></span>
+        </div>
+    </div>
 
-                  <div class="image position-absolute d-none d-lg-block">
-                    <img src="./images/about p2.jpg" alt="person" />
-                  </div>
-
-                  <div class="image position-absolute d-none d-lg-block">
-                    <img src="./images/about p3.jpg" alt="person" />
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-12 col-lg-6">
-                <div class="title d-flex justify-content-start align-items-start gap-2">
-                  <img class="" src="./images/dumbbell.jpg" alt="dumbbell icon" />
-                  <h2 class="text-primary-color fs-5">About Us</h2>
-                </div>
-
-                <header>
-                  <p class="fw-bolder display-6 mb-4">
-                    EMPOWERING YOU TO ACHIEVE
-                    <span class="text-primary-color">YOUR FITNESS</span> GOALS
-                  </p>
-                  <p class="text">
-                    We believe fitness is more than just a workout—it's a
-                    lifestyle. With top-of- the-line facilities, certified
-                    trainers, and a supportive community, we're here to inspire
-                    and guide you every step of the way.
-                  </p>
-                </header>
-
-                <div class="features">
-                  <div class="row row-cols-1 row-cols-sm-2 gx-3 gy-5">
-                    <div class="feature">
-                      <div class="inner">
-                        <div class="title d-flex gap-2">
-                          <img src="./images/feature icon.jpg" alt="icon" />
-                          <h3 class="fw-bold">Personal Trainer</h3>
-                        </div>
-                        <div class="info">
-                          <p>Achieve your fitness goals with the</p>
-                          <p>guidance of our certified trainers.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="feature">
-                      <div class="inner">
-                        <div class="title d-flex gap-2">
-                          <img src="./images/feature icon.jpg" alt="icon" />
-                          <h3 class="fw-bold">Personal Trainer</h3>
-                        </div>
-                        <div class="info">
-                          <p>Achieve your fitness goals with the</p>
-                          <p>guidance of our certified trainers.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="feature">
-                      <div class="inner">
-                        <div class="title d-flex gap-2">
-                          <img src="./images/feature icon.jpg" alt="icon" />
-                          <h3 class="fw-bold">Personal Trainer</h3>
-                        </div>
-                        <div class="info">
-                          <p>Achieve your fitness goals with the</p>
-                          <p>guidance of our certified trainers.</p>
-                        </div>
-                      </div>
-                    </div>
-
-                    <div class="feature">
-                      <div class="inner">
-                        <div class="title d-flex gap-2">
-                          <img src="./images/feature icon.jpg" alt="icon" />
-                          <h3 class="fw-bold">Personal Trainer</h3>
-                        </div>
-                        <div class="info">
-                          <p>Achieve your fitness goals with the</p>
-                          <p>guidance of our certified trainers.</p>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                  <button class="btn bg-primary-color rounded-pill text-white fw-medium px-4 py-2 mt-3">
-                    Get Started
-                  </button>
-                </div>
-              </div>
+    <!-- ══ ABOUT ══════════════════════════════════════════════════ -->
+    <section class="about-sec">
+        <div class="about-images">
+            <div class="about-img about-img-main">
+                <img src="~/images/Redhulk 2nd Section.png" alt="Training" onerror="this.style.display='none'" />
+                <div class="img-bg-text">A</div>
             </div>
-          </div>
-        </section>
-
-        <!-- ^ workout section -->
-        <section class="workout">
-          <div class="container">
-            <div class="title">
-              <h2>WORKOUTS</h2>
-              <p class="text-white fw-bolder fs-2 mb-4">
-                Transform Your Body with Our Dynamic Upcoming Workouts
-              </p>
+            <div class="about-img about-img-sec">
+                <img src="~/images/Redhulk 2nd Section 2.png" alt="Training" onerror="this.style.display='none'" />
+                <div class="img-bg-text">B</div>
             </div>
-
-            <div class="row row-cols-md-3 row-cols-12 gy-4 gx-2 gx-md-4">
-              <div>
-                <div class="card">
-                  <img src="./images/workout 1.jpg" class="card-img-top" alt="..." />
-
-                  <footer class="card-footer bg-white">
-                    <h5 class="card-title text-black-alternative text-uppercase fw-bolder">
-                      group workout
-                    </h5>
-                    <a href="#" class="">Explore</a>
-                  </footer>
-                </div>
-              </div>
-
-              <div>
-                <div class="card">
-                  <img src="./images/workout 2.jpg" class="card-img-top" alt="..." />
-
-                  <footer class="card-footer bg-white">
-                    <h5 class="card-title text-black-alternative text-uppercase fw-bolder">
-                      group workout
-                    </h5>
-                    <a href="#" class="">Explore</a>
-                  </footer>
-                </div>
-              </div>
-
-              <div>
-                <div class="card">
-                  <img src="./images/workout 3.jpg" class="card-img-top" alt="..." />
-
-                  <footer class="card-footer bg-white">
-                    <h5 class="card-title text-black-alternative text-uppercase fw-bolder">
-                      group workout
-                    </h5>
-                    <a href="#" class="">Explore</a>
-                  </footer>
-                </div>
-              </div>
+            <div class="about-badge">
+                <div class="about-badge-num">10+</div>
+                <div class="about-badge-text">Years of<br>Excellence</div>
             </div>
-
-            <div class="indicators">
-              <div class="indicator"></div>
-              <div class="indicator active"></div>
-              <div class="indicator"></div>
-              <div class="indicator"></div>
-            </div>
-          </div>
-        </section>
-
-        <!-- ^ why-us section -->
-        <section class="why-us my-5">
-          <div class="container">
-            <div class="row row-cols-1 row-cols-lg-2">
-              <div class="info">
-                <div>
-                  <div class="title d-flex justify-content-start align-items-start gap-2">
-                    <img class="" src="./images/dumbbell.jpg" alt="dumbbell icon" />
-                    <h2 class="text-primary-color fs-5">Why Us</h2>
-                  </div>
-
-                  <header>
-                    <p class="fw-bolder display-5 mb-4">
-                      Elevate fitness with<br />
-                      <span class="text-primary-color">the best</span> way
-                      possible
-                    </p>
-                    <p class="text">
-                      We believe fitness is more than just a workout—it's a
-                      lifestyle. With top-of- the-line facilities, certified
-                      trainers, and a supportive community, we're here to inspire
-                      and guide you every step of the way.
-                    </p>
-                  </header>
-
-                  <ul class="featutes list-unstyled mt-6">
-                    <li class="feature d-flex gap-4 align-items-center mb-4">
-                      <div class="count">01</div>
-
-                      <div class="text">
-                        <h3 class="text-capitalize fw-bold">
-                          personalized fitness plans
-                        </h3>
-                        <p class="fs-18">
-                          We tailor every workout to fit your unique goals and
-                          fitness level ensuring that you make the most progress.
-                        </p>
-                      </div>
-                    </li>
-
-                    <li class="feature d-flex gap-4 align-items-center mb-4">
-                      <div class="count">01</div>
-
-                      <div class="text">
-                        <h3 class="text-capitalize fw-bold">
-                          personalized fitness plans
-                        </h3>
-                        <p class="fs-18">
-                          We tailor every workout to fit your unique goals and
-                          fitness level ensuring that you make the most progress.
-                        </p>
-                      </div>
-                    </li>
-
-                    <li class="feature d-flex gap-4 align-items-center">
-                      <div class="count">01</div>
-
-                      <div class="text">
-                        <h3 class="text-capitalize fw-bold">
-                          personalized fitness plans
-                        </h3>
-                        <p class="fs-18">
-                          We tailor every workout to fit your unique goals and
-                          fitness level ensuring that you make the most progress.
-                        </p>
-                      </div>
-                    </li>
-                  </ul>
-                </div>
-              </div>
-
-            </div>
-          </div>
-        </section>
-      </main>
-      <footer class="mt-5">
-        <div class="bar bg-primary-color d-flex py-4 text-white fw-bolder align-items-center">
-          <p class="py-0 my-0 overflow-hidden text-nowrap">
-            outdoor & online trainers
-            <img src="../images/star.svg" alt="star icon" /> personal training
-            <img src="../images/star.svg" alt="star icon" /> live classes
-            <img src="../images/star.svg" alt="star icon" /> personal trainers
-            <img src="../images/star.svg" alt="star icon" /> personal training
-          </p>
         </div>
 
-        <div class="footer-content my-5">
-          <div class="container">
-            <div class="row row-cols-2 row-cols-md-4 g-5">
-              <div class="logo">
-                <div class="inner">
-                  <div class="image">
-                    <img src="../images/logo.jpg" alt="our logo" />
-                  </div>
-                  <p class="fs-18 mt-2">
-                    Push harder, go further. Your <br />
-                    fitness journey starts today!
-                  </p>
+        <div class="about-body">
+            <div class="eyebrow">
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">About Us</span>
+            </div>
+            <h2 class="sec-heading">
+                EMPOWERING YOUR<br>
+                <span class="accent">FITNESS</span> GOALS
+            </h2>
+            <p class="lead-text">
+                We believe fitness is more than just a workout — it's a lifestyle.
+                With top-of-the-line facilities, certified trainers, and a supportive
+                community, we're here to inspire and guide you every step of the way.
+            </p>
+
+            <div class="about-features">
+                <div class="feat">
+                    <div class="feat-icon">&#9670;</div>
+                    <div><h4>Personal Trainer</h4><p>Achieve your goals with certified trainer guidance.</p></div>
                 </div>
-              </div>
+                <div class="feat">
+                    <div class="feat-icon">&#8862;</div>
+                    <div><h4>Group Classes</h4><p>High-energy sessions in a motivating team environment.</p></div>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon">&#9678;</div>
+                    <div><h4>Nutrition Plans</h4><p>Custom plans designed around your physique goals.</p></div>
+                </div>
+                <div class="feat">
+                    <div class="feat-icon">&#8853;</div>
+                    <div><h4>Recovery Zone</h4><p>Ice baths, saunas, and dedicated recovery facilities.</p></div>
+                </div>
+            </div>
 
-              <div class="contact">
-                <h4 class="fw-bolder text-uppercase mb-4">contact us</h4>
+            <button class="btn-primary-pf">Get Started Today</button>
+        </div>
+    </section>
 
-                <ul>
-                  <li class="d-flex align-items-center gap-2">
-                    <div class="icon">
-                      <img src="../images/phone icon.jpg" alt="phone icon" />
-                    </div>
-                    <p>+91 123 456 789</p>
-                  </li>
+    <!-- ══ WORKOUTS ════════════════════════════════════════════════ -->
+    <div class="workouts-sec">
+        <div class="sec-header">
+            <div>
+                <div class="eyebrow">
+                    <div class="eyebrow-line"></div>
+                    <span class="eyebrow-text">Programs</span>
+                </div>
+                <h2 class="sec-heading">
+                    TRANSFORM WITH OUR<br>
+                    <span class="accent">WORKOUTS</span>
+                </h2>
+            </div>
+            <a href="#" class="view-all">View All &nbsp;&#8594;</a>
+        </div>
 
-                  <li class="d-flex align-items-center gap-2">
-                    <div class="icon">
-                      <img src="../images/message icon.jpg" alt="message icon" />
-                    </div>
-                    <p>info@gmail.com</p>
-                  </li>
+        <div class="workouts-grid">
+            <div class="wcard">
+                <div class="wcard-bg wcard-bg-1"></div>
+                <div class="wcard-flair"><span class="wcard-flair-text">GW</span></div>
+                <img src="~/images/Redhulk 3rd Section 1.png" alt="Group Workout" onerror="this.style.display='none'" />
+                <div class="wcard-overlay"></div>
+                <div class="wcard-content">
+                    <span class="wcard-tag">Popular</span>
+                    <div class="wcard-title">GROUP WORKOUT</div>
+                    <div class="wcard-meta"><span>60 min</span><span>·</span><span>All levels</span></div>
+
+                </div>
+            </div>
+
+            <div class="wcard">
+                <div class="wcard-bg wcard-bg-2"></div>
+                <div class="wcard-flair"><span class="wcard-flair-text">PT</span></div>
+                <img src="~/images/Redhulk 3rd Section 2.png" alt="Power Training" onerror="this.style.display='none'" />
+                <div class="wcard-overlay"></div>
+                <div class="wcard-content">
+                    <span class="wcard-tag">Intense</span>
+                    <div class="wcard-title">POWER TRAINING</div>
+                    <div class="wcard-meta"><span>45 min</span><span>·</span><span>Advanced</span></div>
+                </div>
+            </div>
+
+            <div class="wcard">
+                <div class="wcard-bg wcard-bg-3"></div>
+                <div class="wcard-flair"><span class="wcard-flair-text">CB</span></div>
+                <img src="~/images/Redhulk 3rd Section 3.png" alt="Circuit Blast" onerror="this.style.display='none'" />
+                <div class="wcard-overlay"></div>
+                <div class="wcard-content">
+                    <span class="wcard-tag">New</span>
+                    <div class="wcard-title">CIRCUIT BLAST</div>
+                    <div class="wcard-meta"><span>30 min</span><span>·</span><span>Beginner</span></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══ WHY US ═════════════════════════════════════════════════ -->
+    <section class="whyus-sec">
+        <div>
+            <div class="eyebrow">
+                <div class="eyebrow-line"></div>
+                <span class="eyebrow-text">Why Us</span>
+            </div>
+            <h2 class="sec-heading">
+                ELEVATE FITNESS<br>
+                THE <span class="accent">BEST</span> WAY
+            </h2>
+            <p class="whyus-lead">
+                We believe fitness is more than just a workout — it's a lifestyle.
+                With top-of-the-line facilities, certified trainers, and a supportive
+                community, we're here to inspire you every step of the way.
+            </p>
+            <button class="btn-primary-pf" style="margin-top:2rem;">Join The Community</button>
+        </div>
+
+        <ul class="why-list">
+            <li class="why-item">
+                <div class="why-num">01</div>
+                <div class="why-text">
+                    <h3>Personalized Fitness Plans</h3>
+                    <p>We tailor every workout to fit your unique goals and fitness level, ensuring you make the most progress.</p>
+                </div>
+            </li>
+            <li class="why-item">
+                <div class="why-num">02</div>
+                <div class="why-text">
+                    <h3>Expert Certified Trainers</h3>
+                    <p>Our certified professionals bring decades of experience to help you train smarter and recover faster.</p>
+                </div>
+            </li>
+            <li class="why-item">
+                <div class="why-num">03</div>
+                <div class="why-text">
+                    <h3>World-Class Facilities</h3>
+                    <p>State-of-the-art equipment, recovery zones, and nutrition bars — everything under one roof.</p>
+                </div>
+            </li>
+        </ul>
+    </section>
+
+    <!-- ══ FOOTER TICKER ══════════════════════════════════════════ -->
+    <div class="ticker">
+        <div class="ticker-track rev">
+            <span class="ticker-item">Outdoor &amp; Online Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Training <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Live Classes <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Group Workouts <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Nutrition Plans <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Outdoor &amp; Online Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Training <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Live Classes <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Personal Trainers <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Group Workouts <span class="ticker-dot"></span></span>
+            <span class="ticker-item">Nutrition Plans <span class="ticker-dot"></span></span>
+        </div>
+    </div>
+
+    <!-- ══ FOOTER ══════════════════════════════════════════════════ -->
+    <footer class="site-footer">
+        <div class="footer-main">
+            <div>
+                <div class="footer-logo">POWER<span>FIT</span></div>
+                <p class="footer-tagline">Push harder, go further.<br>Your fitness journey starts today.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <ul class="footer-list">
+                    <li><span class="fi">&#9990;</span> +91 123 456 789</li>
+                    <li><span class="fi">&#9993;</span> info@powerfitness.com</li>
                 </ul>
-              </div>
-
-              <div class="time">
-                <h4 class="fw-bolder text-uppercase mb-4">our gym timing</h4>
-
-                <p>
-                  Mon - Fri : 08:00 AM - 10:00 PM <br />Sat - Sun : 08:00 AM -
-                  09:00 PM
-                </p>
-              </div>
-
-              <div class="location">
-                <h4 class="fw-bolder text-uppercase mb-4">our location</h4>
-
-                <p>
-                  2715 Ash Dr. San Jose, South <br />
-                  Dakota 83475
-                </p>
-              </div>
             </div>
-          </div>
+            <div class="footer-col">
+                <h4>Gym Timing</h4>
+                <ul class="footer-list">
+                    <li>Mon &ndash; Fri &nbsp;&nbsp; 08:00 AM &ndash; 10:00 PM</li>
+                    <li>Sat &ndash; Sun &nbsp;&nbsp; 08:00 AM &ndash; 09:00 PM</li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Location</h4>
+                <ul class="footer-list">
+                    <li>2715 Ash Dr. San Jose,<br>South Dakota 83475</li>
+                </ul>
+            </div>
         </div>
-      </footer>
+        <div class="footer-bottom">
+            <p>&copy; 2026 PowerFit. All rights reserved.</p>
+            <ul class="footer-bottom-links">
+                <li><a href="#">Privacy Policy</a></li>
+                <li><a href="#">Terms of Service</a></li>
+                <li><a href="#">Sitemap</a></li>
+            </ul>
+        </div>
+    </footer>
 
-    </main>
-  </div>
-</body>
-
-</html>
+</div>

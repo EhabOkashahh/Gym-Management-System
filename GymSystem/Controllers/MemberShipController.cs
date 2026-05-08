@@ -19,6 +19,7 @@ namespace GymSystem.Controllers
             var MS = await _memberShipService.GetAllMemberShipAsync();
             return View(MS);
         }
+        [HttpPost]
         public async Task<IActionResult> ToggleCancelMemberShip(int? id)
         {
             if (id is null)

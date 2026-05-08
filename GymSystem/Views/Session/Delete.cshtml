@@ -1,33 +1,57 @@
-<div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card shadow-lg border-0 text-center">
-                <div class="card-body p-5">
-                    <div class="mb-4">
-                        <i class="bi bi-exclamation-triangle-fill text-warning display-1"></i>
-                    </div>
+@section Styles {
+    <link rel="stylesheet" href="~/css/site.css" />
+}
 
-                    <h3 class="text-primary-color mb-3">Delete Session</h3>
+<div class="session-delete-page">
 
-                    <div class="alert alert-warning text-start mb-4">
-                        <strong><i class="bi bi-info-circle me-2"></i>Warning:</strong>
-                        This action cannot be undone. All session data and bookings will be permanently deleted.
-                    </div>
-                    <p class="text-muted mb-4">Are you sure you want to delete this session?</p>
+    <div class="session-delete-card">
 
-                    <form asp-action="Delete" method="post">
-                        <input type="hidden" name="id" value="@ViewBag.Id" />
-                        <div class="d-flex justify-content-between gap-3">
-                            <a asp-action="Index" class="btn btn-outline flex-fill">
-                                <i class="bi bi-x-lg me-1"></i>Cancel
-                            </a>
-                            <button type="submit" class="btn btn-fill bg-danger border-danger flex-fill">
-                                <i class="bi bi-trash me-1"></i>Delete
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <!-- ICON -->
+        <div class="session-delete-icon">
+            <i class="bi bi-exclamation-triangle-fill"></i>
         </div>
+
+        <!-- TITLE -->
+        <h3 class="session-delete-title">
+            Delete Session
+        </h3>
+
+        <!-- WARNING -->
+        <div class="session-delete-warning">
+            <i class="bi bi-info-circle"></i>
+            <span>
+                This action cannot be undone.
+                All session data and bookings will be permanently deleted.
+            </span>
+        </div>
+
+        <!-- CONFIRM TEXT -->
+        <p class="session-delete-text">
+            Are you sure you want to delete this session?
+        </p>
+
+        <!-- SESSION ID -->
+        <div class="session-delete-box">
+            <small>Session ID</small>
+            <strong>#@ViewBag.Id</strong>
+        </div>
+
+        <!-- FORM -->
+        <form asp-action="Delete" method="post" class="session-delete-actions">
+
+            <input type="hidden" name="id" value="@ViewBag.Id" />
+
+            <a asp-action="Index" class="btn-outline-pf">
+                Cancel
+            </a>
+
+            <button type="submit" class="btn-primary-pf danger">
+                <i class="bi bi-trash"></i>
+                Delete
+            </button>
+
+        </form>
+
     </div>
+
 </div>

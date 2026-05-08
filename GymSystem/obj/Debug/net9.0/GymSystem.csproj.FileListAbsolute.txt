@@ -267,11 +267,8 @@ D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\rjsmcshtml.dswa.cache.json
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\scopedcss\Views\Shared\_Layout.cshtml.rz.scp.css
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\scopedcss\bundle\GymSystem.styles.css
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\scopedcss\projectbundle\GymSystem.bundle.scp.css
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\5bun8x5jk5-b9sayid5wm.gz
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\lvea2rzzhh-m38wtjmxib.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\9uuskgzs3o-61n19gt1b8.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\oxk4q01lmy-hby4qdiqxa.gz
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\gtdbrstew4-xtxxf3hu2r.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\83d33lxigw-bqjiyaj88i.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\57jybr7v63-c2jlpeoesf.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\0yg0z5ego5-erw9l3u2r3.gz
@@ -357,5 +354,8 @@ D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.FilePro
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identity.Core.dll
 D:\VS PROJECTS\GymSystem\GymSystem\bin\Debug\net9.0\Microsoft.Extensions.Identity.Stores.dll
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\GymSystem.MvcApplicationPartsAssemblyInfo.cs
-D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\mfawmp6avc-zihl4qxq9i.gz
 D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\staticwebassets.upToDateCheck.txt
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\mfawmp6avc-da8jjdigwr.gz
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\lvea2rzzhh-c62k3ltmq3.gz
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\5bun8x5jk5-zet95c70bv.gz
+D:\VS PROJECTS\GymSystem\GymSystem\obj\Debug\net9.0\compressed\gtdbrstew4-rakjaj9bb7.gz
