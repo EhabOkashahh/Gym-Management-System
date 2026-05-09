@@ -25,24 +25,6 @@ The Gym Management System is a comprehensive solution designed to streamline the
 
 ---
 
-## Screenshots
-
-<div align="center">
-  <img src="screenshots/1.png" alt="Home" width="800"/>
-  <br/><br/>
-  <img src="screenshots/22.png" alt="Plans" width="800"/>
-  <br/><br/>
-  <img src="screenshots/3.png" alt="Memberships" width="800"/>
-  <br/><br/>
-  <img src="screenshots/4.png" alt="User Side Support Chat" width="800"/>
-  <br/><br/>
-  <img src="screenshots/5.png" alt="Admin Side Support Chat" width="800"/>
-  <br/><br/>
-  <img src="screenshots/6.png" alt="Session Enrollment" width="800"/>
-</div>
-
----
-
 ## Features
 
 | Feature | Description |
