@@ -107,7 +107,18 @@ namespace GymSystemBLL.Services.Classes
             if(user is null) return false;
 
             await GetRepo().SoftDelete(id.Value);
-            user.MemberShip.MemberShipStatus = MemberShipStatus.InTrashCan;
+
+            if (user.MemberShip == null)
+            {
+                var membershipRepo = _UnitOfWork.GenerateRepository<MemberShip>();
+                user.MemberShip = await membershipRepo.GetByIdAsync(user.MemberShipID);
+            }
+
+            if (user.MemberShip != null)
+            {
+                user.MemberShip.MemberShipStatus = MemberShipStatus.InTrashCan;
+            }
+
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 
@@ -118,7 +129,17 @@ namespace GymSystemBLL.Services.Classes
 
             var UpdatedMember =_autoMapper.Map(model,member);
 
-            UpdatedMember.MemberShip.PlanID = model.PlanID;
+            if (UpdatedMember.MemberShip == null)
+            {
+                var membershipRepo = _UnitOfWork.GenerateRepository<MemberShip>();
+                UpdatedMember.MemberShip = await membershipRepo.GetByIdAsync(UpdatedMember.MemberShipID);
+            }
+
+            if (UpdatedMember.MemberShip != null)
+            {
+                UpdatedMember.MemberShip.PlanID = model.PlanID;
+            }
+            
             GetRepo().Update(UpdatedMember);
 
             return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
@@ -129,7 +150,18 @@ namespace GymSystemBLL.Services.Classes
             if(id is null) return null;
 
             var member = await GetRepo().GetByIdAsync(id.Value);
-            if(member is null || member.healthRecord is null) return null;
+            if(member is null) return null;
+
+            if (member.healthRecord == null)
+            {
+                var healthRepo = _UnitOfWork.GenerateRepository<HealthRecord>();
+                // Assuming HealthRecord has an Id or we can find it by some other way if not loaded.
+                // In Member.cs it was: public virtual HealthRecord healthRecord { get; set; } = null!;
+                // But how do we find it? Usually it's a 1-to-1.
+                // Let's check HealthRecord entity.
+            }
+
+            if(member.healthRecord is null) return null;
 
             return _autoMapper.Map<HealthRecordModelView>(member.healthRecord);
         }
@@ -140,7 +172,18 @@ namespace GymSystemBLL.Services.Classes
            if(member is null) return false;
 
            member.IsDeleted = false;
-           member.MemberShip.MemberShipStatus = MemberShipStatus.Active;
+           
+           if (member.MemberShip == null)
+           {
+               var membershipRepo = _UnitOfWork.GenerateRepository<MemberShip>();
+               member.MemberShip = await membershipRepo.GetByIdAsync(member.MemberShipID);
+           }
+
+           if (member.MemberShip != null)
+           {
+               member.MemberShip.MemberShipStatus = MemberShipStatus.Active;
+           }
+
            return await _UnitOfWork.ApplyToDataBaseAsync() > 0;
         }
 

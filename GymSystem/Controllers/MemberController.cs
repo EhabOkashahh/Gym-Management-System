@@ -118,7 +118,7 @@ namespace GymSystem.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpPost]
-        public async Task<IActionResult> SoftDeleteMemberAsync(int? Id)
+        public async Task<IActionResult> SoftDeleteMember(int? Id)
         {
             if (Id is null)
             {
@@ -141,10 +141,11 @@ namespace GymSystem.Controllers
 
         #endregion 
 
+        [HttpPost]
         public async Task<IActionResult> RestoreMember(int id)
         {
             var res = await _memberService.RestoreMember(id);
-            if(!res) TempData["DeletionError"] = "Something went wrong while deleting. Try again later.";
+            if(!res) TempData["DeletionError"] = "Something went wrong while restoring. Try again later.";
             
             return RedirectToAction(nameof(Index));
         }

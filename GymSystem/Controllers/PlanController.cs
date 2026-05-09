@@ -10,7 +10,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace GymSystem.Controllers
 {
-        [Authorize(Roles = "Admin,SuperAdmin")]
     public class PlanController(IPlanService _PlanService , IMapper _mapper) : Controller
     {
         public async Task<IActionResult> Index()

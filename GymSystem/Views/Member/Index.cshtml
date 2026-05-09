@@ -204,11 +204,19 @@
     <script>
         // restore + soft delete
         function setRestoreId(id) {
-            document.getElementById("RestoreMemberId").value = id;
+            if (confirm("Are you sure you want to restore this member?")) {
+                const form = document.getElementById("RestoreMemberId").closest("form");
+                document.getElementById("RestoreMemberId").value = id;
+                form.submit();
+            }
         }
 
         function setSoftDeleteId(id) {
-            document.getElementById("SoftDeleteMemberId").value = id;
+            if (confirm("Are you sure you want to move this member to trash?")) {
+                const form = document.getElementById("SoftDeleteMemberId").closest("form");
+                document.getElementById("SoftDeleteMemberId").value = id;
+                form.submit();
+            }
         }
 
         // TAB SWITCH
