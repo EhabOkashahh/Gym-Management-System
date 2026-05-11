@@ -79,27 +79,7 @@
     </div>
 
     <!-- ══ CHAT (non-admin only) ═════════════════════════════════ -->
-    @if (!User.IsInRole("Admin") && !User.IsInRole("SuperAdmin"))
-    {
-        <button id="chatButton" onclick="toggleChat()" title="Support Chat">&#128172;</button>
-
-        <div id="chatWindow">
-            <div class="chat-header">
-                <span>Support Chat</span>
-                <button class="chat-header-close" onclick="toggleChat()">&#10005;</button>
-            </div>
-            <div class="chat-messages" id="chatMessages">
-                <div class="chat-bubble received">Hi! How can we help you today?</div>
-            </div>
-            <div class="chat-input">
-                <input type="text"
-                       id="chatInputField"
-                       placeholder="Type a message..."
-                       onkeydown="if(event.key==='Enter') sendChat()" />
-                <button onclick="sendChat()">Send</button>
-            </div>
-        </div>
-    }
+  
 
     <!-- ══ SCRIPTS ════════════════════════════════════════════════ -->
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
